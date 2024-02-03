@@ -73,7 +73,8 @@ const config = {
       navbar: {
         logo: {
           alt: "Netlab Logo",
-          src: "img/logo.svg",
+          src: "img/logo_dark.svg",
+          srcDark: "img/logo.svg"
         },
         items: [
           {
@@ -82,7 +83,7 @@ const config = {
             position: "left",
             label: "Modules",
           },
-          { to: "/blog", label: "Blog", position: "left" },
+          // { to: "/blog", label: "Blog", position: "left" },
         ],
       },
       footer: {

@@ -5,14 +5,24 @@ import Link from "@docusaurus/Link";
 
 const SubjectList = [
   {
-    title: "Database System",
-    Svg: require("@site/static/img/SBD_illustration_notext.svg").default,
+    title: "Database System (SBD)",
+    Svg: require("@site/static/img/SBD_illustration_simple.svg").default,
     navigate: "/docs/category/SBD",
     description: (
       <>
-        Covers the fundamentals of relational and non-relational databases,
-        emphasizing data modeling through Entity-Relationship Diagrams (ERDs),
-        and practical implementation in web applications.
+        Covers the fundamentals of relational and non-relational databases
+        through practical implementation in web apps.
+      </>
+    ),
+  },
+  {
+    title: "Desain Manajemen Jaringan (DMJ)",
+    Svg: require("@site/static/img/DMJ_illustration_simple.svg").default,
+    navigate: "/docs/category/DMJ",
+    description: (
+      <>
+        Learn how to design a network with the large scale by considering
+        aspects of scalability and reliability.
       </>
     ),
   },
@@ -20,19 +30,18 @@ const SubjectList = [
 
 function Feature({ Svg, title, navigate, description }) {
   return (
-    <div className={clsx("col col--4")}>
+    <div className={clsx("col")}>
       <div className="text--center">
-        <Link 
-          to={navigate}>
+        <Link to={navigate}>
           <Svg
-            className="w-80 h-60 hover:scale-110 hover:cursor-pointer transition-transform duration-300 ease-in-out"
+            className="h-60 w-40 hover:scale-110 hover:cursor-pointer transition-transform duration-300 ease-in-out"
             role="img"
           />
         </Link>
       </div>
       <div className="text--center padding-horiz--md">
         <Heading as="h3">{title}</Heading>
-        <p>{description}</p>
+        <p className="font-mono">{description}</p>
       </div>
     </div>
   );
@@ -41,7 +50,7 @@ function Feature({ Svg, title, navigate, description }) {
 export default function HomepageFeatures() {
   return (
     <section className={styles.features}>
-      <div className="container">
+      <div className="container mb-12">
         <div className="row">
           {SubjectList.map((props, idx) => (
             <Feature key={idx} {...props} />

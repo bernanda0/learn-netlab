@@ -3,17 +3,16 @@ import { useTypewriter, Cursor } from "react-simple-typewriter";
 
 function HeroTitle() {
   const [text] = useTypewriter({
-    words: ['OOP', 'Jaringan Komputer', 'SBD', 'DMJ', 'Cyber Security'],
+    words: ["OOP", "JARINGAN KOMPUTER", "SBD", "DMJ", "CYBER SECURITY"],
     loop: {},
     typeSpeed: 120,
     deleteSpeed: 120,
   });
 
   return (
-    <h1 style={{ margin: "50px", fontFamily: "monospace" }}>
-        Mata Kuliah :
-      <span style={{ fontFamily: "monospace"}}> {text}</span>
-      <Cursor cursorStyle='<'/>
+    <h1 className="text-5xl">
+      LEARN <span className="font-extrabold">{text}</span>
+      <Cursor cursorStyle="<" />
     </h1>
   );
 }

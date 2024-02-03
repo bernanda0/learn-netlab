@@ -4,25 +4,25 @@ import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import Layout from "@theme/Layout";
 import HomepageFeatures from "@site/src/components/HomepageFeatures";
 
-import Heading from "@theme/Heading";
 import styles from "./index.module.css";
 import HeroTitle from "../components/HeroTitle";
-
 
 function HomepageHeader() {
   const { siteConfig } = useDocusaurusContext();
   return (
     <header className={clsx(styles.heroBanner)}>
       <div className="container">
-        <HeroTitle>
-        </HeroTitle>
+        <div className="mb-10">
+          <HeroTitle />
+        </div>
+
         <p className="hero__subtitle">{siteConfig.index}</p>
         <div className={styles.buttons}>
           <Link
-            className="button button--primary button--lg"
+            className="button button--primary button--lg rounded-3xl hover:scale-110 dark:hover:text-white"
             to="/docs/category/SBD"
           >
-            Start Exploring 🤓
+            Start Exploring!
           </Link>
         </div>
       </div>
