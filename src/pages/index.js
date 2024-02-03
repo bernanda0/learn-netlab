@@ -12,17 +12,16 @@ function HomepageHeader() {
   return (
     <header className={clsx(styles.heroBanner)}>
       <div className="container">
-        <div className="mb-10">
-          <HeroTitle />
-        </div>
-
-        <p className="hero__subtitle">{siteConfig.index}</p>
+        <HeroTitle />
+        <p className="hero__subtitle font-mono mb-8 w-full">
+          {siteConfig.tagline}
+        </p>
         <div className={styles.buttons}>
           <Link
-            className="button button--primary button--lg rounded-3xl hover:scale-110 dark:hover:text-white"
+            className="button button--primary button--lg rounded-3xl hover:scale-110 dark:hover:text-white w-64"
             to="/docs/category/SBD"
           >
-            Start Exploring!
+            Start Exploring! 🤓
           </Link>
         </div>
       </div>

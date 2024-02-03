@@ -9,7 +9,7 @@ import { themes as prismThemes } from "prism-react-renderer";
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: "LEARN.NETLAB",
-  tagline: "Repository for all modules and blogs",
+  tagline: "Repository for NETLAB modules.",
   favicon: "img/favicon.ico",
 
   // Set the production url of your site here
