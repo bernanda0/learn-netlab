@@ -1,0 +1,129 @@
+---
+title: Module Upload 101
+authors: bernanda
+tags: [aslab]
+---
+
+import DocsDir from './docs-dir.png';
+import DocsPos from './docs-position.png';
+
+
+This guide will walk you through the process of creating a module using Markdown (`.md`) or MDX (`.mdx`) format and making it live on the website.
+
+{/* truncate */}
+
+### Step 1: Clone the Repository
+
+Clone the repository containing the project:
+
+```bash
+git clone https://github.com/bernanda0/learn-netlab
+```
+
+### Step 2: Install Dependencies
+
+Navigate to the project directory and install dependencies:
+
+```bash
+cd learn-netlab
+npm install
+```
+
+### Step 3: Locate the Docs Directory
+
+Using your favorite IDE. Find the `docs` directory within the project. 
+
+<img src={DocsDir} width="256"/>
+
+Inside the `docs/[subject]` directory, you will find:
+- `assets` directory
+- `_category_.json` (you can ignore this file)
+- Markdown files (`*.md` or `*.mdx`)
+
+### Step 4: Create Module Files
+
+Start creating the module files in either Markdown or MDX format (**better use MDX 👍**) using the following naming convention:
+
+`[No. module].[topic/title].[mdx/md]`
+
+For example:
+- `01.introduction.mdx`
+- `02.setup.mdx`
+- `03.usage.md`
+
+In each Markdown file, add the following content at the top to specify the position/order of the module:
+
+```mdx
+---
+sidebar_position: 2
+---
+
+# 2. Title of Module 2
+
+... rest of the content 
+```
+
+<img src={DocsPos} width="256"/>
+
+### Step 5: Organize Sections/Subsections
+
+Ensure that your Markdown files have proper sectioning and subsectioning for better readability. Utilize Markdown syntax to structure your content effectively.
+
+### Step 6: Add Images and Other
+
+Place any images you want to include in your module in the `assets` directory within the `docs/[subject]` folder.
+
+:::tip
+
+#### To add image you can use html image tag like thy (example is written in .mdx):
+
+```mdx
+import ERDiagram from './assets/erd.png';
+
+<img src={ERDiagram} width="256"/>
+```
+
+#### You can also add interractive code in mdx
+
+```js
+<button className='hover:cursor-pointer' onClick={() => alert('Hi')}>Click me baby!</button>
+```
+<button className='hover:cursor-pointer' onClick={() => alert('She hates me :(')}>Click me baby!</button>
+:::
+
+Explore more about mdx via blog posts support [Docusaurus Markdown features](https://docusaurus.io/docs/markdown-features), such as [MDX](https://mdxjs.com/).
+
+### Step 7: Preview Live Render
+
+To preview the live render of your files, run the following command:
+
+```bash
+npm start
+```
+
+### Step 8: Test Build Version 
+
+Test the build version of your documentation by running the following commands:
+
+```bash
+npm run build
+npm run serve
+```
+
+### Step 9: Upload Changes
+
+Once you're satisfied with your changes, upload the newly created branch to the remote repository:
+
+```bash
+git checkout -b module/[Subject][No. Module]
+git add .
+git commit -m "Adding [Subject] module [?]"
+git push origin module/[Subject][No. Module]
+```
+
+### Step 10: Create a Pull Request
+
+Create a pull request to merge your changes into the main branch. Provide a descriptive title and description for your pull request.
+
+
+That's it! Tytyty 🤓

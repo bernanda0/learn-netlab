@@ -39,11 +39,10 @@ const config = {
       ({
         docs: {
           sidebarPath: "./sidebars.js",
-          editUrl: "https://github.com/bernanda0/",
         },
         blog: {
           showReadingTime: true,
-          editUrl: "https://github.com/bernanda0/",
+          blogSidebarCount: 0, 
         },
         theme: {
           customCss: "./src/css/custom.css",
