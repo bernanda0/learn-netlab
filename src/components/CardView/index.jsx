@@ -18,7 +18,7 @@ export default function CardView({
 }) {
   return (
     <div className={clsx("col col--6")}>
-      <Card className="max-w-[32rem] mb-12 overflow-hidden dark:bg-blue-gray-900/75 bg-gray-50 hover:bg-gray-100 hover:scale-110 transition-transform duration-300 ease-in-out">
+      <Card className="max-w-[32rem] mb-12 lg:mx-0 mx-9 overflow-hidden dark:bg-blue-gray-900/75 bg-gray-50 hover:bg-gray-100 hover:scale-110 transition-transform duration-300 ease-in-out">
         <CardHeader
           floated={true}
           shadow={false}
@@ -33,7 +33,7 @@ export default function CardView({
             />
             <img
               src={icon}
-              className="overlay w-auto h-auto max-w-48 max-h-48 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 ease-in-out transition-transform duration-200"
+              className="overlay lg:my-3 lg:max-w-48 lg:max-h-48 max-w-32 max-h-32 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 hover:scale-110 ease-in-out transition-transform duration-200"
               alt="Overlay Image"
             />
           </div>

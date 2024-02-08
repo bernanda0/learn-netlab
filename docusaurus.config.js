@@ -42,7 +42,7 @@ const config = {
         },
         blog: {
           showReadingTime: true,
-          blogSidebarCount: 0, 
+          blogSidebarCount: 0,
         },
         theme: {
           customCss: "./src/css/custom.css",
@@ -65,6 +65,16 @@ const config = {
     },
   ],
 
+  themes: [
+    [
+      "@easyops-cn/docusaurus-search-local",
+      /** @type {import("@easyops-cn/docusaurus-search-local")} */
+      ({
+        hashed: true,
+      }),
+    ],
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
@@ -73,7 +83,7 @@ const config = {
         logo: {
           alt: "Netlab Logo",
           src: "img/logo_dark.svg",
-          srcDark: "img/logo.svg"
+          srcDark: "img/logo.svg",
         },
         items: [
           {
