@@ -15,6 +15,27 @@
   }
 }
 
+/* Hide scrollbar */
+body::-webkit-scrollbar {
+  width: 5px; /* Adjust width as needed */
+}
+
+/* Track */
+body::-webkit-scrollbar-track {
+  background: transparent; /* Remove the track */
+}
+
+/* Handle */
+body::-webkit-scrollbar-thumb {
+  background: #98abbc; /* Color of the scrollbar */
+  border-radius: 3px; /* Rounded corners */
+}
+
+/* Handle on hover */
+body::-webkit-scrollbar-thumb:hover {
+  background: #59636b; /* Darker color on hover */
+}
+
 .buttons {
   display: flex;
   align-items: center;
