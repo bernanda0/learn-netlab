@@ -1,0 +1,144 @@
+---
+sidebar_position: 1
+---
+
+# MODUL 1: MULTI-ACCESS & MULTI AREA OSPFv2
+
+## TUJUAN PRAKTIKUM:
+
+1. Praktikan dapat menjelaskan konsep dan fitur link state routing protocol pada OSPF.
+2. Praktikan dapat menggunakan perintah-perintah yang digunakan dalam mengkonfigurasi OSPF Single dan Multi Area pada router cisco.
+
+## A. OSPF:
+
+Open Shortest Path First (OSPF) adalah link-state routing protokol yang dikembangkan sebagai pengganti untuk distance vector routing protocol RIP. RIP merupakan routing protokol yang digunakan pada awal perkembangan jaringan dan internet, tetapi ketergantungan pada hop sebagai satu-satunya ukuran untuk memilih rute terbaik dan cepat menjadi tidak dapat diterima dalam jaringan yang lebih besar dan membutuhkan solusi routing lebih kuat.
+
+OSPF adalah protokol routing tanpa kelas (classless) yang menggunakan konsep area untuk skalabilitas. RFC 2328 mendefinisikan metrik OSPF sebagai cost. IOS Cisco menggunakan bandwidth sebagai penentu cost metric OSPF. Keunggulan utama OSPF setelah berakhirnya RIP adalah konvergensi yang cepat dan skalabilitas untuk implementasi jaringan yang jauh lebih besar.
+
+Terdapat 3 versi dari routing protocol OSPF. OSPFv1 adalah cikal bakal dari OSPF yang ada saat ini karena hanya menjadi versi eksperimental. OSPF yang digunakan saat ini adalah OSPF versi 2 dan 3, dimana versi 3 adalah pengembangan dari versi 2 untuk dapat mendukung IPv6.
+
+OSPF merupakan routing protokol yang menggunakan konsep area. Seorang network administrator dapat membagi domain routing ke dalam area yang berbeda yang membantu dalam mengendalikan traffic pembaruan routing. Link merupakan sebuah interface pada sebuah router. Link juga merupakan bagian dalam jaringan untuk menghubungkan dua router atau bagian dari jaringan seperti Ethernet LAN yang terhubung ke suatu router. Informasi mengenai status dari link tersebut disebut dengan link-state. Semua informasi link-state terdiri dari network prefix, ukuran prefix, dan cost.
+
+## B. KOMPONEN OSPF:
+
+Semua jenis routing protocol memiliki komponen yang hampir sama untuk menukarkan informasi routing. Pesan yang dikirimkan akan membantu dalam membangun struktur data yang diproses menggunakan algoritma routing. Adapun komponen OSPF terdiri dari 3 hal yaitu:
+
+### 1. Pesan Routing Protokol
+
+![pesan_routing_protokol](/DMJ/assets/routing_protocol_message.png)
+
+Router yang menjalankan pertukaran pesan OSPF untuk menyampaikan informasi routing menggunakan lima jenis paket sebagai berikut:
+
+- Hello packet
+- Database description (DBD) packet
+- Link-state request (LSR) packet
+- Link-state update (LSU) packet
+- Link-state acknowledgement (LSAck) packet
+
+Paket-paket tersebut digunakan untuk menemukan router terdekat (neighbor router) dan juga untuk bertukar informasi agar dapat memperbarui informasi yang lebih akurat mengenai jaringan tersebut.
+
+### 2. Struktur Data
+
+Pesan OSPF digunakan untuk membuat dan memperbarui tiga database OSPF, sebagai berikut:
+
+- **Adjacency database**
+
+  Database yang membuat atau berisi tabel neighbor router.
+
+- **Link-state database**
+
+  Database yang berfungsi untuk membuat tabel topology.
+
+- **Forwarding database**
+
+  Database yang berfungsi untuk membuat tabel routing. Tabel tersebut akan disimpan dan diperbarui di dalam RAM.
+
+## C. CARA KERJA LINK-STATE
+
+Untuk memperbarui informasi routing, router OSPF harus menyelesaikan proses routing link state untuk mencapai konvergensi. Berikut adalah ilustrasi operasi link-state:
+
+### 1. Pembentukan Neighbor adjacencies
+
+Router OSPF harus mengenali router lain yang terhubung pada jaringan satu sama lain sebelum dapat berbagi informasi. Router OSPF mengirim paket Hello keluar dari semua interface yang mendukung OSPF untuk menentukan apakah ada router neighbor pada link tersebut. Jika ada, maka router yang mendukung OSPF mencoba untuk membuat neighbor adjacencies pada jaringan tersebut.
+
+![hello_packets](/DMJ/assets/hello_packets.png)
+
+### 2. Proses pertukaran advertisement link-state
+
+Setelah router adjacencies telah terbentuk, router akan bertukar Link State Advertisements (LSA) yang berisi status dan cost dari setiap link yang terhubung secara langsung. Router akan mengirimkan LSA ke setiap neighbor yang berdekatan dan langsung diterima serta dikirimkan lagi ke router neighbor router berikutnya sampai semua router dalam area jaringan tersebut memiliki semua LSA.
+
+![lsa_packets](/DMJ/assets/lsa_packets.png)
+
+### 3. Membangun database link state
+
+Setelah LSA diterima, router OSPF akan membuat tabel topologi Link State Database (LSDB) berdasarkan LSA yang diterima, Database ini nantinya akan menyimpan semua informasi tentang topologi jaringan.
+
+![topology_table](/DMJ/assets/topology_table.png)
+
+### 4. Mengeksekusi algoritma SPF
+
+Selanjutnya router mengeksekusi algoritma SPF. Tahap ini bertujuan untuk membuat pohon SPF.
+
+![lsdb_table](/DMJ/assets/lsdb_table.png)
+
+### 5. Memilih rute terbaik
+
+Setelah pohon SPF dibuat, jalur terbaik dari suatu jaringan ke jaringan lain akan ditambahkan pada tabel routing. Rute akan ditambahkan ke dalam tabel routing kecuali terdapat sumber rute ke jaringan yang sama dengan administrative distance yang lebih rendah, seperti static routing. Routing akan ditentukan berdasarkan entri dalam tabel routing.
+
+![destination_table](/DMJ/assets/destination_table.png)
+
+## D. TIPE-TIPE OSPF
+
+Untuk membuat OSPF lebih efisien, OSPF mendukung routing berbasis area. Area pada OSPF merupakan kumpulan atau sekelompok router yang berbagi informasi link- state yang sama dalam LSDB.
+
+### OSPF SINGLE AREA:
+
+Semua router terdapat dalam satu area. Dalam implementasinya, area yang digunakan yaitu area 0.
+
+![single_area](/DMJ/assets/ospf_area_0.png)
+
+### OSPF MULTI AREA:
+
+OSPF multi area adalah OSPF area yang dibagi menjadi area yang lebih kecil, sehingga dapat memiliki lebih dari 1 jenis area. Semua area harus terhubung dengan backbone area (area 0). Router yang menjadi penghubung antar area disebut dengan Area Border Router (ABR).
+
+Dengan OSPF multiarea, suatu domain routing yang besar dapat dibagi menjadi beberapa area yang lebih kecil. Misalnya, setiap kali router menerima informasi baru tentang perubahan topologi dalam area termasuk penambahan, penghapusan, atau modifikasi link, router harus menjalankan kembali algoritma SPF, membuat pohon SPF baru, dan memperbarui tabel routing. Algoritma SPF mengonsumsi CPU dan waktu yang diperlukan untuk kalkulasi bergantung pada ukuran area. Router di area lain akan menerima pembaruan terkait perubahan topologi, tetapi router hanya memperbarui tabel routing, tidak menjalankan algoritma SPF kembali.
+
+Terlalu banyak router di suatu area akan membuat LSDB menjadi sangat besar dan meningkatkan beban pada CPU. Oleh karena itu, perlu melakukan pengaturan router ke dalam area secara efektif untuk mempartisi database yang berpotensi untuk memperkecil database dan membuatnya lebih mudah dikelola. Keuntungan mendesain hierarki-topologi dengan multiarea OSPF, di antaranya:
+
+- Tabel routing yang lebih kecil
+- Mengurangi pembaruan link-state
+- Mengurangi frekuensi perhitungan SPF
+
+Contoh pada gambar berikut R2 merupakan ABR untuk area 51. Perubahan topologi pada area 51 dapat menyebabkan router area 51 untuk menjalankan kembali algoritma SPF, membuat pohon SPF baru dan memperbarui tabel routing.
+
+R2 akan mengirimkan LSA ke router di dalam area 0 yang pada akhirnya akan mengirimkan ke semua router dalam domain routing OSPF. Jenis LSA tersebut tidak menyebabkan router di area lain menjalankan kembali algoritma SPF. Router tersebut hanya akan memperbarui LSDB dan tabel routing.
+
+![multi_area](/DMJ/assets/ospf_multi_area.png)
+
+### OSPFv3
+
+OSPFv3 sama seperti OSPFv2 namun penggunaannya untuk prefix IPv6. OSPFv3 bertukar informasi routing untuk mengisi tabel routing IPv6 dengan remote prefixes. Dengan fitur alamat OSPFv3 yang menyertakan dukungan untuk IPv4 dan IPv6. Konfigurasi OSPFv3 dan perintah verifikasi mirip dengan yang digunakan di OSPFv2. OSPFv3 juga mendukung IPv4 dan IPv6. OSPFv3 untuk IPv4 dan IPv6 masing-masing memiliki tabel adjacency terpisah, tabel topologi OSPF, dan tabel routing seperti gambar berikut.
+
+![ospfv3](/DMJ/assets/ospfv3.png)
+
+### <u>COMMAND SET UTAMA:</u>
+
+Berikut adalah perintah utama untuk konfigurasi OSPF pada router. Perhatikan kapan perintah tersebut dapat digunakan.
+
+| Command                                             | Fungsi                                           |
+| --------------------------------------------------- | ------------------------------------------------ |
+| **Advanced OSPF**                                   |                                                  |
+| `default-information originate`                     | Propagasi default static route ke seluruh router |
+| `ip ospf hello-interval VALUE_IN_SECS`              | Mengganti waktu hello interval pada interface    |
+| `ip ospf dead-interval VALUE_IN_SECS`               | Mengganti waktu dead interval pada interface     |
+| `bandwidth VALUE_OF_BW`                             | Mengganti bandwidth pada interface               |
+| `area AREA_NUMBER authentication message-digest`    | Membuat otentikasi untuk area ospf ini           |
+| `ip ospf message-digest-key KEY md5 PASSWORD`       | Memberi key dan password ke interface            |
+| **Multi-area OSPFv2**                               |                                                  |
+| `router ospf PROCESS_ID`                            | Membuat ospf process                             |
+| `router-id ROUTER_ID`                               | Memberi router ID                                |
+| `network IP_ADDRESS WILDCARD_MASK area AREA_NUMBER` | Memberi network pada ospf area                   |
+| **Multi-area OSPFv3**                               |                                                  |
+| `Ipv6 router ospf PROCESS_ID`                       | Membuat ospf process untuk ipv6                  |
+| `router-id ROUTER_ID`                               | Memberi router ID                                |
+| `Ipv6 ospf OSPF_PROCESS area AREA_NUMBER`           | Memberi network pada ospf area                   |
