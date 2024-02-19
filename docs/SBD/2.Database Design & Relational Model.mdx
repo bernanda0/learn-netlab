@@ -1,0 +1,271 @@
+---
+sidebar_position: 2
+---
+import AuthorList from "../../src/components/Author"
+import Entity from "./assets/Modul2/Entity.png"
+import Attributes from "./assets/Modul2/Attributes.png"
+import Simple_Composite from "./assets/Modul2/Simple&Composite.png"
+import DerivedAttribute from "./assets/Modul2/Derived.png"
+import MultiValue from "./assets/Modul2/Multi-Value.png"
+
+# MODUL 2: Database Design & Relational Model
+
+<AuthorList authorsName={["reibar"]} />
+
+## TUJUAN PRAKTIKUM 
+
+1. Praktikan dapat memahami definisi dari entity beserta jenis attributes pada basis data.
+2. Praktikan dapat mengetahui perintah SQL untuk membuat, menghapus, memasukkan dan mendapatkan data dari basis data.
+3. Praktikan dapat memahami cara membuat data beserta tipe data pada basis data.
+4. Praktikan dapat memahami tipe-tipe data yang bisa ditampilkan pada suatu table.
+
+
+## A. Table
+Table merupakan bagian dari basis data & digunakan untuk menyimpan data dalam
+bentuk kolom dan baris. Dalam istilah matematis, table merepresentasikan relasi antardata. Table
+dikelompokkan menjadi basis data, dan koleksi dari banyak basis data dikelola oleh satu
+database server. Setiap table memiliki koleksi baris (row) dengan nama kolom (column) yang
+sama, dimana setiap kolom tersebut memiliki tipe data yang spesifik & merepresentasikan
+attribute. Untuk membuat sebuah table, user harus mendefinisikan nama table, nama kolom dan
+tipe data.
+
+## B. Entity
+Entity adalah sebuah objek pada dunia nyata yang bersifat independen dan dapat
+dibedakan antara satu objek dengan objek lain. Sebuah entity bisa berupa objek fisik ataupun
+objek konseptual. Entity Type mendefinisikan sekumpulan entity yang sama satu lain. Entity Set
+dapat berupa sekumpulan entities dengan atribut nilai yang sama.
+
+<img src={Entity} />
+
+## C. Attributes
+Entities dapat direpresentasikan dengan sifatnya yang disebut sebagai attributes. Seluruh
+attribute memiliki sebuah nilai. Sebagai contoh, terdapat sebuah objek yaitu mahasiswa yang
+mempunyai nama, angkatan, dan jurusan sebagai atributnya. Setiap attribute memiliki suatu nilai
+yang dapat kita tentukan. Nilai tersebut dapat kita sebut sebgai suatu tipe data. Sebagai contoh,
+nama mahasiswa tidak mungkin terdiri dari nilai numeric atau angka dan umur dari mahasiswa
+tidak mungkin negative dan sebagainya.
+<img src={Attributes} />
+
+### Tipe-Tipe Attributes
+    * **Simple Attribute**
+
+        Simple Attribute bersifat atomic atau pasti yang berarti harus sesuai dengan nilai yang
+ditentukan. Sebagai contoh, nomor induk mahasiswa pasti terdiri dari nilai 10 digit.
+    * **Composite Attribute**
+
+        Composite Attribute terdiri dari lebih dari satu simple attribute. Sebagai contoh, nama
+lengkap mahasiswa dapat terdiri dari nama_pertama dan nama_terakhir.
+<img src={Simple_Composite}/>
+
+    * **Derived Attribute**
+        
+        Derived Attribute adalah attribute yang tidak ada dalam database tetapi nilainya diambil
+dari attribute lain yang ada dalam database. Sebagai contoh, rata-rata_nilai dari seluruh
+mahasiswa tidak harus disimpan secara langsung pada database melainkan dapat
+diperoleh dari attribute lainnya.
+<img src={DerivedAttribute}/>
+
+    * **Single-Value Attribute**
+
+        Attribute ini memiliki satu nilai. Sebagai contoh, Nomor_Induk_Mahasiswa
+
+    * **Multi-value Attribute**
+
+        Multi-Value Attribute dapat memiliki lebih dari satu nilai. Sebagai contoh, Mahasiswa
+dapat memiliki lebih dari satu alamat email.
+<img src={MultiValue}/>
+
+## D. Perintah SQL
+Untuk membuat sebuah table, user harus mendefinisikan nama table, nama kolom dan
+tipe data. Perintah SQL untuk membuat table :
+```SQL
+CREATE TABLE table_name (column_name data_type, ..);
+```
+Sebagai contoh, berikut adalah perintah SQL untuk membuat table pengambilan data cuaca pada
+setiap kota dengan atribut nama kota, suhu rendah, suhu tinggi, dan tanggal pengambilan data :
+```SQL
+CREATE TABLE weather (
+    city varchar(20),       --nama kota
+    temp_lo real,           --suhu terendah saat pengambilan data
+    temp_hi int,            --suhu tertinggi saat pengambilan data
+    date date,              --tanggal pengambilan data
+);
+```
+
+User dapat memasukkan command dengan banyak line karena psql tidak akan mengeksekusi
+command hingga ada input karakter semicolon (“;”). Dua dash (“--“) digunakan untuk komentar
+user, dan setiap inputan setelahnya tidak akan dihiraukan hingga akhir line. `varchar`, `real`,
+`int`, dan `date` adalah contoh tipe data. Untuk menghapus table, perintah yang digunakan adalah :
+```SQL
+DROP TABLE table_name;
+```
+Untuk memasukkan data ke dalam table, user dapat menggunakan statement `INSERT`.
+Perintah SQL untuk memasukan data kedalam table :
+```SQL
+INSERT INTO table_name VALUES (value1, value2, ..);
+```
+**Contoh:**
+```SQL
+INSERT INTO weather VALUES ('Jakarta', 35.5, 40, '2012-09-29');
+```
+
+Data yang dimasukkan harus sesuai dengan tipe data dari kolom. Data yang tidak bersifat
+numerik harus diberikan tanda quote (‘). Urutan data yang dimasukkan, secara default, harus
+mengikuti urutan kolom. User dapat menentukan urutannya sesuai keinginan dengan perintah
+berikut :
+```SQL
+INSERT INTO weather (temp_lo, temp_hi, date, city) 
+    VALUES (36, 45, '2012-09-29', 'Surabaya');
+
+```
+
+Untuk mendapatkan data dari basis data, user dapat menggunakan statement `SELECT`.
+Perintah SQL untuk mendapatkan data table list (bagian yang menentukan table-table mana yang
+datanya ingin diambil atau menampilkan seluruh isi kolom tabel)
+```SQL
+SELECT * FROM weather;
+```
+
+
+Karakter `*` artinya **semua kolom**.
+Perintah SQL untuk mendapatkan data select list (bagian yang menentukan kolom mana yang
+ngin dilampirkan), misal kita hanya membutuhkan kolom `city` dan `temp_io` :
+```SQL
+SELECT city, temp_lo FROM weather;
+```
+
+
+## E. Tipe-Tipe Data
+PostgreSQL memiliki banyak tipe data yang bisa digunakan oleh pengguna untuk
+mendefinisikan nilai dari suatu attribute. Tabel di bawah ini menunjukkan semua tipe data built-
+in. Nama alternatif dari tipe data ditunjukkan pada kolom “Aliases”.
+
+| Name                                  | Aliases           | Description                                       |
+| ------------------------------------- | ----------------- | ------------------------------------------------- |
+| `bigint`                              | int8              | signed eight-byte integer                         |
+| `bigserial`                           | serial8           | autoincrementing eight-byte integer               |
+| `bit [(n)]`                           |                   | fixed-length bit string                           |
+| `bit varying [(n)]`                   | varbit            | variable-length bit string                        |
+| `boolean`                             | bool              | logical Boolean (true/false)                      |
+| `box`                                 |                   | rectangular box on a plane                        |
+| `bytea`                               |                   | binary data ("byte array")                        |
+| `character varying [(n)]`             | varchar [(n)]     | variable-length character string                  |
+| `character [(n)]`                     | char [(n)]        | fixed-length character string                     |
+| `cidr`                                |                   | IPv4 or IPv6 network address                      |
+| `circle`                              |                   | circle on a plane                                 |
+| `date`                                |                   | calendar date (year, month, day)                  |
+| `double precision`                    | float8            | double precision floating-point number (8 bytes)  |
+| `inet`                                |                   | IPv4 or IPv6 host address                         |
+| `integer`                             | int, int4         | signed four-byte integer                          |
+| `interval [fields] [(p)]`             |                   | time span                                         |
+| `line`                                |                   | infinite line on a plane                          |
+| `lseg`                                |                   | line segment on a plane                           |
+| `macaddr`                             |                   | MAC (Media Access Control) address                |
+| `money`                               |                   | currency amount                                   |
+| `numeric [(p, s)]`                    | decimal [(p, s)]  | exact numeric of selectable precision             |
+| `path`                                |                   | geometric path on a plane                         |
+| `point`                               |                   | geometric point on a plane                        |
+| `polygon`                             |                   | closed geometric path on a plane                  |
+| `real`                                | float4            | single precision floating-point number (4 bytes)  |
+| `smallint`                            | int2              | signed two-byte integer                           |
+| `serial`                              | serial4           | autoincrementing four-byte integer                |
+| `text`                                |                   | variable-length character string                  |
+| `time [(p)] [without time zone]`      |                   | time of day (no time zone)                        |
+| `time [(p)] with time zone`           | timetz            | time of day, including time zone                  |
+| `timestamp [(p)] [without time zone]` |                   | date and time (no time zone)                      |
+| `timestamp [(p)] with time zone`      | timestamptz       | date and time, including time zone                |
+| `tsquery`                             |                   | text search query                                 |
+| `tsvector`                            |                   | text search document                              |
+| `txid_snapshot`                       |                   | user-level transaction ID snapshot                |
+| `uuid`                                |                   | universally unique identifier                     |
+| `xml`                                 |                   | XML data                                          |
+
+
+Selain tipe data di atas, terdapat jenis tipe data lainnya diantaranya :
+
+    1. ***Enumerated Type***
+
+        Enumerated adalah Tipe data yang terdiri dari sekumpulan value statik berurutan yang didefinisikan oleh
+pengguna. Perintah SQL yang digunakan adalah CREATE TYPE. User yang mendefinisikan akan menjadi owner dari tipe data tersebut.  
+Tipe ini ekuivalen dengan tipe enum pada beberapa bahasa pemrograman. Contoh dari tipe enum adalah nama hari dalam satu minggu.
+Contoh penggunaan :
+```SQL
+CREATE TYPE city AS ENUM('Jakarta', 'Depok', 'Bogor');
+```
+**Contoh pengaplikasian:**
+```SQL
+CREATE TABLE bus (
+    name text,
+    arrival city,
+    departure city
+);
+
+INSERT INTO bus VALUES ('Tayo', 'Jakarta', 'Bogor');
+```
+Pada kolom yang memiliki tipe data enumerated `city`, maka kolom tersebut hanya bisa diisi oleh ENUM 
+`Jakarta`, `Depok`, atau `Bogor`. Selain dari itu akan membuat pengisian tabel menjadi invalid.
+
+    2. ***Composite Type***
+
+        Array adalah suatu tipe data terstruktur yang dapat menyimpan banyak data dengan suatu
+nama yang sama dan menempati lokasi yang berurutan di dalam memori serta bertipe
+sama pula. Deklarasi dari tipe ini harus menyertakan tanda ([ ]) pada tipe datanya.
+Contoh penggunaan :
+```SQL
+CREATE TABLE fibonacci (
+    square integer[]
+);
+```
+**Contoh pengaplikasian:**
+```SQL
+INSERT INTO fibonacci VALUES ('{1, 1, 2, 3, 5, 8}');
+```
+
+    3. ***Base Type***
+        
+        Tipe data ini tipe data dasar, dimana untuk membuatnya kita harus mengakses basis data
+sebagai superuser terlebih dahulu. Batasan ini dibuat karena kesalahan dalam mendefinisikan tipe data 
+ini dapat membuat server menjadi crash. User harus membuat dua atau lebih function terlebih dahulu sebelum 
+mendefinisikan tipe data. Secara umum, function-function ini harus dikoding menggunakan bahasa C atau bahasa low-level
+lainnya.
+
+## F. Constraint: NOT NULL dan UNIQUE
+NOT NULL constraint digunakan untuk menentukan kolom yang tidak boleh kosong
+(NULL value). Jika kolom tersebut tidak diisi pada saat melakukan pengisian data ke dalam table,
+maka akan terjadi error yang menandakan bahwa perintah tersebut tidak dengan sesuai aturan
+yang berlaku.
+Contoh penggunaan :
+```SQL
+CREATE TABLE products (
+    product_no integer NOT NULL,
+    name text NOT NULL,
+    price numeric,
+);
+```
+
+Sedangkan UNIQUE constraint digunakan untuk memastikan data dalam kolom tersebut
+`unique` dan tidak terduplikasi di baris manapun.
+Contoh penggunaan :
+```SQL
+CREATE TABLE products (
+    product_no integer UNIQUE,
+    name text,
+    price numeric
+);
+```
+**Atau**
+```SQL
+CREATE TABLE products (
+    product_no integer,
+    name text,
+    price numeric,
+    UNIQUE (product_no, name)
+);
+```
+
+Contoh Implementasi tabel :
+| ID    | Job   | Salary    | Commission    |
+| ----- | ----- | --------- | ------------- |
+| A10   | Sales | 12500     | 8000          |
+| A11   | NULL  | 40000     | 0             |
+| A12   | Sales | 40000     | NULL          |
