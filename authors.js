@@ -35,6 +35,12 @@ const authorsData = {
     url: "https://github.com/althafnafi",
     image_url: "https://github.com/althafnafi.png",
   },
+  reibar: {
+    name: "Rayhan [RA]",
+    title: "Netlab Assistant 2023/2024",
+    url: "https://github.com/rayhan-akbar",
+    image_url: "https://github.com/rayhan-akbar.png",
+  },
   pibi: {
     name: "Phoebe",
     title: "Digilab Assistant 2023/2024",
