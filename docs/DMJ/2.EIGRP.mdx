@@ -1,0 +1,268 @@
+---
+sidebar_position: 1
+---
+import AuthorList from "./../../src/components/Author"
+import Eigrp_Metric from './assets/Modul2/formula.png'
+import Eigrp_Simple from './assets/Modul2/simplified.png'
+import Dual from './assets/Modul2/Dual.png'
+import EIGRP2 from './assets/Modul2/EIGRP2.png'
+import EIGRP3 from './assets/Modul2/EIGRP3.png'
+import EIGRP4 from './assets/Modul2/EIGRP4.png'
+import EIGRP5 from './assets/Modul2/EIGRP5.png'
+import EIGRP6 from './assets/Modul2/EIGRP6.png'
+
+# MODUL 2: EIGRP
+
+<AuthorList authorsName={["dio"]} />
+
+## TUJUAN PRAKTIKUM 
+
+1. Dapat menjelaskan fitur dan pengoperasian EIGRP
+2. Mengetahui perbedaan format paket EIGRP
+3. Mengerti konsep dan operasi DUAL (Diffusing Update Algorithm)
+4. Dapat mengkalkulasi metric menggunakan DUAL
+5. Dapat melakukan konfigurasi routing EIGRP
+
+## A. Karakteristik EIGRP
+EIGRP (*Enhanced Interior Gateway Protocol*) adalah sebuah routing protocol berupa
+advanced distance vector. EIGRP merupakan routing protocol yang yang termasuk proprietari
+Cisco, sehingga hanya dapat diberlakukan pada router Cisco. EIGRP menggunakan DUAL
+(Diffusing Update Algorithm) untuk mengkalkulasi jalur terbaiknya.
+
+Berikut ini merupakan karakteristik dari routing protocol EIGRP:
+- Dirilis pada 1992 sebagai Cisco proprietary protocol.
+- Merupakan Advanced Distance Vector routing protocol.
+- Membentuk Neighbor Adjacencies (router yang bersebelahan atau yang terdekat).
+- Mengunakan Transport Protocol yang reliable untuk pengiriman paket EIGRP menuju
+router tetangganya.
+- Partial dan Bounded Updates yaitu mengirim update paket hanya jika terjadi perubahan route kepada router yang membutuhkan informasi tersebut. Dengan mengirimkan informasi routing
+yang dibutuhkan kepada router yang membutuhkan, maka EIGRP dapat meminimalisir bandwidth yang dibutuhkan untuk
+mengirimkan paket EIGRP.
+
+- Mendukung Equal and Unequal Cost Load Balancing. Equal and Unequal Cost Load
+Balancing adalah suatu keadaan dimana suatu paket data memiliki dua jalur yang berbeda untuk
+sampai kepada tujuannya, tetapi 2 jalur tersebut digunakan secara bergantian 1:1 karena nilainya
+sama (AD, Bandwidth, Metric).
+
+### Tipe Paket EIGRP
+EIGRP memiliki tipe-tipe paket sebagai berikut:
+
+| Jenis Packet   | Keterangan                                                                                                                                                                            |
+|----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Hello Packet** | Hello Packets digunakan untuk menjalin dan mempertahankan EIGRP neighbor. Ini juga merupakan pesan *keepalive*. Pesan Hello ini dikirim sebagai pesan Multicast ke Alamat Multicast 224.0.0.10.           |
+| **Update Packet** | Paket Update EIGRP digunakan untuk mengirim pembaruan routing. Dengan pesan Update ini, Tabel Topologi dan Tabel Routing dibangun. Pesan Update dikirim baik sebagai Unicast maupun Multicast. Jika pembaruan dikirim ke tetangga baru, dikirim sebagai unicast. Jika pembaruan ini terkait dengan perubahan rute apa pun, maka dikirim sebagai Multicast ke alamat 224.0.0.10.          |
+| **Query Packet** | Paket Query EIGRP digunakan untuk meminta pembaruan routing, meminta pembaruan. Jika Suksesor gagal, dengan pesan Query, rute cadangan diminta. Pesan Query EIGRP dikirim sebagai Multicast ke alamat 224.0.0.10.             |
+| **Reply Packet** | Paket Reply EIGRP digunakan sebagai respons terhadap Paket Query. Mereka mencakup rute alternatif ke tujuan yang diminta. Pesan Reply adalah pesan unicast.                                                                  |
+| **ACK Packet**   | Paket Ack digunakan sebagai umpan balik terhadap paket Update, Query, atau Reply sebagai mekanisme umpan balik. Tidak digunakan untuk Hello Packets dan Ack Packets. Pesan Ack adalah pesan hello kosong tanpa data dan dikirim sebagai unicast. |
+
+### Penghitungan Nilai Metric pada EIGRP
+
+**Apa itu K-Values EIGRP?**
+
+Perhitungan metric dalam EIGRP mempertimbangkan K-values yang digunakan untuk menghitung rute terbaik. Nilainya dapat antara 0-255 dan diatur secara independen, dengan referensi terhadap apa yang dianggap untuk perhitungan biaya untuk setiap rute. Jika suatu atribut tidak dipertimbangkan, K-value untuk itu harus sama dengan nol, tetapi jika dipertimbangkan, K-value harus sama dengan satu.
+
+**Penghitungan EIGRP Classic Metric dengan Default K-values**
+
+Ketika mempertimbangkan K-values default dalam menghitung formula perhitungan metric EIGRP rute, K1 dan K3 harus selalu 1, dan K2, K4, dan K5 adalah nol. Formula EIGRP ini berasal dari formula metric IGRP, kemudian dikalikan dengan 256 untuk mengubah perhitungan dari 24 menjadi 32 bit. Bandwidth adalah link terlambat yang dirujuk ke link 10 Gbps (107). Kecepatan link berasal dari Bandwidth yang dikonfigurasi pada antarmuka, dan nilai Delay adalah jumlah total delay path dalam mikrodetik.
+
+<img src={Eigrp_Metric} />
+
+Dengan menghitung persamaan di atas dengan mempertimbangkan semua K-values default, kita akan mendapatkan formula Metric EIGRP Classic.
+
+<img src={Eigrp_Simple} />
+
+Tabel di bawah ini menunjukkan Default EIGRP Interface Metrics yang dapat kita gunakan untuk rumus Metric Classic:
+
+| Jenis Antarmuka     | Kecepatan Link (Kbps) | Delay      | Metric     |
+|----------------------|-----------------------|------------|------------|
+| Serial               | 64                    | 20.000 μs  | 40.512.000 |
+| T1                   | 1544                  | 20.000 μs  | 2.170.031  |
+| Ethernet             | 10.000                | 1000 μs    | 281.600    |
+| FastEthernet         | 100.000               | 100 μs     | 28.160     |
+| GigabitEthernet      | 1.000.000             | 10 μs      | 2.816     |
+| 10 GigabitEthernet   | 10.000.000            | 10 μs      | 512        |
+
+
+Dengan menghitung persamaan di atas dengan mempertimbangkan semua K-values default, kita akan mendapatkan formula Metric EIGRP Classic.
+
+## B. Diffusing Update Algorithm (DUAL)
+
+<img src={Dual} />
+
+
+DUAL merupakan algoritma yang digunakan oleh routing protocol EIGRP untuk
+memungkinkan route yang diberikan dikalkulasi ulang ketika menyebabkan loop routing.
+
+Hal ini disebabkan karena Advanced Distance Vector routing protocol merupakan protocol
+yang rentan terhadap looping karena tidap dapat memetakan topologi jaringan secara akurat
+(bergantung terhadap tertangganya). DUAL menyediakan:
+
+DUAL merupakan algoritma yang digunakan oleh routing protocol EIGRP untuk
+memungkinkan route yang diberikan dikalkulasi ulang ketika menyebabkan loop routing.
+
+Hal ini disebabkan karena Advanced Distance Vector routing protocol merupakan protocol
+yang rentan terhadap looping karena tidap dapat memetakan topologi jaringan secara akurat
+(bergantung terhadap tertangganya). 
+
+DUAL menyediakan:
+
+- Loop-free paths (jalur bebas looping)
+- Loop-free backup paths (jalur cadangan bebas looping)
+- Fast convergence. (konvergensi yang cepat)
+- Penggunaan bandwidth yang minimum dengan bounded updates
+
+Proses pemilihan dan perhitungan rute diatur menggunakan DUAL **Finite State Machine
+(FSM)**
+
+- DUAL FSM melakukan tracking pada semua rute.
+- Menggunakan metric untuk menentukan efisiensi dan loop-free paths.
+- Mengidentifikasi rute dengan least-cost path (jalur dengan cost terkecil) untuk
+dimasukkan pada routing table.
+- EIGRP menjaga daftar dari backup route yang dapat digunakan jika primary pathnya
+mengalami kegagalan.
+
+## C. Konfigurasi EIGRP untuk IPv4
+
+```Cisco
+Router(config)# router eigrp <autonomous-system-number>
+```
+
+Command ini untuk mengaktifkan EIGRP process. Contoh penggunaannya sebagai berikut:
+
+```Cisco
+R1(config)# router eigrp 1
+R1(config-router)#
+```
+
+Untuk menghapus atau membatalkan proses EIGRP routing dapat dilakukan dengan
+memberikan command
+
+```Cisco
+Router(config)# no router eigrp <autonomous-system-number>
+```
+
+Command untuk konfigurasi EIGRP router ID
+
+```Cisco
+R1(config)# router eigrp <autonomous-system-number>
+R1(config-router)# eigrp router-id <ipv4-address>
+```
+Loopback address dapat dijadikan sebagai router ID. Jika router ID tidak di-set, maka secara
+otomatis loopback address tertinggi dipilih sebagai router Idnya.
+
+Command konfigurasi *loopback interface*:
+
+```Cisco
+Router(config)# interface loopback <number> 
+Router(config-if)# ip address <ipv4-address> <subnet-mask>
+```
+
+Command untuk memasukkan network yang akan meng-update database:
+
+<img src={EIGRP2} />
+
+Jika perlu melakukan update ke jaringan yang spesifik saja, maka perlu digunakan
+wildcard mask dengan command:
+
+```Cisco
+Router(config-router)# network <network> <wildcard-mask>
+```
+
+Wildcard mask merupakan inverse dari subnet mask suatu jaringan.
+
+Konfigurasi passive-interface yaitu untuk membatasi update pada traffic yang tidak
+diperlukan. Command-nya adalah sebagai berikut:
+
+```Cisco
+Router(config)# router eigrp <autonomous-system-number>
+Router(config-router)# passive-interface <interface-type + interface-number>
+```
+
+
+Untuk melihat verifikasi konfigurasi yang dilakukan, dapat dilihat dari command dibawah
+berikut hasilnya:
+
+```Cisco
+show ip protocols
+```
+
+<img src={EIGRP3} />
+
+Untuk memeriksa IP neighbor dapat dilihat dari command berikut:
+
+<img src={EIGRP4} />
+
+
+### Auto Summarization
+
+Jika ingin mengaktifkan
+
+```Cisco
+Router(config)# router eigrp <autonomous-system-number>
+Router(config-router)# auto-summary
+```
+Jika ingin menon-aktifkan
+
+```Cisco
+Router(config)# router eigrp <autonomous-system-number>
+Router(config-router)# no auto-summary
+```
+
+Auto summary digunakan untuk meringkas banyak subnet jaringan menjadi satu jaringan, hal
+ini dilakukan agar database tidak terlalu penuh dengan data dari banyak subnet, cukup
+direspresentasikan dalam suatu subnet.
+
+Untuk melihat masing-masing jaringan yang ter-update, digunakan command:
+
+```Cisco
+Router#show ip route
+```
+
+Command ini nantinya akan menghasilkan data routing dengan beberapa kode sebagai
+berikut:
+- D – berarti rute ini berasal dari EIGRP routing update.
+- \* – rute ini merupakan default route.
+- EX – rute ini diluar EIGRP route domain.
+- 170 – merupakan AD (Administrative Distance) dari external EIGRP route.
+
+### Penggabungan dengan static route
+
+Untuk menggabungkan EIGRP route dengan static route domain dapat digunakan
+command:
+
+```Cisco
+R2(config)# ip route <ipv4> <subnet> <next-hop>
+R2(config)# router eigrp <autonomous-system-number>
+R2(config-router)# redistribute static
+```
+### Pengaturan bandwidth
+
+Untuk mengatur persentase bandwidth yang akan digunakan, dapat memakai command:
+```Cisco
+Router(config-if)# ip bandwidth-percent eigrp <autonomous-system-number> <percent>
+```
+Sebagai default, interface bandwidth yang digunakan dalam proses update EIGRP adalah
+50%.
+
+## C. Konfigurasi EIGRP untuk IPv6
+Konfigurasi EIGRP untuk IPv6 serupa dengan konfigurasi pada IPV4, hanya saja perlu
+menyesuaikan beberapa command dengan konteks IPv6. EIGRP untuk IPv6 melakukan pertukaran
+informasi routing untuk mengisi tabel routing IPv6 dengan awalan remote prefixes. EIGRP untuk
+IPv6 telah tersedia di Cisco IOS, Release 12.4 (6) T. Dalam IPv6, network address disebut sebagai
+prefix dan subnet mask disebut panjang prefix.
+EIGRP untuk IPv4 berjalan di atas network layer dari IPv4, berkomunikasi dengan EIGRP
+IPv4, dan menyebarkan hanya di rute IPv4. EIGRP untuk IPv6 memiliki fungsi yang sama dengan
+EIGRP untuk IPv4, tetapi menggunakan IPv6 sebagai network layer transport, berkomunikasi
+dengan EIGRP untuk IPv6 dan melakukan advertise rute IPv6.
+
+EIGRP untuk IPv6 juga menggunakan DUAL sebagai algoritma komputasi untuk menjamin
+jalur loop-free dan jalur cadangan loop-free seluruh domain routing.
+
+<img src={EIGRP5} />
+
+Seperti pada semua protokol routing IPv6, EIGRP untuk IPv6 memiliki proses yang terpisah
+dari IPv4-nya. EIGRP untuk IPv4 dan EIGRP untuk IPv6 masing-masing memiliki EIGRP tabel
+neighbor yg terpisah, tabel topologi EIGRP, dan tabel IP routing.
+
+### Perbedaan EIGRP pada IPv4 dan IPv6
+<img src={EIGRP6} />
