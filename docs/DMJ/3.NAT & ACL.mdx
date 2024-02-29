@@ -1,0 +1,359 @@
+---
+sidebar_position: 3
+---
+import AuthorList from "./../../src/components/Author"
+import PrivateIP from "./assets/Modul3/Private-IP.jpg"
+import NAToverview from "./assets/Modul3/NAToverview.jpg"
+import NAT from "./assets/Modul3/NAT.jpg"
+import NATexample from "./assets/Modul3/NATexample.jpg"
+import StaticNAT from "./assets/Modul3/StaticNAT.jpg"
+import StaticNATexample from "./assets/Modul3/StaticNATexample.jpg"
+import DynamicNAT from "./assets/Modul3/DynamicNAT.jpg"
+import PAT from "./assets/Modul3/PAT.jpg"
+import PATexample from "./assets/Modul3/PATexample.jpg"
+import NATdebug from "./assets/Modul3/NATdebug.jpg"
+import ACL from "./assets/Modul3/ACL.jpg"
+
+# MODUL 3: Network Address Translation & Access Control List
+
+<AuthorList authorsName={["reibar"]} />
+
+## TUJUAN PRAKTIKUM 
+
+1. Mempelajari peran dan kegunaan NAT (Network Address Translation) serta cara menkonfigurasi dan implementasi NAT pada jaringan.
+2. Mempelajari definisi, fungsi, konsep dan tata cara penggunaan ACL. 
+3. Memahami dan mampu menganalisis kondisi yang tepat dalam mengimplementasikan ACL. 
+4. Memahami bagaimana cara mengkonfigurasi ACL.
+
+## A. Network Address Translation (NAT)
+
+Network Address Translation (NAT) merupakan suatu metode untuk menghubungkan lebih dari satu host ke internet dengan menggunakan 
+satu atau sedikit alamat IP. Hal ini disebabkan oleh ketersediaan alamat IP yang terbatas, keamanan, serta kebutuhan akan fleksibilitas 
+dalam administrasi jaringan. 
+
+<img src={PrivateIP}/>
+
+<img src={NAToverview}/>
+
+Dalam penggunaan NAT, dikenal dua istilah yaitu ip inside (private) dan ip outside (public). Ip inside merupakan ip internal yang digunakan 
+pada jaringan dalam. Sedangkan ip outside merupakan ip eksternal yang digunakan untuk berhubungan dengan jaringan luar.  
+Router yang dikonfigurasi dengan NAT akan membaca ip address tujuan dari suatu paket dan mengecek apakah ip address asal paket tersebut valid 
+untuk ditranslasikan dengan menggunakan access-list yang sudah dimiliki oleh router tersebut. Ketika criteria terpenuhi, maka ip lokal dari 
+paket tersebut akan ditranslasikan ke ip global. Pemetaan ini akan disimpan di table NAT. Ketika paket sampai dan server merespon, router akan 
+memeriksa kembali table NAT dan mentranslasikan lagi ip global tersebut menjadi ip local sebelumnya. 
+
+
+<img src={NAT}/>
+
+<img src={NATexample}/>
+
+Catatan : 
+* Inside address adalah alamat yang akan ditranslate oleh NAT 
+* Outside address adalah alamat tujuan 
+* Local address adalah setiap alamat yang ada pada jaringan lokal 
+* Global address adalah setiap alamat yang ada pada porsi luar dari jaringan 
+
+### Static NAT
+
+Static NAT adalah translasi alamat satu ke satu dari alamat lokal ke global 
+
+<img src={StaticNAT}/>
+
+<img src={StaticNATexample}/>
+
+Konfigurasi terdiri dari 3 tahap:  
+1. Set mapping: 
+
+```Cisco
+Router(config)# ip nat inside source static [ip inside lokal] [ip inside global]
+```
+ 
+2. Terapkan pada interface lokal
+
+```Cisco
+Router(config)# interface [interface lokal]
+Router(config-if)# ip nat inside
+```
+ 
+3. Terapkan pada interface ke global 
+
+```Cisco
+Router(config)# interface [interface ke global]
+Router(config-if)# ip nat outside
+```
+
+### Dynamic NAT
+
+Dynamic NAT adalah translasi alamat banyak ke banyak dari alamat lokal ke global.  
+
+<img src={DynamicNAT}/>
+
+Konfigurasi terdiri dari 5 tahap:  
+1. Set POOL IP: 
+
+```Cisco
+Router(config)# ip nat pool [nama pool ip] [ip inside global(batas bawah)] [ip inside global(batas atas)] netmask [network mask]
+```
+
+2. Bind alamat network inside lokal pada ACL untuk mengizinkan translasi
+
+```Cisco
+Router(config)# access-list [nomor access list] permit [alamat network inside lokal] [source-wildcard mask]
+```
+ 
+3. Set Dynamic NAT: 
+
+```Cisco
+Router(config)# ip nat inside source list [nomor access list] pool [nama pool ip]
+```
+
+4. Terapkan pada interface local
+
+```Cisco
+Router(config)# interface [interface lokal]
+Router(config-if)# ip nat inside
+```
+
+4. Terapkan pada interface ke global 
+
+```Cisco
+Router(config)# interface [interface ke global]
+Router(config-if)# ip nat outside
+```
+
+### Port Address Translation (PAT)
+
+PAT adalah translasi alamat banyak ke satu dari alamat lokal ke global. Metode PAT diketahui juga sebagai NAT overloading 
+
+<img src={PAT}/>
+
+Konfigurasi PAT dengan overload (banyak source dengan satu ip outside) terdiri dari 3 tahap: 
+
+1. Menentukan alamat-alamat yang diizinkan untuk ditranslasikan
+
+```Cisco
+Router(config)# access-list [acl-number] permit [alamat network inside lokal] [source- wildcard mask]
+```
+	 
+2. Mengizinkan translasi dari source yang dinamis dengan menspesifikasikan access-list yang dipakai 
+
+```Cisco
+Router(config)#ip nat inside source list acl-number interface [interface ke global] overload
+```
+
+3. Terapkan pada interface internal/local
+
+```Cisco
+Router(config)#interface [interface internal/lokal]
+Router(config-if)#ip nat inside
+```
+
+4. Menspesifikasikan interface eksternal 
+
+```Cisco
+Router(config)#interface [interface eksternal/global]
+Router(config-if)#ip nat outside
+```
+
+Contoh konfigurasi PAT pada router : 
+
+<img src={PATexample}/>
+
+```Cisco
+R1(config)# access-list 1 permit 192.168.0.0 0.0.0.255
+R1(config)#ip nat inside source list 1 interface s0/0/1 overload
+R1(config)#interface s0/0/1
+R1(config-if)#ip nat outside
+R1(config)#interface s0/0/0
+R1(config-if)#ip nat inside
+```
+
+### NAT Troubleshooting & Evaluation
+
+1. Untuk melihat statistik NAT digunakan perintah: 
+
+```Cisco
+Router# show ip nat statistics
+```
+
+2. Untuk melihat translasi NAT gunakan perintah: 
+
+```Cisco
+Router# show ip nat translations
+```
+
+3. Untuk melihat apakah servis NAT sudah berjalan, dapat dilakukan dengan menggunakan konfigurasi:  
+
+```Cisco
+Router#debug ip nat
+```
+
+<img src={NATdebug}/>
+ 
+Dengan konfigurasi tersebut apabila ada paket yang melewati router dan servis NAT berhasil berjalan maka akan muncul tampilan ip yang ditranslasikan.
+ 
+4. Untuk menghapus statistik NAT digunakan perintah:
+
+```Cisco
+Router# clear ip nat statistics
+```
+
+5. Untuk menghapus seluruh translasi NAT gunakan perintah:
+
+```Cisco
+Router# clear ip nat translations *
+```
+
+## B. Access Control List (ACL)
+
+Access lists berfungsi untuk menyaring lalu lintas jaringan, dengan mengontrol apabila sebuah paket data 
+diteruskan (forward) atau diblok (drop) pada sebuah interface router. Sebuah router akan memeriksa setiap paket 
+yang melewati interface tersebut, diteruskan atau tidaknya tergantung dari kriteria access list. 
+Kriteria access list dapat memeriksa sumber datangnya paket data, tujuan paket data, protokol pada layer atas, 
+dan informasi lainnya. Karena dasar access list hanyalah sebuah set kondisi tanpa autentikasi, sangat memungkinkan 
+untuk lolosnya paket yang tidak diinginkan yang disebabkan oleh kesalahan pada konfigurasi. 
+Terdapat banyak alasan untuk mengkonfigurasi access list pada sebuah router. Contohnya adalah untuk merestriksi konten 
+routing update atau untuk mengontrol lalu lintas paket data. Salah satu alasan yang terpenting adalah untuk mengamankan 
+jaringan. Access list seharusnya digunakan untuk keamanan dasar aksesibilitas sebuah jaringan, untuk menangkal paket-paket 
+data yang bahkan tidak seharusnya masuk ke dalam sebuah jaringan. 
+
+Pada contoh di bawah ini, penggunaan access list yang memperbolehkan paket data dari host A (host A) masuk ke dalam jaringan 
+"Human Resource Network" dan melarang paket data dari host b (host b) untuk masuk. 
+
+<img src={ACL}/>
+
+### ACL Number Range
+
+
+| Protocol	                                           | Range
+| ---------------------------------------------------- | ---------------------- |
+| Standard IP 	                                       | 1-99 and 1300-1999     |
+| Extended IP	                                       | 100-199 and 2000-2699  |
+| Ethernet type code	                               | 200-299                |
+| Ethernet address	                                   | 700-799                |
+| Transparent bridging (protocol type)                 | 200-299                |
+| Transparent bridging (vendor code)                   | 700-799                |
+| Extended transparent bridging                        | 1100-1199              |
+| DECnet and extended DECnet                           | 300-399                |
+| Xerox Network Systems (XNS)                          | 400-499                |              
+| Extended XN	                                       | 500-599                |              
+| AppleTalk	                                           | 600-699                |              
+| Source-route bridging (protocol type)                | 200-299                |              
+| Source-route bridging (vendor code)                  | 700-799                |              
+| Internetwork Packet Exchange (IPX)                   | 800-899                |              
+| Extended IPX	                                       | 900-999                |              
+| IPX Service Advertising Protocol (SAP)               | 1000-1099              |       
+| Standard Virtual Integrated Network Service (VINES)  | 1-100                  |
+| Extended VINES	                                   | 101-200                |
+| Simple VINES	                                       | 201-300                |
+
+
+
+### ACL COMMAND SET 
+
+#### Standard ACL commands
+
+1. Creating a standard access-list. 
+
+WITH NUMBER 
+
+```Cisco
+Router(config)# access-list access-list-number {permit | deny} {source [source-wildcard] | host hostname | any} 
+```
+
+Example:
+
+```Cisco
+Router(config)# access-list 10 deny any 
+Router(config)# access-list 11 deny 192.168.1.0 0.0.0.255
+```
+
+WITH NAMED ACL
+
+```Cisco
+Router(config)# ip access-list standard {accesslist-name} 
+Router(config-std-nacl)# [sequence-number] {permit | deny} {source [source-wildcard] | host hostname | any} 
+```
+
+Example:
+
+```Cisco
+Router(config)# ip access-list standard admin 
+Router(config-std-nacl)# 12 permit 192.168.0.0 0.0.0.255
+```
+
+2. Applying an access-list to a specific interface. 
+
+```Cisco
+Router(config-if)# ip access-group {access-listnumber | access-list-name} {in | out} 
+```
+
+Example:
+
+```Cisco
+Router(config-if)# ip access-group admin out 
+Router(config-if)# ip access-group 10 out 
+```
+
+
+#### Extended ACL commands
+
+1. Creating an extended access-list. 
+
+```Cisco
+Router(config)# ip access-list extended {accesslist-name} 
+Router(config-ext-nacl)# [sequence-number] {permit | deny} protocol source source-wildcard destination destination-wildcard [option optionvalue] [precedence precedence] [tos tos] [fragments] [time-range time-range-name] [log] 
+```
+
+Example:
+
+```cisco
+Router(config)# ip access-list extended ACL 
+Router(config-ext-nacl)# deny tcp host 
+192.168.0.2 host 192.168.4.2 eq 80
+```
+
+Explanation of example:
+Deny traffic of TCP port 80 (HTTP) from specific source 192.168.0.2 to specific destination 
+192.168.4.2. 
+
+2. Applying an access-list to a specific interface. 
+
+```Cisco
+Router(config-if)# ip access-group {access-listnumber | access-list-name} {in | out} 
+```
+
+Example:
+
+```Cisco
+Router(config-if)# ip access-group ACL in 
+```
+
+#### ACL Troubleshooting & Evaluation
+1. Displays the contents of one or all current access lists. 
+
+``` Cisco
+Router# show access-lists [access-list-number | access-list-name] 
+```
+
+2. Displays information regarding compiled access lists, including the state of each compiled access list. 
+
+```Cisco
+Router# show access-list compiled 
+```
+
+3. Displays the contents of current IP access lists. 
+
+```Cisco
+Router# show ip access-list [access-list-number | name] 
+```
+
+4. Displays the active IP accounting or checkpointed database 
+
+```Cisco
+Router# show ip accounting [checkpoint] 
+```
+
+
+
+
