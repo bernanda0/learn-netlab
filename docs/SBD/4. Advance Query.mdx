@@ -1,0 +1,299 @@
+---
+sidebar_position: 4
+---
+
+import AuthorList from "../../src/components/Author";
+import BasicQuery from "./assets/Modul4/BasicQuery.jpg";
+import InnerJoin from "./assets/Modul3/inner_join.png";
+import LeftJoin from "./assets/Modul3/left_join.png";
+import RightJoin from "./assets/Modul3/right_join.png";
+import FullJoin from "./assets/Modul3/full_join.png";
+import NaturalJoin from "./assets/Modul3/natural_join.png";
+import CrossJoin from "./assets/Modul3/cross_join.png";
+import SelfJoin from "./assets/Modul3/self_join.png";
+import ViewsExample from "./assets/Modul3/views_example.png";
+
+# MODUL 3: Join and Views
+
+<AuthorList authorsName={["bubin"]} />
+
+## TUJUAN PRAKTIKUM
+
+1. Memahami berbagai penggunaan query untuk mengambil data dari database.
+
+## A. Basic Query
+
+Query merupakan suatu proses atau perintah untuk mengambil data dari database. Untuk mengambil data, menggunakan perintah SELECT. Dengan mengkombinasikan perintah SELECT dan tanda asterisk (*), maka akan menampilkan semua data dalam tabel.
+
+Query dilakukan dengan perintah :
+
+```SQL
+SELECT columnName1,...,columnNameN FROM tableName1,...tableNameN WHERE condition;
+```
+
+Atau untuk memilih semua data dalam suatu tabel dapat digunakan simbol asterisk * untuk mewakili semua data tersebut. Contohnya:
+
+```SQL
+SELECT * FROM weather;
+```
+<img src={BasicQuery} />
+
+## B. ALTER TABLE
+
+Perintah ‘ALTER’ digunakan untuk memodifikasi segala jenis konfigurasi dalam
+sistem basis data:
+
+<img src={AlterTable} />
+
+&nbsp;
+
+Namun pada sesi ini kita mengkhususkan untuk mempelajari ALTER TABLE untuk
+memodifikasi tabel baik itu attribute(kolom) pada sebuah relation(tabel) maupun tabel itu
+sendiri. Namun pada dasarnya konsep yang digunakan sama.
+
+'ALTER' memiliki beberapa kegunaan, yaitu:
+
+1.  Menghapus Kolom
+    Syntax yang digunakan :
+
+    ```SQL
+    ALTER TABLE table_name DROP column_name;
+    ```
+
+2.  Menambah Kolom Dengan menambahkan command ‘ADD’, kita dapat menambah
+    kolom baru. Perintah tersebut diikuti dengan nama kolom dan tipe kolom.
+    Syntax yang digunakan :
+    ```SQL
+    ALTER TABLE table_name ADD column_name column_type;
+    ```
+3.  Mengganti tipe kolom
+    Perintah ini digunakan jika kita ingin mengubah tipe dari sebuah kolom. Misalnya
+    tabel Persons ditambahkan kolom 'DateofBirth' dengan tipe date
+    Syntax yang digunakan:
+
+    ```SQL
+    ALTER TABLE table_name ALTER COLUMN column_name TYPE data_type;
+    ```
+
+4.  Mengganti Nama Kolom
+    Syntax yang digunakan :
+
+    ```SQL
+    ALTER TABLE table_name RENAME COLUMN column_name TO
+    ```
+
+5.  Mengganti Nama Table
+    ALTER juga dapat digunakan untuk mengubah nama tabel.
+    Syntax yang digunakan :
+
+    ```SQL
+    ALTER TABLE table_name RENAME TO new_table_name;
+    ```
+
+## C. JOIN
+
+Query tidak hanya dapat mengakses satu tabel, tetapi juga dapat mengakses banyak tabel dalam sekali waktu. Query juga dapat mengakses tabel yang sama dengan proses menggunakan banyak baris pada suatu waktu. Query yang mengakses banyak baris dari suatu tabel, baik tabel yang sama ataupun tidak, disebut JOIN. Berikut adalah tabel yang digunakan sebagai acuan contoh:
+
+**Tabel Persons:**
+| Person_Id | Firstname | Lastname | Guild | Location |
+|-----------|-----------|------------|---------------|----------|
+| 1 | Natsu | Dragneel | Fairy_Tail | Magnolia |
+| 2 | Lyon | Vastia | Lamia_Scale | Margaret |
+| 3 | Jellal | Fernandes | Crime_Sorciere| Mobile |
+
+**Tabel Orders:**
+| Order_Id | OrderNo | Person_Id |
+|----------|---------|-----------|
+| 1 | 42356 | 3 |
+| 2 | 58763 | 3 |
+| 3 | 86454 | 1 |
+| 4 | 24356 | 1 |
+| 5 | 71714 | 10 |
+
+&nbsp;
+
+Tipe-tipe dari JOIN adalah sebagai berikut:
+
+### 1. INNER JOIN (JOIN)
+
+    Keyword INNER JOIN menampilkan row ketika paling tidak ada satu kesamaan dari kedua tabel.
+
+    Syntax yang digunakan:
+    ```SQL
+    SELECT column_name(s)FROM table_name1
+    INNER JOIN table_name2
+    ON table_name1.column_name=table_name2.column_name;
+    ```
+    Contoh penggunaan:
+    ```SQL
+    SELECT persons.person_id, firstname, lastname, orderno
+    FROM persons
+    INNER JOIN orders
+    ON persons.person_id = orders.person_id;
+    ```
+    Hasil:
+    <img src={InnerJoin}/>
+    &nbsp;
+
+    Keyword INNER JOIN menampilkan row pada dua tabel yang memiliki kesamaan sesuai statement pada klausa ON (person_id). Value person_id = 2 pada table **Persons** tidak matching dengan person_id manapun pada tabel **Orders**, sehingga row yang bersangkutan tidak ditampilkan. Hal yang sama berlaku pada value person_id = 10 pada tabel **Orders**.
+
+### 2. LEFT OUTER JOIN (LEFT JOIN)
+
+    Keyword LEFT OUTER JOIN menampilkan semua row yang berada pada tabel di sebelah kiri keyword (table_name1), walaupun tidak match dengan row manapun pada tabel di sebelah kanan keyword (table_name2).
+
+    Syntax yang digunakan:
+    ```SQL
+    SELECT column_name(s)
+    FROM table_name1
+    LEFT OUTER JOIN table_name2
+    ON table_name1.column_name=table_name2.column_name;
+    ```
+
+    Contoh penggunaan:
+    ```SQL
+    SELECT persons.person_id, firstname, lastname, orderno
+    FROM persons
+    LEFT OUTER JOIN orders
+    ON persons.person_id = orders.person_id;
+    ```
+
+    Hasil:
+    <img src={LeftJoin}/>
+    &nbsp;
+
+    Pada contoh di atas, tabel sebelah kiri adalah **PERSONS** dan tabel sebelah kanan adalah Orders. Seluruh row pada tabel **PERSONS** ditampilkan, walaupun person_id = 2 tidak matching dengan person_id manapun pada tabel **Orders**.
+
+### 3. RIGHT OUTER JOIN (RIGHT JOIN)
+
+    Keyword RIGHT OUTER JOIN menampilkan semua row yang berada pada tabel di sebelah kanan keyword (table_name2), walaupun tidak match dengan row manapun pada tabel di sebelah kiri keyword (table_name1). Syntax yang digunakan:
+
+    Syntax yang digunakan:
+    ```SQL
+    SELECT column_name(s) FROM table_name1
+    RIGHT OUTER JOIN table_name2
+    ON table_name1.column_name=table_name2.column_name;
+    ```
+
+    Contoh penggunaan:
+    ```SQL
+    SELECT persons.person_id, firstname, lastname, orderno FROM persons
+    RIGHT OUTER JOIN orders
+    ON persons.person_id = orders.person_id;
+    ```
+
+    Hasil:
+    <img src={RightJoin}/>
+    &nbsp;
+
+    Pada contoh di atas, tabel sebelah kiri adalah **Persons** dan tabel sebelah kanan adalah **Orders**. Seluruh row pada table **Orders** ditampilkan, walaupun person_id = 10 tidak matching dengan person_id manapun pada tabel **Persons**.
+
+### 4. FULL OUTER JOIN
+
+    Keyword FULL OUTER JOIN akan menampilkan semua row ketika ada satu kesamaan pada tabel- tabel yang bersangkutan. Syntax yang digunakan:
+
+    Syntax yang digunakan:
+    ```SQL
+    SELECT column_name(s) FROM table_name1
+    FULL OUTER JOIN table_name2
+    ON table_name1.column_name=table_name2.column_name;
+    ```
+
+    Contoh penggunaan:
+    ```SQL
+    SELECT persons.person_id, firstname, lastname, orderno FROM persons
+    FULL OUTER JOIN orders
+    ON persons.person_id = orders.person_id;
+    ```
+
+    Hasil:
+    <img src={FullJoin}/>
+    &nbsp;
+
+    FULL OUTER JOIN menampilkan seluruh row dari tabel sebelah kiri **Persons** dan tabel sebelah kanan Orders. Jika ada row dari tabel **Persons** yang tidak match dengan row dari tabel **Orders** (atau sebaliknya), row tersebut akan tetap ditampilkan.
+
+### 5. NATURAL JOIN
+
+    Keyword NATURAL JOIN digunakan agar kolom dengan nama yang sama dari dua tabel berbeda hanya ditampilkan salah satunya. Syntax yang digunakan:
+
+    Syntax yang digunakan:
+    ```SQL
+    SELECT * FROM table1 NATURAL JOIN table2;
+    ```
+
+    Contoh penggunaan:
+    ```SQL
+    SELECT * FROM persons NATURAL JOIN orders;
+    ```
+
+    Hasil:
+    <img src={NaturalJoin}/>
+    &nbsp;
+
+### 6. CROSS JOIN
+
+    Keyword CROSS JOIN menghasilkan set row dimana jumlah row dari tabel pertama dikalikan dengan jumlah row dari tabel kedua, hasil semacam ini biasa disebut dengan Cartesian Product. Syntax yang digunakan:
+
+
+    Syntax yang digunakan:
+    ```SQL
+    SELECT column_name(s)
+    FROM table_name1 CROSS JOIN table_name2;
+    ```
+
+    Contoh penggunaan:
+    ```SQL
+    SELECT firstname, lastname, orderno FROM persons
+    CROSS JOIN orders;
+    ```
+
+    Hasil:
+    <img src={CrossJoin}/>
+    &nbsp;
+
+### 7. SELF JOIN
+
+    Selain menggabungkan antara dua tabel, kita juga dapat melakukan JOIN antara tabel dengan dirinya sendiri. Statement yang dibuat memerlukan trik tersendiri. Misalkan pada tabel Orders kita ingin melihat semua record order_id dan orderno sebanyak dua kali. Percobaan ini dilakukan dengan tujuan mencoba menggunakan query ini secara sederhana. Namun dalam prakteknya, diperlukan kondisi untuk menentukan kondisi yang diinginkan administrator yang akan dipelajari pada modul berikutnya.
+
+    Syntax yang digunakan:
+    ```SQL
+    SELECT O1.order_id AS o_id1, O1.orderno AS orderno1, O2.order_id AS o_id2, O2.orderno AS orderno2 FROM orders O1, orders O2;
+    ```
+
+    Hasil:
+    <img src={SelfJoin}/>
+    &nbsp;
+
+## D. VIEWS
+
+VIEWS digunakan agar pengguna tidak perlu mengetikkan query secara berulang-ulang untuk mendapatkan data yang sama. Kita dapat memberi nama query dengan view, misalnya:
+
+```SQL
+CREATE VIEW ordersrange AS
+SELECT O1.order_id AS o_id1, O1.orderno AS orderno1, O2.order_id AS o_id2, O2.orderno AS orderno2 FROM orders O1, orders O2;
+SELECT * FROM ordersrange; /*untuk menampilkan view 'withinrange'*/
+CREATE OR REPLACE VIEW ordersrange AS ... ; /*untuk mengupdate view*/
+```
+
+Contoh **VIEW** diatas digunakan untuk menyimpan hasil penggabungan tabel menggunakan **SELF JOIN**, namun penggunaannya tidak terbatas pada jenis penggabungan tersebut. Pada dasarnya, query **VIEW** difungsikan untuk memudahkan administrator untuk menyimpan penggabungan tabel agar tidak perlu mengulang proses penggabungan kembali saat dibutuhkan di masa yang akan datang.
+
+Syntax yang digunakan:
+
+```SQL
+CREATE VIEW leftjoin AS
+SELECT persons.person_id, firstname, lastname, orderno FROM persons
+LEFT OUTER JOIN orders
+ON persons.person_id = orders.person_id;
+```
+
+Contoh Penggunaan:
+
+```SQL
+SELECT * from leftjoin;
+```
+
+Hasil:
+
+<img src={ViewsExample} />
+&nbsp;
+
+Penggunaan **VIEW** yang efisien adalah kunci dari desain basis data SQL yang baik. **VIEW** membantu pengguna untuk meng-enkapsulasi detail dari struktur tabel, yang akan terus berkembang semakin besar, dengan antarmuka yang konsisten.
