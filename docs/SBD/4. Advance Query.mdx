@@ -1,0 +1,235 @@
+---
+sidebar_position: 4
+---
+
+import AuthorList from "../../src/components/Author";
+import BasicQuery from "./assets/Modul4/BasicQuery.jpg";
+import AS from "./assets/Modul4/AS.png";
+import GroupBy from "./assets/Modul4/GroupBy.png";
+import OrderBy from "./assets/Modul4/OrderBy.png";
+import Distinct from "./assets/Modul4/Distinct.png";
+import Naruto from "./assets/Modul4/naruto.png";
+import Meme1 from "./assets/Modul4/Meme1.png";
+import Meme2 from "./assets/Modul4/self_join.png";
+
+# MODUL 4: Advance Query and Subquery
+
+<AuthorList authorsName={["bubin"]} />
+
+<img src={Naruto} />
+
+## TUJUAN PRAKTIKUM
+
+1. Memahami berbagai penggunaan query untuk mengambil data dari database.
+
+## A. Basic Query
+
+Query merupakan suatu proses atau perintah untuk mengambil data dari database. Untuk mengambil data, menggunakan perintah SELECT. Dengan mengkombinasikan perintah SELECT dan tanda asterisk (*), maka akan menampilkan semua data dalam tabel.
+
+Query dilakukan dengan perintah :
+
+```SQL
+SELECT columnName1,...,columnNameN FROM tableName1,...tableNameN WHERE condition;
+```
+
+Atau untuk memilih semua data dalam suatu tabel dapat digunakan simbol asterisk * untuk mewakili semua data tersebut. Contohnya:
+
+```SQL
+SELECT * FROM weather;
+```
+<img src={BasicQuery} />
+
+## B. Advance Query
+
+Selain query biasa yang sudah digunakan di modul sebelumnya, terdapat juga beberapa query yang tergolong 'advance' untuk dipelajari, antara lain:
+
+&nbsp;
+
+1.  AS
+    AS digunakan untuk membuat suatu kolom dengan nama alias. 
+
+    Syntax yang digunakan :
+
+    ```SQL
+    SELECT city, (temp_hi + temp_lo)/2 AS temp_avg, date FROM weather;
+    ```
+
+    Hasilnya:
+    <img src={AS} />
+
+2.  GROUP BY
+
+    GROUP BY digunakan untuk mengelompokkan baris dalam suatu tabel yang memiliki nilai yang sama. 
+    Syntax yang digunakan :
+    ```SQL
+    SELECT select List
+    FROM ...
+    [WHERE ...]
+    GROUP BY grouping_column_reference [, grouping_column reference]...
+    ```
+    Contoh: 
+    ```SQL
+    SELECT name, SUM(SALARY), FROM COMPANY GROUP BY NAME ORDER BY NAME;
+    ```
+    Hasilnya:
+    <img src={GroupBy} />
+
+3.  HAVING
+    HAVING digunakan untuk mengeliminasi data yang diinginkan, fungsinya sama seperti WHERE. Syntax-nya adalah
+
+    Syntax yang digunakan:
+    ```SQL
+    SELECT select List
+    FROM ...
+    [WHERE ...]
+    GROUP BY ,,,
+    HAVING 
+    ```
+    Contoh: 
+    ```SQL
+    SELECT product_id, SUM(quantity_sold) AS total_sold
+    FROM sales
+    GROUP BY product_id
+    HAVING SUM(quantity_sold) > 100;
+    ```
+
+
+4.  ORDER BY
+    ORDER BY digunakan untuk mengurutkan data secara ascending atau descending. 
+    
+    Syntax yang digunakan :
+    ```SQL
+    SELECT column1, column2, ...
+    FROM table_name
+    ORDER BY column1, column2, ... ASC|DESC;
+    ```
+    Contoh:
+    ```SQL
+    SELECT * FROM weather ORDER BY city;
+    ```
+    Hasilnya:
+    <img src={OrderBy} />
+
+
+5.  DISTINCT
+    DISTINCT digunakan untuk mengeliminasi data yang mempunyai nilai yang sama. 
+
+    Syntax yang digunakan :
+
+    ```SQL
+    SELECT DISTINCT column1, column2, ...
+    FROM table_name;
+    ```
+
+    Contoh:
+    ```SQL
+    SELECT DISTINCT city FROM weather;
+    ```
+    Hasilnya:
+    <img src={Distinct} />
+
+6.  LIKE
+    ALTER juga dapat digunakan untuk mengubah nama tabel.
+    Syntax yang digunakan :
+
+    ```SQL
+    ALTER TABLE table_name RENAME TO new_table_name;
+    ```
+
+## C. AGGREGATE
+
+Fungsi aggregate dalam SQL merujuk kepada serangkaian operasi matematis atau statistik yang digunakan untuk merangkum data dalam sebuah kueri. Operasi-operasi ini mengambil sekelompok nilai, seperti dalam sebuah kolom, dan menghasilkan nilai tunggal yang mewakili informasi agregat dari kelompok tersebut.
+
+Fungsi aggregate juga dapat dikombinasikan dengan query-query lainnya.
+
+Terdapat beberapa jenis aggregate, yaitu:
+
+&nbsp;
+
+1.  MIN & MAX
+    MIN & MAX digunakan untuk mendapatkan nilai terkecil dan terbesar dalam sebuah kolom.
+
+    Syntax yang digunakan :
+
+    ```SQL
+    SELECT MIN(column_name)
+    FROM table_name
+    WHERE condition;
+    ```
+    ```SQL
+    SELECT MAX(column_name)
+    FROM table_name
+    WHERE condition;
+    ```
+
+2.  COUNT
+    COUNT digunakan untuk menghitung jumlah baris dalam sebuah hasil atau jumlah nilai non-null dalam sebuah kolom tertentu.
+
+    Syntax yang digunakan :
+
+    ```SQL
+    SELECT COUNT(column_name)
+    FROM table_name
+    WHERE condition;
+    ```
+
+    Contoh lain:
+    ```SQL
+    SELECT COUNT(ProductID)
+    FROM Products
+    WHERE Price > 20;
+    ```
+
+3.  SUM
+    SUM digunakan untuk menghitung jumlah dari nilai-nilai dalam sebuah kolom numerik.
+
+    Syntax yang digunakan :
+
+    ```SQL
+    SELECT SUM(column_name)
+    FROM table_name
+    WHERE condition;
+    ```
+
+    Contoh lain:
+    ```SQL
+    SELECT SUM(Quantity)
+    FROM OrderDetails
+    WHERE ProductId = 11;
+    ```
+
+4.  AVG
+    AVG digunakan untuk menghitung rata-rata dari nilai-nilai dalam sebuah kolom numerik.
+
+    Syntax yang digunakan :
+
+    ```SQL
+    SELECT AVG(column_name)
+    FROM table_name
+    WHERE condition;
+    ```
+
+    Contoh lain:
+    ```SQL
+    SELECT AVG(Price)
+    FROM Products
+    WHERE CategoryID = 1;
+    ```
+
+Selain 5 aggregate di atas, masih ada aggregate lain seperti STDDEV dan VARIANCE.
+
+.
+.
+.
+.
+.
+.
+.
+.
+.
+.
+
+<img src={Meme1} />
+<img src={Meme2} />
+
+**Yang pertama kali mengirim pesan ke discord aslab RS, akan dapat +5 di modul 4**
