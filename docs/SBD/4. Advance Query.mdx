@@ -24,7 +24,7 @@ import Meme2 from "./assets/Modul4/Meme2.jpg";
 
 ## A. Basic Query
 
-Query merupakan suatu proses atau perintah untuk mengambil data dari database. Untuk mengambil data, menggunakan perintah SELECT. Dengan mengkombinasikan perintah SELECT dan tanda asterisk (*), maka akan menampilkan semua data dalam tabel.
+Query merupakan suatu proses atau perintah untuk mengambil data dari database. Untuk mengambil data, menggunakan perintah SELECT. Dengan mengkombinasikan perintah SELECT dan tanda asterisk (\*), maka akan menampilkan semua data dalam tabel.
 
 Query dilakukan dengan perintah :
 
@@ -32,11 +32,12 @@ Query dilakukan dengan perintah :
 SELECT columnName1,...,columnNameN FROM tableName1,...tableNameN WHERE condition;
 ```
 
-Atau untuk memilih semua data dalam suatu tabel dapat digunakan simbol asterisk * untuk mewakili semua data tersebut. Contohnya:
+Atau untuk memilih semua data dalam suatu tabel dapat digunakan simbol asterisk \* untuk mewakili semua data tersebut. Contohnya:
 
 ```SQL
 SELECT * FROM weather;
 ```
+
 <img src={BasicQuery} />
 
 ## B. Advance Query
@@ -46,7 +47,7 @@ Selain query biasa yang sudah digunakan di modul sebelumnya, terdapat juga beber
 &nbsp;
 
 1.  AS
-    AS digunakan untuk membuat suatu kolom dengan nama alias. 
+    AS digunakan untuk membuat suatu kolom dengan nama alias.
 
     Syntax yang digunakan :
 
@@ -55,37 +56,46 @@ Selain query biasa yang sudah digunakan di modul sebelumnya, terdapat juga beber
     ```
 
     Hasilnya:
+
     <img src={AS} />
 
 2.  GROUP BY
 
-    GROUP BY digunakan untuk mengelompokkan baris dalam suatu tabel yang memiliki nilai yang sama. 
+    GROUP BY digunakan untuk mengelompokkan baris dalam suatu tabel yang memiliki nilai yang sama.
     Syntax yang digunakan :
+
     ```SQL
     SELECT select List
     FROM ...
     [WHERE ...]
     GROUP BY grouping_column_reference [, grouping_column reference]...
     ```
-    Contoh: 
+
+    Contoh:
+
     ```SQL
     SELECT name, SUM(SALARY), FROM COMPANY GROUP BY NAME ORDER BY NAME;
     ```
+
     Hasilnya:
+
     <img src={GroupBy} />
 
 3.  HAVING
     HAVING digunakan untuk mengeliminasi data yang diinginkan, fungsinya sama seperti WHERE. Syntax-nya adalah
 
     Syntax yang digunakan:
+
     ```SQL
     SELECT select List
     FROM ...
     [WHERE ...]
     GROUP BY ,,,
-    HAVING 
+    HAVING
     ```
-    Contoh: 
+
+    Contoh:
+
     ```SQL
     SELECT product_id, SUM(quantity_sold) AS total_sold
     FROM sales
@@ -93,26 +103,29 @@ Selain query biasa yang sudah digunakan di modul sebelumnya, terdapat juga beber
     HAVING SUM(quantity_sold) > 100;
     ```
 
-
 4.  ORDER BY
-    ORDER BY digunakan untuk mengurutkan data secara ascending atau descending. 
-    
+    ORDER BY digunakan untuk mengurutkan data secara ascending atau descending.
+
     Syntax yang digunakan :
+
     ```SQL
     SELECT column1, column2, ...
     FROM table_name
     ORDER BY column1, column2, ... ASC|DESC;
     ```
+
     Contoh:
+
     ```SQL
     SELECT * FROM weather ORDER BY city;
     ```
+
     Hasilnya:
+
     <img src={OrderBy} />
 
-
 5.  DISTINCT
-    DISTINCT digunakan untuk mengeliminasi data yang mempunyai nilai yang sama. 
+    DISTINCT digunakan untuk mengeliminasi data yang mempunyai nilai yang sama.
 
     Syntax yang digunakan :
 
@@ -122,10 +135,13 @@ Selain query biasa yang sudah digunakan di modul sebelumnya, terdapat juga beber
     ```
 
     Contoh:
+
     ```SQL
     SELECT DISTINCT city FROM weather;
     ```
+
     Hasilnya:
+
     <img src={Distinct} />
 
 6.  LIKE
@@ -156,6 +172,7 @@ Terdapat beberapa jenis aggregate, yaitu:
     FROM table_name
     WHERE condition;
     ```
+
     ```SQL
     SELECT MAX(column_name)
     FROM table_name
@@ -174,6 +191,7 @@ Terdapat beberapa jenis aggregate, yaitu:
     ```
 
     Contoh lain:
+
     ```SQL
     SELECT COUNT(ProductID)
     FROM Products
@@ -192,6 +210,7 @@ Terdapat beberapa jenis aggregate, yaitu:
     ```
 
     Contoh lain:
+
     ```SQL
     SELECT SUM(Quantity)
     FROM OrderDetails
@@ -210,6 +229,7 @@ Terdapat beberapa jenis aggregate, yaitu:
     ```
 
     Contoh lain:
+
     ```SQL
     SELECT AVG(Price)
     FROM Products
@@ -232,4 +252,6 @@ Selain 5 aggregate di atas, masih ada aggregate lain seperti STDDEV dan VARIANCE
 <img src={Meme1} />
 <img src={Meme2} />
 
+
 **Yang pertama kali mengisi https://link.netlabdte.com/EasterEggDaste  , akan dapat +5 di modul 4 ^_^**
+

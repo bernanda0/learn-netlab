@@ -17,7 +17,7 @@ const authorsData = {
     url: "https://github.com/RafieAmandio",
     image_url: "https://github.com/RafieAmandio.png",
   },
-  bintang: {
+  bubin: {
     name: "Bintang [RS]",
     title: "Netlab Assistant 2023/2024",
     url: "https://github.com/marsyuma",
