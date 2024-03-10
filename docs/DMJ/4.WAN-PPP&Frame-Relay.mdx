@@ -1,0 +1,182 @@
+---
+sidebar_position: 4
+---
+
+# MODUL 4: Wide Area Network (WAN), Point-to-Point Protocol (PPP), & Frame Relay
+
+import AuthorList from "./../../src/components/Author"
+import WANequipment from "./assets/Modul4/WANequipment.jpg"
+import equipment1 from "./assets/Modul4/equipment1.jpg"
+import equipment2 from "./assets/Modul4/equipment2.jpg"
+import CircuitSwitched from "./assets/Modul4/CircuitSwitched.png"
+import PacketSwitched from "./assets/Modul4/PacketSwitched.png"
+import CHAP from "./assets/Modul4/CHAP.png"
+import PAP from "./assets/Modul4/PAP.png"
+import OSImodel from "./assets/Modul4/OSIModel.png"
+import PPPtopology from "./assets/Modul4/PPPtopology.png"
+
+<AuthorList authorsName={["reibar"]} />
+
+## TUJUAN PRAKTIKUM 
+
+1. Memahami pengertian, tujuan, dan fungsi dari WAN
+2. Memahami operasi WAN dan enkapsulasi WAN
+3. Memahami cara kerja PPP
+4. Memahami proses konfigurasi dan verifikasi PPP
+5. Memahami proses autentikasi PPP
+6. Memahami cara kerja Frame Relay
+7. Memahami proses konfigurasi dan verifikasi Frame Relay
+
+## A. Wide Area Network (WAN)
+
+Wide Area Network (WAN) adalah komunikasi yang dilakukan antara sender 
+dengan receiver yang secara geografi terpisah jauh. Terdapat bermacam-macam 
+teknologi WAN, yang membedakan hanya speed dan cost. WAN menghubungkan jaringan 
+yang letaknya berjauhan menggunakan jasa provider.
+
+### Beberapa Istilah dalam WAN
+
+**Customer-Premises Equipment (CPE)** adalah peralatan jaringan yang letaknya di sisi
+customer dan dihubungkan dengan local loop menuju Central Office.
+Di dalam cakupan suatu CPE, terdapat **Data Terminal Equipment (DTE)** dan **Data Communications Equipment (DCE)**.
+
+DCE adalah perangkat yang digunakan untuk berkomunikasi dengan ISP atau penyedia WAN, 
+sedangkan DTE adalah perangkat yang menghubungkan LAN milik customer ke DCE.
+Kemudian, **Demarcation point** adalah titik yang menandakan batas berakhirnya sebuah CPE, 
+dan mulai beralih ke sisi ISP. Lebih lengkapnya dapat dilihat pada gambar berikut.
+
+<img src={WANequipment}/>
+
+<img src={equipment1}/>
+
+<img src={equipment2}/>
+
+WAN bekerja pada layer 1 dan 2 OSI layer. Berikut merupakan keterangannya:
+
+* Layer 1 (physical)
+    * EIA/TIA-232
+    * EIA/TIA-449/ 530
+    * EIA/TIA-612/ 613: High Speed Serial Interface (HSSI)
+    * V.35    
+
+* Layer 2 (data-link)
+    * Circuit Switched
+    * Packet Switched
+    * Leased Line
+
+<img src={OSImodel}/>    
+
+### Circuit Switched
+
+Merupakan jenis koneksi WAN dimana pembentukan koneksi dilakukan dengan men-dial 
+sebuah nomor, contohnya adalah nomor telepon. Setelah koneksi tercipta, barulah 
+paket dapat dikirimkan. 
+Contohnya: Integrated Service Digital Network (ISDN).
+
+<img src={CircuitSwitched}/>
+
+### Packet Switched
+
+Merupakan jenis koneksi WAN dimana paket dibentuk, dikirimkan, dan diterima 
+dalam frame atau cell, hubungannya tidak menggunakan nomor yang di-dial, melainkan 
+memakai identifier untuk mengirim paket ke tujuan.
+Contoh: Frame Relay dan Multiprotocol Label Switching (MPLS)
+
+<img src={PacketSwitched}/>
+
+### Leased Line
+
+Private dedicated point-to-point connection, biasanya menggunakan encapsulation PPP atau HDLC.
+
+## Point-to-Point Protocol (PPP)
+
+Point-to-Point Protocol (PPP) adalah sebuah protokol enkapsulasi paket jaringan yang
+banyak digunakan pada komunikasi WAN. PPP dapat mendukung synchronous maupun
+asynchronous communication. Data di encode ke dalam Non Return to Zero Inverted
+(NRZI), High Density Binary 3 (HDB3), dan Alternative Mark Invertion (AMI). Pada WAN,
+terdapat istilah demarcation point yang merupakan batas tanggung jawab antara provider
+dengan customer.
+
+### Komponen PPP:
+
+*  High-Level Data Link Control (HDLC) sebagai protokol basis untuk enkapsulasi
+datagram melalui serial link pada point-to-point connection
+*  Link Control Protocol (LCP) untuk membangun, melakukan konfigurasi, dan menguji
+koneksi data link
+*  Sekumpulan Network Control Protocol (NCP) untuk menetapkan dan mengkonfigurasi
+layer jaringan yang berbeda
+
+PPP memiliki dua sub layer utama yaitu:
+* Link Control Protocol (LCP):
+LCP merupakan first-phase protocol yang membentuk koneksi pada PPP. LCP frame
+terbagi menjadi 3 macam, yaitu:
+    * Link-establishment frame : membentuk koneksi.
+    * Link-termination : memutus koneksi.
+    * Link-maintenance : mempertahankan koneksi.
+
+* Network Control Protocol (NCP):
+NCP merupakan second-phase protocol yang mengatur hal-hal yang dibutuhkan
+terkait dengan Network Layer seperti permintaan IP address.
+
+**Contoh konfigurasi PPP dengan CHAP**
+* Topologi:
+
+<img src={PPPtopology}/>
+
+* Konfigurasi:
+    * Router Customer
+```Cisco
+Customer(config)#int s0/0/0
+Customer(config-if)#encapsulation ppp
+Customer(config-if)#ppp authentication chap
+Customer(config-if)#username ISP secret cisco
+```
+
+    * Router ISP
+```Cisco
+ISP(config)#int s0/0/0
+ISP(config-if)#encapsulation ppp
+ISP(config-if)#ppp authentication chap
+ISP(config-if)#username Customer secret cisco
+```
+
+sesimpel itu wkwkwk
+
+
+### Password Authentication Protocol (PAP)
+
+PAP adalah salah satu authentication protocol pada PPP. PAP menggunakan metode
+two-way handshake dalam proses autentikasinya, dengan fase sebagai berikut:
+
+PAP merupakan authentication protocol yang tidak menggunakan proses enkripsi, sehingga
+dapat memiliki kekurangan-kekurangan dalam segi keamanannya.
+
+<img src={PAP}/>
+
+### Challenge Handshake Authentication Protocol (CHAP)
+
+CHAP authentication protocol lainnya yang ada pada PPP. Berbeda dengan PAP, CHAP
+melakukan proses autentikasi dengan metode three-way handshake. CHAP memakai teknik
+enkripsi dalam prosesnya, sehingga lebih aman dibandingkan dengan PAP. Berikut
+merupakan fase dari CHAP:
+
+<img src={CHAP}/>
+
+
+## Frame Relay
+
+Frame Relay adalah salah satu enkapsulasi yang digunakan dalam proses pengiriman
+informasi melalui WAN, yang dilakukan dengan membagi informasi menjadi beberapa frame
+atau packet. Masing-masing frame mempunyai alamat yang digunakan oleh jaringan untuk
+menentukan tujuan. Frame-frame akan melewati switch dalam jaringan Frame Relay dan
+dikirimkan melalui sesuatu yang disebut dengan “virtual circuit” hingga sampai pada tujuan.
+Frame Relay bersifat connection-oriented. Berikut merupakann jenis jalur pada virtual circuit:
+
+* **Permanent VC (PVC)**, merupakan jalur tetap (fixed). PVC adalah koneksi permanen
+seperti “dedicated point-to-point circuit”
+
+* **Switched VC (SVC)**, merupakan koneksi sementara yang digunakan ketika terjadi
+transfer data antar perangkat DTE melewati jaringan Frame Relay. SVC tidak bersifat
+fixed dan jalur akan dibuat ulang bila waktunya habis
+
+Contoh konfigurasi frame relay akan didemonstrasikan lewat video, tungguin yaa :D
