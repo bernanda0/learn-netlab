@@ -1,0 +1,195 @@
+---
+sidebar_position: 7
+---
+
+# MODUL 7: Network Monitoring
+
+import AuthorList from "./../../src/components/Author";
+
+import SysLogConfig1 from "./assets/Modul7/SysLogConfig1.png";
+import SysLogConfig2 from "./assets/Modul7/SysLogConfig2.png";
+import SNMPv2cProtocol from "./assets/Modul7/SNMPv2cProtocol.png";
+import SNMPConfig from "./assets/Modul7/SNMPConfig.png";
+import NetflowTable from "./assets/Modul7/NetflowTable.png";
+import NetflowEnabledDevice from "./assets/Modul7/NetflowEnabledDevice.png";
+import NetflowTableWithTiming from "./assets/Modul7/NetflowTableWithTiming.png";
+import CommercialNetflow from "./assets/Modul7/CommercialNetflow.png";
+import FreewareNetflow from "./assets/Modul7/FreewareNetflow.png";
+import NetflowVisualization from "./assets/Modul7/NetflowVisualization.png";
+import NetflowConfiguration from "./assets/Modul7/NetflowConfiguration.png";
+import NetflowConfiguration2 from "./assets/Modul7/NetflowConfiguration2.png";
+import NetflowConfiguration3 from "./assets/Modul7/NetflowConfiguration3.png";
+import NetflowConfiguration4 from "./assets/Modul7/NetflowConfiguration4.png";
+
+<AuthorList authorsName={["dito"]} />
+
+## TUJUAN PRAKTIKUM
+
+1. Understand Syslog Operation
+2. Configures Syslog to compile message
+3. Configures SNMP to compile message
+4. Describe Netflow operation
+5. Configures Netflow data
+6. Examine sample Netflow data
+
+## A. Syslog
+
+Syslog meruapakan sebuah metode yang digunakan untuk melakukan logging dan
+alerting. Umumnya pada sebuah perangkat jaringan, syslog akan mengirimkan data log ke
+server tertentu dan disimpan di server tersebut. Dari data log ini kita dapat menganalisa apa
+saja yang terjadi pada jaraingan. Untuk dapat bekerja sebuah server Syslog harus dikonfigurasi
+untuk listen data syslog dan menerimanya jika ada log message yang masuk.
+
+- **Berikut cara konfigurasi syslog pada cisco:**
+
+<img src={SysLogConfig1} />
+<img src={SysLogConfig2} />
+
+## B. SNMP
+
+SNMP(Simple Network Management Protocol) merupakan sebuah application layer
+protokol standar yang digunakan untuk melakukan monitoring jaringan. Dengan SNMP kita
+dapat memonitor banyak aspek jaringan yang kita butuhkan seperti System up time, CPU
+usage, disk usage, dan banyak lagi.
+
+### Struktur SNMP
+
+1. **SNMP Manager**
+
+   SNMP manager merupakan sebuah software yang umumnya terinstall
+   pada computer admin atau server yang terhubung ke jaringan. Secara umum
+   SNMP manager berperan sebagai pusat monitoring dari sebuah jaringan
+   berdasarkan data yang dikumpulkan oleh SNMP Agent.
+   Berikut fungsi lengkap SNMP Manager:
+
+   - Fault Monitoring
+   - Configuration Control
+   - Accounting Monitoring
+   - Performance Monitoring
+   - Security Control
+
+2. **SNMP Agent**
+
+   SNMP agent merupakan software yang berjalan pada node atau host
+   jaringan yang akan dimonitor. Node dapat berupa PC, router, switch, printer,
+   dan banyak lagi.
+
+3. **SNMP MIB (Management Information Base)**
+
+   MIB merupakan object yang dimonitor oleh protocol SNMP, seperti penggunaan disk,
+   waktu aktif, ping, penggunaan CPU, dan lainnya.
+
+### SNMP Message
+
+SNMP manager dan SNMP agent berkomunikasi melalui beberapa tipe SNMP message, yaitu:
+
+- **SNMP GET**: Dikirim oleh SNMP Manager untuk mengambil data atau MIB Object.
+- **SNMP GET-NEXT**: Dikirim oleh SNMP Manager untuk mengambil data atau MIB Object selanjutnya.
+- **SNMP GET-RESPONSE**: Dikirim oleh SNMP agent untuk merespon GET message sesuai MIB object yang diminta.
+- **SNMP SET**: Dikirim oleh SNMP Manager ke SNMP agent untuk menset nilai dari MIB object tertentu.
+- **SNMP TRAP**: Dikirim oleh SNMP Agent ke SNMP Manager untuk memberitahukan ada alert atau aktifitas tertentu meliputi alert activity.
+
+<br />
+
+<img src={SNMPv2cProtocol} />
+
+- **Berikut cara konfigurasi SNMP pada cisco:**
+
+<img src={SNMPConfig} />
+
+## Netflow
+
+Netflow merupakan salah satu fitur pada perangkat jaringn yang memungkinkan kita
+untuk menganalisa trafik data pada suatu jaringan. Netflow tidak lain adalah sekumpulan record
+paket dengan struktur data yang sama yang masuk dan keluar dari sebuah interface. Dari
+sekumpulan paket inilah kita dapat melakukan monitoring dan analisa terhadap trafik yang
+terjadi pada jaringan kita.
+Netflow dapat bekerja pada perangkat jaringan apapun yang support Netflow. Netflow
+diterapkan pada level interface dari sebuah perangkat jaringan. Sehingga pada sebuah
+perangkat jaringan dapat memiliki Netflow monitoring tersendiri. Untuk menghemat resource
+paket Netflow memiliki waktu expiration yang ditentukan saat konfigurasi Netflow pada suatu
+interface.
+
+**Paket yang termonitor pada Netflow akan dikumpulkan dalam sebuah tabel Netflow
+seperti:**
+
+<img src={NetflowTable} />
+Untuk dapat melakukan analisa terhadap jaringan dengan paket-paket Netflow, terdapat
+dua cara yang dapat dilakukan yaitu: melihat tabel Netflow packet melalui CLI atau
+mengexport data Netflow ke sebuah Collector. Collector umumnya berupa PC atau host
+yang terhubung ke jaringan yang dimonitor. Untuk mempermudah proses analisa banyak
+tools yang digunakan untuk memetakan paket Netflow dalam bentuk visualisasi yang
+lebih baik seperti grafik.
+
+### **Manfaat atau kegunaan Netflow:**
+
+- Monitor trafik jaringan berdasarkan source dan destination paketnya.
+- Untuk mendeteksi dan mencegah serangan dan anomali pada trafik jaringan.
+- Untuk menghindari kemacetan lalu lintas dengan mendeteksi lalu lintas tinggi dari sebuah host.
+- Untuk menganalisis rencana penggunaan bandwidth di masa mendatang.
+- Troubleshoot jika terjadi gangguan pada jaringan.
+- Mengkonfirmasi apakah bandwidth telah dialokasikan sesuai dengan QoS jaringan.
+
+### **Dampak penggunaan Netflow:**
+
+- Penggunaan atau pengaktifan Netflow pada suatu interface perangkat jaringan
+  dapat menurunkan kinerja interface perangkat tersebut karena harus
+  mengalokasikan sumber daya untuk operasi Netflow.
+
+Paket Netflow dapat terdiri dari 5 hingga 7 bagian dalam satu paketnya. berikut
+struktur lengkap paket Netflow:
+
+<img src={NetflowEnabledDevice} />
+
+**Berikut bagaimana Netflow bekerja:**
+
+1. Konfigurasi Netflow pada interface perangkat jaringan yang dibutuhkan.
+2. Konfigurasi collector yang akan menerima export data dari Netflow.
+3. Netflow akan mencari paket pada Netflow tabel yang telah melewati waktu
+   expiration kemudian mengirimkannya ke collector.
+4. Umumnya dalam sekali pengiriman terdapat 30 - 50 bundled packet yang
+   dikirim melalui UDP format ke collector.
+5. Collector menerima data dan memvisualisasikannya dalam bentuk grafik atau
+   visualisasi data lainnya.
+
+Bagaimana perangkat jaringan memilih paket mana di dalam tabel yang harus dikirim ke
+kolektor?
+
+Sekumpulan paket atau disebut flow siap di-export ketika sudah tidak ada lagi traffic
+paket pada flow tersebut, atau jika flow memiliki durasi aktif yang lebih lama dari
+pada max active timer (long flow), atau flow tersebut diterminasi melalui flag (misalnya
+FIN, RST Flag). Waktu default sebuah flow dikatakan tidak aktif adalah 15 detik setelah
+trafik terakhir dan waktu max active flow adalah 30 menit.
+
+- **Berikut contoh tabel flow dengan timing pada perangkat Cisco:**
+
+  <img src={NetflowTableWithTiming} />
+
+- **Berikut tools berbayar dan tidak berbayar yang dapat digunakan untuk memetakan data Netflow:**
+
+  <img src={CommercialNetflow} />
+  <br />
+  <img src={FreewareNetflow} />
+
+- **Contoh visualisasi data Netflow:**
+  <img src={NetflowVisualization} />
+
+### Konfigurasi Dasar Netflow:
+
+Saat suatu interface diaktifkan fitur Netflow maka seluruh packet yang masuk dan keluar akan di-capture dan disimpan ke cache Netflow table.
+
+1. **Mengaktifkan Netflow pada interface router:**
+
+   <img src={NetflowConfiguration} />
+
+2. **Konfigurasi collector untuk menerima data Netflow:**
+
+   <img src={NetflowConfiguration2} />
+
+3. **Show Interface dengan Netflow aktif:**
+
+   <img src={NetflowConfiguration3} />
+
+4. **Show Netflow cache table dan contoh output:**
+
+   <img src={NetflowConfiguration4} />

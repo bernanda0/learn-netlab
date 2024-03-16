@@ -1,0 +1,335 @@
+---
+sidebar_position: 7
+---
+
+import AuthorList from "../../src/components/Author";
+import Table_Example from "./assets/Modul1/Table_Example.png";
+import Config from "./assets/Modul1/Config.jpg";
+import Shell from "./assets/Modul1/Shell.jpg";
+import Sel from "./assets/Modul1/Select.jpg";
+import MetaCom from "./assets/Modul1/MetaCom.jpg";
+import CRole from "./assets/Modul1/CRole.jpg";
+import CRole2 from "./assets/Modul1/CRole2.jpg";
+import du from "./assets/Modul1/du.jpg";
+import List from "./assets/Modul1/list.jpg";
+import List2 from "./assets/Modul1/list2.jpg";
+
+# MODUL 7: MongoDB
+
+<AuthorList authorsName={["dito"]} />
+
+## TUJUAN PRAKTIKUM
+
+1. Praktikan dapat memahami fungsi dasar DBMS dan pengaplikasiannya.
+2. Praktikan dapat memahami tata cara konfigurasi database server PostgreSQL.
+3. Praktikan dapat memahami cara menggunakan software client PostgreSQL beserta perintah-perintah client PostgreSQL, untuk melakukan operasi pada database server
+
+## A. Database
+
+Database adalah koleksi data yang sistematis dan sistematis yang disimpan secara elektronik. Ini dapat berisi semua jenis data, termasuk kata, angka, gambar, video, dan file. Anda dapat menggunakan perangkat lunak yang disebut sistem manajemen database (DBMS) untuk menyimpan, mengambil, dan mengedit data. Dalam sistem komputer, database kata juga dapat merujuk ke DBMS apa pun, ke sistem database, atau ke aplikasi yang terkait dengan database.
+
+## B. DBMS (Database Management System)
+
+    *Database Management System* (DBMS) adalah sekumpulan program yang
+
+memungkinkan user untuk membuat dan mengelola suatu basis data. DBMS adalah general
+purpose software system yang memfasilitasi proses definisi, konstruksi, manipulasi, dan berbagi
+basis data kepada banyak pengguna dan aplikasi.
+
+    **Mendefinisikan** basis data berarti menentukan tipe data, struktur, aturan, pembatasan
+
+(_constraint_) dari data yang akan disimpan di dalam suatu basis data. Definisi atau informasi
+deskriptif dari basis data juga disimpan oleh DBMS dalam bentuk database catalog atau
+dictionary, yang disebut sebagai _meta-data_. **Mengkonstruksikan** basis data berarti sebuah
+proses untuk menyimpan data di dalam media penyimpanan yang dikontrol oleh DBMS.
+**Memanipulasi** basis data artinya menggunakan fungsi tertentu yang disebut dengan database
+_query_ pada data yang disimpan untuk mendapatkan informasi tertentu, data update untuk
+merefleksikan perubahan yang terjadi pada _universe of discourse_ (UoD), dan menghasilkan
+_report_ dari data. **Berbagi** basis data memungkinkan banyak pengguna dan/atau aplikasi untuk
+mengakses basis data secara bersamaan.
+
+    Program dan aplikasi mengakses basis data dengan cara mengirimkan query atau data
+
+request kepada DBMS. Proses query memungkinkan hanya data tertentu yang diinginkan saja
+yang akan didapatkan, sedangkan proses transaction membuat data tertentu dapat dibaca,
+ditulis, atau dihapus dari basis data.
+
+    DBMS juga berfungsi untuk melindungi dan mengelola basis data dalam jangka periode
+
+waktu yang lama. Perlindungan termasuk saat komputer mengalami malfungsi _hardware_ atau
+_software_, serta perlindungan dari akses yang tidak diinginkan terhadap data.
+
+    Basis data besar biasanya memiliki siklus operasi hingga bertahun-tahun, jadi DBMS
+
+harus mampu mengelola suatu basis data dari sistem yang memiliki kemungkinan untuk
+berevolusi sesuai perubahan kebutuhan sepanjang masa. Basis data dan DBMS _software_
+bersama membentuk suatu _database system_.
+
+Perintah-perintah yang digunakan untuk mengelola basis data mempunyai standar yang
+disebut dengan SQL (_Structured Query Language_). Standar ini dibuat oleh suatu badan yang
+berwenang (ANSI) sehingga sering disebut juga dengan istilah ANSI SQL. Saat ini standar SQL
+yang diacu kebanyakan DBMS software adalah SQL92 dan SQL99.
+
+<img src={Table_Example} />
+
+## C. PostgreSQL
+
+### Pengenalan PostgreSQL
+
+PostgreSQL adalah object-relational database management system (ORDBMS) berbasis
+POSTGRES, dikembangkan di University of California, tepatnya di Berkeley Computer Science
+Department. POSTGRES telah menjadi pionir atas konsep-konsep yang sekarang banyak
+diadopsi oleh database system yang bersifat komersial.
+
+PostgreSQL adalah open-source software hasil turunan dari kode buatan Berkeley. Ia
+mendukung bagian besar dari standar SQL dan menawarkan banyak fitur modern, seperti:
+
+- Complex Queries
+- Foreign Keys
+- Trigger
+- Views
+- Transactional Integrity
+- Multiversion Concurrency Control
+
+PostgreSQL juga dapat diperluas fungsinya oleh pengguna dengan berbagai cara seperti
+menambahkan:
+
+- Data Types
+- Functions
+- Operators
+- Aggregate Functions
+- Index Method
+- Procedural Languages
+
+Karena faktor _liberal license_, PostgreSQL dapat digunakan, dimodifikasi, dan
+didistribusikan oleh semua orang tanpa perlu mengeluarkan biaya, baik untuk keperluan pribadi,
+komersial, maupun akademik. Lebih jauh lagi, berikut adalah tabel perbandingan PostgreSQL
+dengan DBMS terkemuka lainnya:
+
+| Feature               | SQL Server | Oracle | MySQL | PostgreSQL |
+| --------------------- | ---------- | ------ | ----- | ---------- |
+| Open Source           | No         | No     | Yes   | Yes        |
+| Free/No License Costs | No         | No     | Yes   | Yes        |
+| ACID Compliant        | Yes        | Yes    | Yes   | Yes        |
+| ANSI SQL Compliant    | Yes        | Yes    | Yes   | Yes        |
+| Referential Integrity | Yes        | Yes    | Yes   | Yes        |
+| Replication           | Yes        | Yes    | Yes   | Yes        |
+| Rules                 | Yes        | Yes    | No    | Yes        |
+| Views                 | Yes        | Yes    | Yes   | Yes        |
+| Triggers              | Yes        | Yes    | Yes   | Yes        |
+| Unicode               | Yes        | Yes    | No    | Yes        |
+| Sequences             | No         | Yes    | No    | Yes        |
+| Inheritance           | No         | Yes    | No    | Yes        |
+| Outer Joins           | Yes        | Yes    | Yes   | Yes        |
+| Sub-selects           | Yes        | Yes    | Yes   | Yes        |
+| Open API              | No         | No     | Yes   | Yes        |
+
+PostgreSQL didistribusikan dalam dua kategori _software_ yaitu **server** dan **client**. _Server_
+diperlukan untuk menyediakan layanan basis data, sedangkan _client_ diperlukan untuk
+mengakses basis data.
+
+## D. Konfigurasi PostgreSQL Server
+
+Konfigurasi PostgreSQL Server pada Windows terletak pada direktori `C:\Program
+Files\PostgreSQL\16\data` (Untuk PostgreSQL versi 16.x) untuk yang melakukan Untuk
+pengguna Linux dapat menggunakan command atau secara manual mencari pada direktori /etc/.
+Command yang dapat dilakukan oleh pengguna ubuntu adalah `which postgresql`. Selain itu juga,
+pengguna dapat memasukkan query seperti ini pada psql untuk mengetahui lokasinya.
+
+Konfigurasi terdapat pada file dengan ekstensi `*.conf.` Berikut ini adalah penjelasan fungsi
+masing-masing:
+
+```SQL
+SHOW hba_file;
+```
+
+```SQL
+SHOW ident_file;
+```
+
+<img src={Config} />
+1. **pg_hba.conf**: Mengatur autentikasi client 2. **pg_ident.conf**: Mengatur autentikasi
+client dengan metode ident 3. **postgresql.conf**: Mengatur konfigurasi software
+PostgreSQL
+
+## E. PostgreSQL Client
+
+PostgreSQL telah menyertakan 2 metode client access, yakni melalui shell dan melalui
+GUI (graphic user interface). Software yang menggunakan environment shell adalah SQL Shell
+(psql), sedangkan GUI biasanya memakai pgAdmin atau pgAccess. Pada praktikum ini, yang
+akan digunakan yaitu akses dengan menggunakan environment shell dengan SQL Shell (psql).
+
+SQL Shell merupakan PostgreSQL interactive terminal berbasis front-end. Software ini
+memungkinkan pengguna untuk memasukkan query secara interaktif, mengirimkannya pada
+PostgreSQL Server, dan menampilkan hasil query. psql juga mampu memberikan query input
+dari sebuah file. Sebagai tambahan, SQL Shell juga menyediakan sejumlah meta-commands dan
+bermacam fitur-fitur layaknya shell untuk memfasilitasi penulisan script dan mengautomasi
+berbagai tugas tertentu.
+
+Pada SQL Shell, untuk dapat tersambung ke PostgreSQL Server, ada beberapa hal yang
+harus diketahui, seperti:
+
+1. Server berupa Hostname, IP, atau domain komputer server yang sedang menjalankan
+   PostgreSQL Server yang ingin diakses
+2. Database: Nama database yang ingin diakses
+3. Port: Port number yang menjalankan PostgreSQL Server
+4. Username: Username yang memiliki akses pada database yang dimaksud
+5. Password: Kata sandi untuk username yang dimaksud
+
+<img src={Shell} />
+
+Pada gambar diatas, dapat dilihat bahwa SQL Shell mencoba untuk mengakses PostgreSQL
+Server dengan keterangan sebagai berikut:
+
+1. Komputer server memiliki IP/Hostname localhost
+2. Database yang dituju adalah postgres.
+3. Port yang digunakan oleh komputer server untuk menjalankan server database adalah
+4.
+5. Log-in dengan username postgres dengan password yang dimiliki oleh username
+   postgres. Password tidak ditampilkan pada shell saat dilakukan input.
+6. “postgres=#” menunjukkan database “postgres” berhasil diakses dan sedang tersambung
+
+### SQL Command
+
+Pada shell, pengguna dapat mengetikkan perintah SQL. Penanda akhir dari suatu SQL
+command merupakan sebuah karakter semicolon (;). Ketika sebuah line telah diakhiri oleh
+sebuah semicolon, maka SQL Shell (client) akan mengirimkan query yang dimasukkan kepada
+SQL Server yang dituju. Sebuah SQL Command dapat dipecah menjadi beberapa line supaya
+lebih mudah dibaca. Jika command telah dikirim dan dapat dieksekusi tanpa error, hasil dari
+command akan ditampilkan pada SQL Shell. Contoh:
+
+```SQL
+SELECT * FROM Employees;
+```
+
+<img src={Sel} />
+
+### Meta-Command
+
+SQL Shell Meta-Command merupakan command yang berguna sebagai keperluan
+administrasi atau scripting. Meta-Command ini akan diproses oleh SQL Shell itu sendiri. Pada
+SQL Shell, Meta-Command diawali dengan karakter backslash (\). Oleh karena itu,
+MetaCommand juga biasa disebut sebagai slash command atau backslash command. Untuk
+menampilkan daftar Meta-Command pada SQL Shell dapat dilakukan dengan mengetikkan
+`\?`
+
+<img src={MetaCom} />
+
+### Role
+
+Role merupakan entitas yang memiliki sutau atau beberapa database dan wewenang
+(privilege) terhadap database tersebut. Role dapat dianggap sebagai pengguna, baik individu,
+kelompok, atau keduanya tergantung penggunaan dari Role tersebut. Dalam membuat Role,
+pencantuman password tidak diwajibkan. Dalam pembuatan Role, terdapat beberapa clause
+yang dapat digunakan untuk menentukan wewenang yang disebut dengan attribute dari Role
+tersebut. Beberapa attribute yang terdapat pada PostgreSQL ialah sebagai berikut:
+
+| No. | Attribute  | Description                                                                |
+| --: | ---------- | -------------------------------------------------------------------------- |
+|   1 | LOGIN      | Dapat melakukan koneksi ke server database                                 |
+|   2 | SUPERUSER  | Memiliki kekuatan superuser, yang memiliki seluruh privilege pada database |
+|   3 | CREATEROLE | Dapat membuat sebuah Role baru pada database                               |
+|   4 | CREATEDB   | Dapat membuat database baru                                                |
+
+Pada PostgreSQL, untuk membuat sebuah Role dapat digunakan query “CREATE
+ROLE” sebagai berikut:
+
+```SQL
+CREATE ROLE dio PASSWORD 'SBD' LOGIN;
+```
+
+<img src={CRole} />
+
+Query diatas akan membuat sebuah Role dengan nama `dio` dan password “SBD” yang akan
+dienkripsi, dan memiliki attribute LOGIN.
+
+```SQL
+CREATE ROLE asisten PASSWORD 'NetlabMantap' LOGIN SUPERUSER;
+```
+
+<img src={CRole2} />
+
+Contoh selanjutnya query diatas berfungsi untuk membuat sebuah Role dengan nama `asisten`
+dengan password `NetlabMantap` yang akan dienkripsi, dan memiliki attribute LOGIN dan
+SUPERUSER.
+
+```SQL
+\du
+```
+
+<img src={du} />
+
+Untuk melihat daftar role yang terdapat di dalam database server PostgreSQL dapat
+dengan memasukkan meta-command `\du` seperti contoh berikut
+
+Untuk menghapus sebuah Role yang telah dibuat, dapat dilakukan dengan
+menggunakan query “DROP ROLE” sebagai berikut:
+
+```SQL
+DROP ROLE dio;
+```
+
+Query diatas akan menghapus Role dengan nama “harits”. Sehingga ketika di drop role tersebut
+akan terhapus dan tidak dapat digunakan untuk mengakses database.
+
+Pada PostgreSQL, kita dapat melakukan perubahan komponen-komponen dari sebuah
+Role yang telah dibuat (seperti password dan attribute) tanpa harus menghapus Role tersebut
+dan membuatnya kembali dari awal. Hal ini dapat dilakukan dengan menggunakan query “ALTER
+ROLE” seperti berikut:
+
+```SQL
+ALTER ROLE asisten PASSWORD 'DasteSBD' LOGIN SUPERUSER;
+```
+
+Query diatas akan mengubah password Role `asisten` menjadi `DasteSBD`,
+serta menambahkan attribute SUPERUSER.
+
+### Role Grouping
+
+Pada PostgreSQL, dapat dibuat sebuah Group Role yang berfungsi untuk
+mengelompokkan beberapa Role. Hal ini bertujuan untuk melakukan penyeragaman privilege
+yang didapatkan dari setiap Role yang merupakan bagian dari Group Role tersebut. SQL Query
+yang akan digunakan ialah `GRANT`
+
+```SQL
+CREATE ROLE asisten_group PASSWORD 'DasteSBD' LOGIN SUPERUSER;
+```
+
+Query diatas akan membuat Role `asisten_group` yang memiliki attribute LOGIN dan
+SUPERUSER. Role tersebut yang kemudian akan dijadikan sebagai Group Role.
+
+```SQL
+GRANT asisten_group to dio
+```
+
+Query diatas akan memasukkan Role `dio` menjadi salah satu anggota dari Role
+`asisten_group` Dengan demikian, maka Role `dio` akan mengadopsi seluruh attribute yang
+dimiliki `asisten_group` Kita dapat menggunakan meta-command \du kembali, untuk melihat
+detail dari setiap Role yang telah dibuat.
+
+### Membuat dan Menghapus Database
+
+Database merupakan sekumpulan data yang disimpan dan diatur sedemikian rupa
+sehingga data tersebut dapat dicari serta diambil informasinya dengan cepat dan efisien.
+Berikut akan dicontohkan cara membuat dan menghapus database dengan menggunakan SQL
+Query `CREATE DATABASE` dan `DROP DATABASE`
+
+```SQL
+CREATE DATABASE sistembasisdata;
+```
+
+Query diatas akan membuat suatu database baru dengan nama `sistembasisdata`.
+
+<img src={List} />
+
+Untuk menghapus database yang telah dibuat, dapat dengan menggunakan query `DROP
+DATABASE [nama_database];` seperti contoh berikut.
+
+```SQL
+DROP DATABASE sistembasisdata;
+```
+
+<img src={List2} />
+
+Query diatas akan menghapus database `sistembasisdata` yang tadi telah dibuat. Metacommand \l dapat digunakan lagi untuk melakukan pengecekan apakah penghapusan database
+telah berhasil dilakukan atau tidak.
