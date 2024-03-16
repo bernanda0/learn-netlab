@@ -14,322 +14,143 @@ import du from "./assets/Modul1/du.jpg";
 import List from "./assets/Modul1/list.jpg";
 import List2 from "./assets/Modul1/list2.jpg";
 
+import MongoEx from "./assets/Modul7/MongoEx.png";
+import SQLEx from "./assets/Modul7/SQLEx.png";
+
 # MODUL 7: MongoDB
 
 <AuthorList authorsName={["dito"]} />
 
 ## TUJUAN PRAKTIKUM
 
-1. Praktikan dapat memahami fungsi dasar DBMS dan pengaplikasiannya.
-2. Praktikan dapat memahami tata cara konfigurasi database server PostgreSQL.
-3. Praktikan dapat memahami cara menggunakan software client PostgreSQL beserta perintah-perintah client PostgreSQL, untuk melakukan operasi pada database server
+1. Memahami cara kerja salah satu basis data yang bersifat NoSQL (MongoDB)
+2. Memahami penggunaan NoSQL sebagai alternatif dari SQL untuk penyimpanan data
+3. Melakukan integrasi API dengan basis data NoSQL.
 
-## A. Database
+## A. MongoDB
 
-Database adalah koleksi data yang sistematis dan sistematis yang disimpan secara elektronik. Ini dapat berisi semua jenis data, termasuk kata, angka, gambar, video, dan file. Anda dapat menggunakan perangkat lunak yang disebut sistem manajemen database (DBMS) untuk menyimpan, mengambil, dan mengedit data. Dalam sistem komputer, database kata juga dapat merujuk ke DBMS apa pun, ke sistem database, atau ke aplikasi yang terkait dengan database.
+### Pengertian MongoDB
 
-## B. DBMS (Database Management System)
+MongoDB adalah program manajemen database NoSQL open source. NoSQL (Not only SQL) digunakan sebagai alternatif untuk database relasional tradisional. Database NoSQL sangat berguna untuk bekerja dengan set data yang besar dan terdistribusi. MongoDB adalah tools yang dapat mengelola document oriented information, menyimpan atau mengambil informasi. Bahasa Query Terstruktur (SQL) adalah bahasa pemrograman standar yang digunakan untuk mengelola database relasional. SQL menormalisasi data sebagai skema dan tabel, dan setiap tabel memiliki struktur tetap. Sebaliknya, sebagai database NoSQL, arsitektur MongoDB terdiri dari collection dan documents. Dokumen terdiri dari key value pairs unit data dasar MongoDB. Collections, yang setara dengan tabel SQL, mengandung set dokumen.
 
-    *Database Management System* (DBMS) adalah sekumpulan program yang
+Environtment MongoDB menyediakan server untuk membuat database dengan MongoDB. MongoDB menyimpan data sebagai records yang terdiri dari collections dan dokumen. Dokumen mengandung data yang ingin pengguna simpan dalam database MongoDB. Dokumen terdiri dari pasangan bidang dan nilai. Mereka adalah unit data dasar dalam MongoDB. Dokumen ini mirip dengan JavaScript Object Notation (JSON) tetapi menggunakan variasi yang disebut Binary JSON (BSON). Keuntungan menggunakan BSON adalah dapat mengakomodasi lebih banyak jenis data. Dokumen akan memasukkan primary key sebagai pengidentifikasi unik.
 
-memungkinkan user untuk membuat dan mengelola suatu basis data. DBMS adalah general
-purpose software system yang memfasilitasi proses definisi, konstruksi, manipulasi, dan berbagi
-basis data kepada banyak pengguna dan aplikasi.
+## B. Mongoose
 
-    **Mendefinisikan** basis data berarti menentukan tipe data, struktur, aturan, pembatasan
+Mongoose merupakan Object Data Modeling (ODM) library untuk MongoDB dan Node.js. Mongoose mengatur hubungan antar data. Mongoose juga menyediakan fitur validasi, query building, business logic hooks, dan lainnya. Mongoose memungkinkan kita untuk mendefinisikan skema untuk dokumen MongoDB. Dengan menggunakan Mongoose, kita dapat melakukan operasi CRUD (Create, Read, Update, dan
+Delete) dengan hanya menggunakan fungsi yang disediakan oleh Mongoose.
 
-(_constraint_) dari data yang akan disimpan di dalam suatu basis data. Definisi atau informasi
-deskriptif dari basis data juga disimpan oleh DBMS dalam bentuk database catalog atau
-dictionary, yang disebut sebagai _meta-data_. **Mengkonstruksikan** basis data berarti sebuah
-proses untuk menyimpan data di dalam media penyimpanan yang dikontrol oleh DBMS.
-**Memanipulasi** basis data artinya menggunakan fungsi tertentu yang disebut dengan database
-_query_ pada data yang disimpan untuk mendapatkan informasi tertentu, data update untuk
-merefleksikan perubahan yang terjadi pada _universe of discourse_ (UoD), dan menghasilkan
-_report_ dari data. **Berbagi** basis data memungkinkan banyak pengguna dan/atau aplikasi untuk
-mengakses basis data secara bersamaan.
+### 1. Schema
 
-    Program dan aplikasi mengakses basis data dengan cara mengirimkan query atau data
+Schema mendefinisikan struktur dari dokumen yang akan disimpan di dalam koleksi MongoDB. Schema ini mendefinisikan properti-properti yang akan disimpan di dalam dokumen, termasuk tipe data, validasi, dan lainnya. Schema ini juga mendefinisikan relasi antar dokumen, seperti relasi one-to-one, one-to-many, dan lainnya. Berikut tipe data yang didukung oleh Mongoose:
 
-request kepada DBMS. Proses query memungkinkan hanya data tertentu yang diinginkan saja
-yang akan didapatkan, sedangkan proses transaction membuat data tertentu dapat dibaca,
-ditulis, atau dihapus dari basis data.
+- String
+- Number
+- Date
+- Buffer
+- Boolean
+- Mixed
+- ObjectId
+- Array
+- Decimal128
+- Map
 
-    DBMS juga berfungsi untuk melindungi dan mengelola basis data dalam jangka periode
+### 2. Model
 
-waktu yang lama. Perlindungan termasuk saat komputer mengalami malfungsi _hardware_ atau
-_software_, serta perlindungan dari akses yang tidak diinginkan terhadap data.
+Model adalah kelas yang digunakan untuk berinteraksi dengan koleksi MongoDB. Model ini menyediakan metode-metode untuk melakukan operasi CRUD, seperti membuat dokumen baru, membaca dokumen, memperbarui dokumen, dan menghapus dokumen. Model ini juga menyediakan metode-metode untuk melakukan operasi lain, seperti mencari dokumen, mengurutkan dokumen, dan lainnya.
 
-    Basis data besar biasanya memiliki siklus operasi hingga bertahun-tahun, jadi DBMS
+**Contoh pembuatan schema dan model pada mongoose:**
 
-harus mampu mengelola suatu basis data dari sistem yang memiliki kemungkinan untuk
-berevolusi sesuai perubahan kebutuhan sepanjang masa. Basis data dan DBMS _software_
-bersama membentuk suatu _database system_.
+```javascript
+import mongoose from "mongoose";
+const { Schema, model } = mongoose;
 
-Perintah-perintah yang digunakan untuk mengelola basis data mempunyai standar yang
-disebut dengan SQL (_Structured Query Language_). Standar ini dibuat oleh suatu badan yang
-berwenang (ANSI) sehingga sering disebut juga dengan istilah ANSI SQL. Saat ini standar SQL
-yang diacu kebanyakan DBMS software adalah SQL92 dan SQL99.
+const blogSchema = new Schema({
+  title: String,
+  slug: String,
+  published: Boolean,
+  author: String,
+  content: String,
+  tags: [String],
+  createdAt: Date,
+  updatedAt: Date,
+  comments: [
+    {
+      user: String,
+      content: String,
+      votes: Number,
+    },
+  ],
+});
 
-<img src={Table_Example} />
-
-## C. PostgreSQL
-
-### Pengenalan PostgreSQL
-
-PostgreSQL adalah object-relational database management system (ORDBMS) berbasis
-POSTGRES, dikembangkan di University of California, tepatnya di Berkeley Computer Science
-Department. POSTGRES telah menjadi pionir atas konsep-konsep yang sekarang banyak
-diadopsi oleh database system yang bersifat komersial.
-
-PostgreSQL adalah open-source software hasil turunan dari kode buatan Berkeley. Ia
-mendukung bagian besar dari standar SQL dan menawarkan banyak fitur modern, seperti:
-
-- Complex Queries
-- Foreign Keys
-- Trigger
-- Views
-- Transactional Integrity
-- Multiversion Concurrency Control
-
-PostgreSQL juga dapat diperluas fungsinya oleh pengguna dengan berbagai cara seperti
-menambahkan:
-
-- Data Types
-- Functions
-- Operators
-- Aggregate Functions
-- Index Method
-- Procedural Languages
-
-Karena faktor _liberal license_, PostgreSQL dapat digunakan, dimodifikasi, dan
-didistribusikan oleh semua orang tanpa perlu mengeluarkan biaya, baik untuk keperluan pribadi,
-komersial, maupun akademik. Lebih jauh lagi, berikut adalah tabel perbandingan PostgreSQL
-dengan DBMS terkemuka lainnya:
-
-| Feature               | SQL Server | Oracle | MySQL | PostgreSQL |
-| --------------------- | ---------- | ------ | ----- | ---------- |
-| Open Source           | No         | No     | Yes   | Yes        |
-| Free/No License Costs | No         | No     | Yes   | Yes        |
-| ACID Compliant        | Yes        | Yes    | Yes   | Yes        |
-| ANSI SQL Compliant    | Yes        | Yes    | Yes   | Yes        |
-| Referential Integrity | Yes        | Yes    | Yes   | Yes        |
-| Replication           | Yes        | Yes    | Yes   | Yes        |
-| Rules                 | Yes        | Yes    | No    | Yes        |
-| Views                 | Yes        | Yes    | Yes   | Yes        |
-| Triggers              | Yes        | Yes    | Yes   | Yes        |
-| Unicode               | Yes        | Yes    | No    | Yes        |
-| Sequences             | No         | Yes    | No    | Yes        |
-| Inheritance           | No         | Yes    | No    | Yes        |
-| Outer Joins           | Yes        | Yes    | Yes   | Yes        |
-| Sub-selects           | Yes        | Yes    | Yes   | Yes        |
-| Open API              | No         | No     | Yes   | Yes        |
-
-PostgreSQL didistribusikan dalam dua kategori _software_ yaitu **server** dan **client**. _Server_
-diperlukan untuk menyediakan layanan basis data, sedangkan _client_ diperlukan untuk
-mengakses basis data.
-
-## D. Konfigurasi PostgreSQL Server
-
-Konfigurasi PostgreSQL Server pada Windows terletak pada direktori `C:\Program
-Files\PostgreSQL\16\data` (Untuk PostgreSQL versi 16.x) untuk yang melakukan Untuk
-pengguna Linux dapat menggunakan command atau secara manual mencari pada direktori /etc/.
-Command yang dapat dilakukan oleh pengguna ubuntu adalah `which postgresql`. Selain itu juga,
-pengguna dapat memasukkan query seperti ini pada psql untuk mengetahui lokasinya.
-
-Konfigurasi terdapat pada file dengan ekstensi `*.conf.` Berikut ini adalah penjelasan fungsi
-masing-masing:
-
-```SQL
-SHOW hba_file;
+const Blog = model("Blog", blogSchema);
+export default Blog;
 ```
 
-```SQL
-SHOW ident_file;
+Pada kode diatas, pertama, kita melakukan import Mongoose dari modul "mongoose". Kemudian, kita mendeklarasikan Schema (skema) untuk model blog dengan menggunakan objek Schema yang disediakan oleh Mongoose. Skema ini mendefinisikan struktur data untuk entitas blog, termasuk properti-properti seperti judul (title), slug, status terbit (published), penulis (author), konten (content), tag, tanggal dibuat (createdAt), tanggal diperbarui (updatedAt), dan komentar (comments).
+Setelah mendefinisikan skema, kita membuat model "Blog" dengan menggunakan fungsi "model" yang disediakan oleh Mongoose. Model ini akan digunakan untuk berinteraksi dengan basis data MongoDB, di mana "Blog" adalah nama koleksi yang akan dibuat di dalam basis data.
+Terakhir, kita mengekspor model "Blog" agar dapat digunakan di tempat lain.
+
+### 3. Mongoose CRUD Operations
+
+(Note : Pelajari Javascript Asynchronous Programming terlebih dahulu untuk memahami kode dibawah ini)
+
+#### A. Create
+
+Pertama, kita membuat instance baru dari model Blog dengan menyediakan objek yang berisi properti-properti yang diperlukan seperti title, slug, published, author, content, dan tags. Kemudian, kita memanggil metode save() pada instance tersebut untuk menyimpan entri baru ke dalam database. Metode save() adalah operasi asynchronous, sehingga kita menggunakan await untuk menunggu operasi selesai sebelum melanjutkan.
+
+```javascript
+const blog = new Blog({
+  title: "Judul Blog Baru",
+  slug: "judul-blog-baru",
+  published: true,
+  author: "Nama Penulis",
+  content: "Isi konten blog baru...",
+  tags: ["javascript", "nodejs", "mongodb"],
+});
+
+await blog.save();
 ```
 
-<img src={Config} />
-1. **pg_hba.conf**: Mengatur autentikasi client 2. **pg_ident.conf**: Mengatur autentikasi
-client dengan metode ident 3. **postgresql.conf**: Mengatur konfigurasi software
-PostgreSQL
+#### B. Read
 
-## E. PostgreSQL Client
+- allBlogs: Mengambil semua blog yang ada dalam basis data MongoDB.
+- specificBlog: Mengambil blog dengan ID tertentu.
+- publishedBlogs: Mengambil semua blog yang telah dipublikasikan (dengan status terbit = true).
 
-PostgreSQL telah menyertakan 2 metode client access, yakni melalui shell dan melalui
-GUI (graphic user interface). Software yang menggunakan environment shell adalah SQL Shell
-(psql), sedangkan GUI biasanya memakai pgAdmin atau pgAccess. Pada praktikum ini, yang
-akan digunakan yaitu akses dengan menggunakan environment shell dengan SQL Shell (psql).
+```javascript
+const allBlogs = await Blog.find(); // Mendapatkan semua blog
 
-SQL Shell merupakan PostgreSQL interactive terminal berbasis front-end. Software ini
-memungkinkan pengguna untuk memasukkan query secara interaktif, mengirimkannya pada
-PostgreSQL Server, dan menampilkan hasil query. psql juga mampu memberikan query input
-dari sebuah file. Sebagai tambahan, SQL Shell juga menyediakan sejumlah meta-commands dan
-bermacam fitur-fitur layaknya shell untuk memfasilitasi penulisan script dan mengautomasi
-berbagai tugas tertentu.
+const specificBlog = await Blog.findById("id_blog"); // Mendapatkan blog dengan ID tertentu
 
-Pada SQL Shell, untuk dapat tersambung ke PostgreSQL Server, ada beberapa hal yang
-harus diketahui, seperti:
-
-1. Server berupa Hostname, IP, atau domain komputer server yang sedang menjalankan
-   PostgreSQL Server yang ingin diakses
-2. Database: Nama database yang ingin diakses
-3. Port: Port number yang menjalankan PostgreSQL Server
-4. Username: Username yang memiliki akses pada database yang dimaksud
-5. Password: Kata sandi untuk username yang dimaksud
-
-<img src={Shell} />
-
-Pada gambar diatas, dapat dilihat bahwa SQL Shell mencoba untuk mengakses PostgreSQL
-Server dengan keterangan sebagai berikut:
-
-1. Komputer server memiliki IP/Hostname localhost
-2. Database yang dituju adalah postgres.
-3. Port yang digunakan oleh komputer server untuk menjalankan server database adalah
-4.
-5. Log-in dengan username postgres dengan password yang dimiliki oleh username
-   postgres. Password tidak ditampilkan pada shell saat dilakukan input.
-6. “postgres=#” menunjukkan database “postgres” berhasil diakses dan sedang tersambung
-
-### SQL Command
-
-Pada shell, pengguna dapat mengetikkan perintah SQL. Penanda akhir dari suatu SQL
-command merupakan sebuah karakter semicolon (;). Ketika sebuah line telah diakhiri oleh
-sebuah semicolon, maka SQL Shell (client) akan mengirimkan query yang dimasukkan kepada
-SQL Server yang dituju. Sebuah SQL Command dapat dipecah menjadi beberapa line supaya
-lebih mudah dibaca. Jika command telah dikirim dan dapat dieksekusi tanpa error, hasil dari
-command akan ditampilkan pada SQL Shell. Contoh:
-
-```SQL
-SELECT * FROM Employees;
+const publishedBlogs = await Blog.find({ published: true }); // Mendapatkan blog yang dipublikasikan
 ```
 
-<img src={Sel} />
+#### C. Update
 
-### Meta-Command
+Pada bagian ini, sebuah blog diambil dari basis data MongoDB berdasarkan ID tertentu menggunakan metode findById(). Kemudian, properti judul dan kontennya diperbarui. Setelah itu, perubahan tersebut disimpan ke dalam basis data dengan menggunakan metode .save().
 
-SQL Shell Meta-Command merupakan command yang berguna sebagai keperluan
-administrasi atau scripting. Meta-Command ini akan diproses oleh SQL Shell itu sendiri. Pada
-SQL Shell, Meta-Command diawali dengan karakter backslash (\). Oleh karena itu,
-MetaCommand juga biasa disebut sebagai slash command atau backslash command. Untuk
-menampilkan daftar Meta-Command pada SQL Shell dapat dilakukan dengan mengetikkan
-`\?`
+    ```javascript
 
-<img src={MetaCom} />
+const blogToUpdate = await Blog.findById("id_blog");
 
-### Role
+blogToUpdate.title = "Judul Blog Diperbarui";
+blogToUpdate.content = "Isi konten blog diperbarui...";
 
-Role merupakan entitas yang memiliki sutau atau beberapa database dan wewenang
-(privilege) terhadap database tersebut. Role dapat dianggap sebagai pengguna, baik individu,
-kelompok, atau keduanya tergantung penggunaan dari Role tersebut. Dalam membuat Role,
-pencantuman password tidak diwajibkan. Dalam pembuatan Role, terdapat beberapa clause
-yang dapat digunakan untuk menentukan wewenang yang disebut dengan attribute dari Role
-tersebut. Beberapa attribute yang terdapat pada PostgreSQL ialah sebagai berikut:
+await blogToUpdate.save();
 
-| No. | Attribute  | Description                                                                |
-| --: | ---------- | -------------------------------------------------------------------------- |
-|   1 | LOGIN      | Dapat melakukan koneksi ke server database                                 |
-|   2 | SUPERUSER  | Memiliki kekuatan superuser, yang memiliki seluruh privilege pada database |
-|   3 | CREATEROLE | Dapat membuat sebuah Role baru pada database                               |
-|   4 | CREATEDB   | Dapat membuat database baru                                                |
+````
 
-Pada PostgreSQL, untuk membuat sebuah Role dapat digunakan query “CREATE
-ROLE” sebagai berikut:
+#### D. Delete
 
-```SQL
-CREATE ROLE dio PASSWORD 'SBD' LOGIN;
-```
+Menghapus blog dari basis data MongoDB berdasarkan ID tertentu menggunakan metode findByIdAndDelete().
 
-<img src={CRole} />
+```javascript
+await Blog.findByIdAndDelete("id_blog"); // Menghapus blog dengan ID tertentu
+````
 
-Query diatas akan membuat sebuah Role dengan nama `dio` dan password “SBD” yang akan
-dienkripsi, dan memiliki attribute LOGIN.
+#### **Referensi untuk membantu pembelajaran :**
 
-```SQL
-CREATE ROLE asisten PASSWORD 'NetlabMantap' LOGIN SUPERUSER;
-```
-
-<img src={CRole2} />
-
-Contoh selanjutnya query diatas berfungsi untuk membuat sebuah Role dengan nama `asisten`
-dengan password `NetlabMantap` yang akan dienkripsi, dan memiliki attribute LOGIN dan
-SUPERUSER.
-
-```SQL
-\du
-```
-
-<img src={du} />
-
-Untuk melihat daftar role yang terdapat di dalam database server PostgreSQL dapat
-dengan memasukkan meta-command `\du` seperti contoh berikut
-
-Untuk menghapus sebuah Role yang telah dibuat, dapat dilakukan dengan
-menggunakan query “DROP ROLE” sebagai berikut:
-
-```SQL
-DROP ROLE dio;
-```
-
-Query diatas akan menghapus Role dengan nama “harits”. Sehingga ketika di drop role tersebut
-akan terhapus dan tidak dapat digunakan untuk mengakses database.
-
-Pada PostgreSQL, kita dapat melakukan perubahan komponen-komponen dari sebuah
-Role yang telah dibuat (seperti password dan attribute) tanpa harus menghapus Role tersebut
-dan membuatnya kembali dari awal. Hal ini dapat dilakukan dengan menggunakan query “ALTER
-ROLE” seperti berikut:
-
-```SQL
-ALTER ROLE asisten PASSWORD 'DasteSBD' LOGIN SUPERUSER;
-```
-
-Query diatas akan mengubah password Role `asisten` menjadi `DasteSBD`,
-serta menambahkan attribute SUPERUSER.
-
-### Role Grouping
-
-Pada PostgreSQL, dapat dibuat sebuah Group Role yang berfungsi untuk
-mengelompokkan beberapa Role. Hal ini bertujuan untuk melakukan penyeragaman privilege
-yang didapatkan dari setiap Role yang merupakan bagian dari Group Role tersebut. SQL Query
-yang akan digunakan ialah `GRANT`
-
-```SQL
-CREATE ROLE asisten_group PASSWORD 'DasteSBD' LOGIN SUPERUSER;
-```
-
-Query diatas akan membuat Role `asisten_group` yang memiliki attribute LOGIN dan
-SUPERUSER. Role tersebut yang kemudian akan dijadikan sebagai Group Role.
-
-```SQL
-GRANT asisten_group to dio
-```
-
-Query diatas akan memasukkan Role `dio` menjadi salah satu anggota dari Role
-`asisten_group` Dengan demikian, maka Role `dio` akan mengadopsi seluruh attribute yang
-dimiliki `asisten_group` Kita dapat menggunakan meta-command \du kembali, untuk melihat
-detail dari setiap Role yang telah dibuat.
-
-### Membuat dan Menghapus Database
-
-Database merupakan sekumpulan data yang disimpan dan diatur sedemikian rupa
-sehingga data tersebut dapat dicari serta diambil informasinya dengan cepat dan efisien.
-Berikut akan dicontohkan cara membuat dan menghapus database dengan menggunakan SQL
-Query `CREATE DATABASE` dan `DROP DATABASE`
-
-```SQL
-CREATE DATABASE sistembasisdata;
-```
-
-Query diatas akan membuat suatu database baru dengan nama `sistembasisdata`.
-
-<img src={List} />
-
-Untuk menghapus database yang telah dibuat, dapat dengan menggunakan query `DROP
-DATABASE [nama_database];` seperti contoh berikut.
-
-```SQL
-DROP DATABASE sistembasisdata;
-```
-
-<img src={List2} />
-
-Query diatas akan menghapus database `sistembasisdata` yang tadi telah dibuat. Metacommand \l dapat digunakan lagi untuk melakukan pengecekan apakah penghapusan database
-telah berhasil dilakukan atau tidak.
+- [MongoDB Explanation](https://www.techtarget.com/searchdatamanagement/definition/MongoDB)
+- [Introduction to Mongoose for MongoDB](https://www.freecodecamp.org/news/introduction-to-mongoose-for-mongodb-d2a7aa593c57/)
+- [Getting Started With MongoDB and Mongoose](https://www.mongodb.com/developer/languages/javascript/getting-started-with-mongodb-and-mongoose)
