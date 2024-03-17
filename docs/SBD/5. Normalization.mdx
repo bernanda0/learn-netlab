@@ -1,0 +1,160 @@
+---
+sidebar_position: 5
+---
+
+import AuthorList from "../../src/components/Author";
+import ACIDProperties from "./assets/Modul5/ACID-Properties.jpg";
+import AlterTable from "./assets/Modul3/alter_list.jpg";
+
+# MODUL 5: Normalization
+
+<AuthorList authorsName={["althaf"]} />
+
+## TUJUAN PRAKTIKUM
+
+1. Mengidentifikasi anomali data pada sebuah desain basis data untuk dapat meningkatkan konsistensi dan efisiensi struktur data.
+2. Memahami konsep dan prinsip dasar normalisasi dalam desain basis data.
+3. Dapat memahami dan menerapkan normalisasi hingga tingkat yang lebih tinggi, dari 1NF hingga 5NF.
+
+## A. ACID Transactions
+
+### ACID Compliance
+
+---
+
+- **Atomicity:** Transaksi basis data, disebut juga atom, dapat dibagi menjadi bagian-bagian kecil untuk memastikan integritas keseluruhan transaksi basis data.
+- **Consistency**: Transaksi basis data mengikuti aturan validasi data yang sesuai dan hanya data yang memenuhi aturan validasi tersebut yang ditulis ke dalam basis data.
+- **Isolation:** Transaksi basis data dapat diproses secara bersamaan tanpa konflik.
+- **Durability:** Transaksi data memastikan bahwa data disimpan dengan aman.
+
+  {" "}
+
+  <img src={ACIDProperties} />
+
+Jika sebuah basis data memenuhi aspek-aspek kepatuhan ACID, maka basis data tersebut dikatakan _ACID-compliant_.
+
+_[References: https://www.geeksforgeeks.org/acid-properties-in-dbms/, https://docs.digitalocean.com/glossary/acid/]_
+
+### Anomali pada DB
+
+---
+
+Anomali dalam DBMS muncul terutama karena terdapatnya kekurang saat perancangan dan desain database, terutama ketika aturan normalisasi tidak diterapkan dengan baik. Masalah-masalah ini terbagi dalam tiga bentuk utama:
+
+- **_Insertion Anomaly_:** Terjadi ketika tidak dapat menambahkan data ke database karena tidak adanya data terkait lainnya. Misalnya tidak bisa menambah pegawai baru karena departemennya belum ada di database.
+- **_Deletion Anomaly_:** Terjadi ketika menghapus sebuah _entry_ juga secara tidak sengaja menghapus data penting lainnya. Misalnya, menghapus karyawan terakhir di suatu departemen mungkin secara tidak sengaja menghapus seluruh departemen dari database.
+- **_Update Anomaly_:** Muncul ketika sepotong informasi yang muncul di beberapa tempat diperbarui di satu lokasi tetapi tidak di lokasi lain, sehingga menyebabkan data tidak konsisten di seluruh database.
+
+_[Reference: https://www.codingninjas.com/studio/library/anomalies-in-relational-model]_
+
+## B. Database Normalization
+
+### First Normal Form (1NF)
+
+---
+
+Untuk sebuah tabel berada dalam First Normal Form, harus mengikuti 4 aturan berikut:
+
+1. **Menggunakan Urutan Baris sebagai Informasi:**
+   Menggunakan urutan baris untuk menyampaikan informasi tidak diperbolehkan dalam desain tabel. Informasi harus disimpan dalam kolom-kolom yang sesuai dan tidak bergantung pada urutan baris.
+
+2. **Tidak Mencampur Jenis Data dalam Kolom yang Sama:**
+   Tidak diizinkan untuk memiliki campuran jenis data (misalnya, teks dan angka) dalam satu kolom. Setiap kolom harus memiliki jenis data yang konsisten.
+
+3. **Tabel tanpa _Primary Key_:**
+   Setiap tabel harus memiliki kunci primer yang unik. Tidak memiliki kunci primer dapat menyebabkan kesulitan dalam mengidentifikasi dan memanipulasi data dengan benar.
+
+4. **_Atomic_ dan Tidak ada _Repeating Data Groups_:**
+   Tidak diizinkan untuk memiliki grup data yang berulang dalam tabel. Data harus diorganisir sehingga tidak ada pengulangan dalam kelompok-kelompok tertentu, yang memungkinkan untuk normalisasi data dengan baik.
+
+Dengan memenuhi aturan-aturan di atas, sebuah tabel dikatakan berada dalam First Normal Form (1NF).
+
+**Contoh Tabel Non-1NF:**
+
+| ID  | Merek  | Model          | Tahun      |
+| --- | ------ | -------------- | ---------- |
+| 1   | Toyota | Corolla, Camry | 2015, 2018 |
+| 2   | Honda  | Civic          | 2017       |
+| 3   | Nissan | Altima         | 2019       |
+
+Tabel di atas **tidak** memenuhi 1NF karena:
+
+- Kolom `Model` dan `Tahun` menyimpan nilai yang bukan tunggal **(tidak atomic)**.
+- Ada kemungkinan banyak nilai yang disimpan dalam satu sel.
+
+**Contoh Tabel dalam 1NF:**
+
+| ID  | Merek  | Model   | Tahun |
+| --- | ------ | ------- | ----- |
+| 1   | Toyota | Corolla | 2015  |
+| 1   | Toyota | Camry   | 2018  |
+| 2   | Honda  | Civic   | 2017  |
+| 3   | Nissan | Altima  | 2019  |
+
+### Second Normal Form (2NF)
+
+---
+
+1. **Harus Berada dalam First Normal Form:**
+   Tabel harus memenuhi syarat First Normal Form (1NF), yang berarti setiap kolom hanya berisi nilai tunggal dan tidak ada pengulangan grup data.
+
+2. **Tidak Boleh Memiliki Ketergantungan Parsial (_Partial Dependency_):**
+   Tidak boleh ada ketergantungan parsial di mana bagian dari kunci utama menentukan non-kunci atribut. Semua atribut non-kunci harus bergantung sepenuhnya pada kunci utama secara keseluruhan.
+
+Dengan mematuhi kedua aturan di atas, sebuah tabel dikatakan berada dalam Second Normal Form (2NF).
+
+#### _Tabel Nilai Siswa (1NF):_
+
+| Student_ID (PK) | Subject_ID (PK) | Nilai | Nama Siswa |
+| --------------- | --------------- | ----- | ---------- |
+| 1               | 101             | 85    | John       |
+| 1               | 102             | 90    | John       |
+| 2               | 101             | 75    | Mary       |
+| 3               | 102             | 88    | Mark       |
+
+Dalam tabel nilai siswa yang diberikan, kita memiliki kunci gabungan yang terdiri dari `Student_ID` dan `Subject_ID`. Ini berarti pasangan `Student_ID` dan `Subject_id` secara unik mengidentifikasi setiap entri dalam tabel.
+
+Dalam hal ini, atribut nilai **sepenuhnya** bergantung pada kunci gabungan `{Student_ID, Subject_ID}`, sehingga dapat dikatakan bahwa `{Student_ID, Subject_ID} → {Nilai}` adalah benar dan bersifat _**fully functional dependent**_.
+
+#### _Tabel Nilai Siswa (2NF)_:
+
+**1. Tabel Siswa (Primary Key: Student_ID)**
+
+| Student_ID (PK) | Nama Siswa |
+| --------------- | ---------- |
+| 1               | John       |
+| 2               | Mary       |
+| 3               | Mark       |
+
+**2. Tabel Mata Pelajaran (Primary Key: Subject_ID)**
+
+| Subject_ID (PK) | Mata Pelajaran |
+| --------------- | -------------- |
+| 101             | Matematika     |
+| 102             | Bahasa Inggris |
+
+**4. Tabel Nilai (Primary Key: Student_ID, Subject_ID)**
+
+| Student_ID (PK) | Subject_ID (PK) | Nilai |
+| --------------- | --------------- | ----- |
+| 1               | 101             | 85    |
+| 1               | 102             | 90    |
+| 2               | 101             | 75    |
+| 3               | 102             | 88    |
+
+Dengan memisahkan tabel menjadi beberapa tabel terpisah (Guru, Siswa, Mata Pelajaran), dan menggunakan primary key gabungan (Student_ID, Subject_ID, Teacher_ID) pada tabel Nilai, kita telah mencapai bentuk 2NF di mana setiap atribut bergantung sepenuhnya pada kunci utama.
+
+_[Reference: https://www.tutorialspoint.com/Types-of-dependencies-in-DBMS, https://www.studytonight.com/dbms/database-normalization.php, https://www.geeksforgeeks.org/differentiate-between-partial-dependency-and-fully-functional-dependency/]_
+
+### Third Normal Form (3NF)
+
+---
+
+Sebuah tabel dikatakan berada dalam Bentuk Normal Ketiga (Third Normal Form) saat:
+
+- Tabel tersebut memenuhi syarat Bentuk Normal Pertama (First Normal Form) dan Bentuk Normal Kedua (Second Normal Form).
+- Tabel tersebut tidak memiliki Transitive Dependency.
+
+#### Apa itu Transitive Dependency?
+
+_Transitive Dependency_ terjadi ketika sebuah tabel memiliki beberapa kolom yang bertindak sebagai kunci utama dan kolom lainnya bergantung pada kolom ini. Namun, terdapat suatu kolom yang bukan kunci utama, namun bergantung pada kolom lain yang juga bukan kunci utama atau bagian dari kunci utama tersebut. Maka kita memiliki Transitive Dependency dalam tabel kita.
