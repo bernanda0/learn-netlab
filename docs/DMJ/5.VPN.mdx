@@ -1,0 +1,69 @@
+---
+sidebar_position: 5
+---
+
+# MODUL 5: VPN
+
+import AuthorList from "./../../src/components/Author"
+import VPN from "./assets/Modul5/VPN.jpeg"
+import GRE from "./assets/Modul5/GRE.png"
+import SSLipsec from "./assets/Modul5/equipment1.webp"
+<AuthorList authorsName={["bubin"]} />
+
+## TUJUAN PRAKTIKUM 
+
+1. Memahami fungsi penggunaan teknologi VPN • Memahami tujuan dan keuntungan GRE Tunnel 
+2. Dapat meng-konfigurasi GRE Tunnel 
+3. Memahami tujuan dan keuntungan IPSec 
+4. Dapat meng-konfigurasi IPSec 
+
+
+## A. VPN
+
+Keamanan ada hal yang sangat diperhatikan jika melakukan transaksi bisnis maupunhal-hal sensitif lainnya di Internet. VPN atau Virtual Private Network bertujuan untuk menjaga keamanandata saat bertukar data di Internet. Dengan adanya VPN akan memungkinkan kita untuk membuat suatu terowongan pribadi (private tunnel) melalui jaringan Internet yang bersifat publik. 
+Dengan menggunakan VPN, memungkinkan untuk pembuatan koneksi jaringanend-to-end yang bersifat privat, melalui jaringan lain seperti Internet atau extranets. Untuk dapat meng implementasikaan VPN, dibutuhkan sebuah VPN Gateway yang dapat berupa router, firewall, atau Cisco Adaptive Security Appliance (ASA).
+
+<img src={VPN}/>
+
+#### Keuntungan menggunakan VPN
+
+- Hemat 
+- Skalabilitas yang baik 
+- Kompatibel dengan teknologi broadband 
+- Aman 
+
+ #### Tipe-Tipe VPN
+ - Site to Site
+ - Remote Access VPN
+
+### GRE Tunnel
+
+GRE atau Generic Routing Encapsulation adalah suatu metode untuk membuat site-to- site VPN yang dikembangkan oleh Cisco dan tidak didesain untuk secure. Hal yang dilakukan dari suatu router yang meng-implementasikan GRE Tunnel adalah hanya meng-enkapsulasi data, dengan menyisipkan header GRE Tunnel, pada suatu paket IP. Dengan menggunakan GRE Tunnel akan memungkinkan untuk pembuatan point-to-point link antara router-router end-point secara virtual.
+
+<img src={GRE}/>
+
+#### Karakteristik dari GRE 
+- GRE terdefinisi sebagai standarisasi IETF
+- IP Protocol 47 digunakan untuk meng-identifikasi paket GRE
+- GRE melakukan enkapsulasi dengan memberikan informasi tentang tipe protocol pada header GRE untuk meng-enkapsulasi semua protokol Layer 3 pada OSI Layer • GRE bersifat stateless dan tidak memiliki mekanisme flow-control secara default.
+- GRE tidak memiliki mekanisme keamanan yang kuat untuk menjaga payloadnya.
+
+### IPSec
+
+IPsec VPN adalah suatu metode site-to-site VPN yang dapat mengirimkan data secara aman melalui jaringan publik antara beberapa jaringan pribadi. IPSec membuat koneksi jaringan virtual antara jaringan pribadi tersebut tanpa menggunakan koneksi layer 2 yang dedicated. Untuk menjaga privasi dan keamanannya, jaringan tersebut di-enkripsi dengan algoritma keamanan yang umum digunakan.
+
+Fitur keamanan yang dimiliki IPsec:
+- Confidentality: Meng-enkripsi data sebelum dikirim melalui jaringan menggunakan suatu algoritma yang dimengerti oleh pengirim dan yang dikirim. Terdapat 2 macam enkripsi yaitu Symmetric Encryption dan Asymmetric Encryption.
+- Data Intergrity: Memastikan integritas dari data yang dikirim. Untuk mengetahui apakah data yang dikirim merupakan data original dan tidak diubah-ubah oleh pihak lain. Untuk menjaga integritas ini digunakan algoritma hash.
+- Authentication: Melakukan authentikasi antara dua device pada masing-masing end-point. Menggunakan PSK ataupun RSA. 
+- Anti-reply Protection: Untuk mendeteksi dan menolak paket yang terulang untuk membantu mencegah spoofing.
+
+### Remote Access VPN
+
+Remote Access VPN adalah VPN yang membuat tunnel antara suatu device dengan jaringan pribadi. Mendukung arsitektur clien/server dimana seorang VPN Client, device yang ingin terkoneksi ke suatu jaringan pribadi, meminta untuk terkoneksi ke jaringan pribadi secara aman melalui suatu VPN Server yang terletak di ujung jaringan pribadi mereka. Biasanya digunakan untuk individu yang ingin terkoneksi ke jaringan perusahaan mereka secara aman. Tunnel tersebut terbentuk dengan cara, VPN Client yang ingin terkoneksi ke jaringan yang dituju memiliki mekanisme untuk meng-enkapsulasi dan meng-enkripsi data traf ic dari client tersebut menggunakan device client tersebut (contohnya adalah laptop yang memiliki software untuk melakukan enkapsulasi dan enkripsi tersebut), lalu data tersebut dikirim ke VPN Gateway (berfungsi sebagai VPN Server) yang terletak diujung dari jaringan yang dituju. 
+
+Remote Access VPN memiliki 2 metode utama untuk di-deploy:
+- Secure Socket Layer (SSL)
+- IP Security (IPSec)
+
+<img src={SSLipsec}/>
