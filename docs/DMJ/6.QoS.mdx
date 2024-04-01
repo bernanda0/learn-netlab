@@ -1,0 +1,118 @@
+---
+sidebar_position: 6
+---
+
+# MODUL 6: Quality of Service and Network Management
+
+import AuthorList from "./../../src/components/Author";
+import Congestion from "./assets/Modul6/congestion_points.jpg";
+import FIFO from "./assets/Modul6/fifo.png";
+import WFQ from "./assets/Modul6/wfq.png";
+import CBWFQ from "./assets/Modul6/cbwfq.png";
+import LLQ from "./assets/Modul6/llq.png";
+import Sequence from "./assets/Modul6/sequence.png";
+import Avoidance from "./assets/Modul6/avoidance.jpg";
+import Shaping from "./assets/Modul6/shaping.png";
+import Policing from "./assets/Modul6/policing.png";
+
+<AuthorList authorsName={["eriqo"]} />
+
+## TUJUAN PRAKTIKUM
+
+1. Dapat menjelaskan Quality of Service dalam jaringan
+2. Mengetahui Queuing Algorithm dan Model Quality of Service.
+3. Dapat mengimplementasikan Quality of Service dalam jaringan.
+
+## A. Quality of Service
+
+Quality of service (QoS) merupakan salah satu poin peting dalam pembentukan reliable network. QoS merupakan mekanisme utama yang digunakan untuk memastikan packet dapat terkirim di dalam jaringan. QoS menjadi sangat penting ketika terjadi congestion, sebagai contoh, ketika kita mengirimkan data yang membutuhkan bandwitdh 150mbps sedangkan link yang digunakan hanya mendukung maksimal 100Mbps maka pada saat itu terjadilah congestion dan membutuhkan QoS untuk mengelola paket sehingga paket tetap dapat dikirim sampai tujuan.
+
+Untuk dapat melakukan QoS maka dibutukan antian (queue) prioritas traffic sehingga perangkat jaringan dapat membedakan paket mana saja yang critical dan membutuhkan prioritas yang lebih tinggi. Pada masa awal perkembangan jaringan, jenis traffic hanya dibedakan menjadi dua jenis yaitu voice dan data traffic. Namun, seiring dengan perkembangan zaman, saat ini terdapat jenis traffic baru yang tentu saja membutuhkan layanan tersendiri yaitu video traffic. Voice traffic sangat sensitif terhadap delay dan pembuangan paket sehingga jenis traffic ini membutuhkan prioritas paling tinggi dibandingkan dengan traffic lainnya. Video traffic lebih resilient daripada voice traffic namun memiliki volume per data yang lebih tinggi. Sedangkan data traffic merupakan traffic yang tidak memiliki toleransi terhadap data loss seperti email dan laman web yang biasanya menggunakan koneksi TCP yang akan mengirim kembali packet yang tidak terkirim.
+
+### Bandwidth, Congestion, Delay, dan Jitter
+
+Bandwidth merupakan pengukuran dalam angka yang merepresentasikan berapa jumlah bit yang dapat dikirimkan dalam satu detik. Network congestion merupakan kondisi ketika suatu jalur tidak dapat mengatasi traffic seperti yang seharusnya. Network congestion dapat menyebabkan terjadinya delay. Gambar dibawah menggambarkan beberapa congestion point. Delay merupakan waktu tambahan yang dibutuhkan oleh suatu paket untuk tiba kepada tujuannya. Beberapa sumber delay dalam jaringan adalah code delay, packetization delay, queuing delay, serialization delay, propagation delay, dan de-jitter delay. Jitter merupakan variasi dari delay pada peneriimaan paket yang terjadi akibat adanya network congestion. Ketika paket dikirimkan dari sumber kepada tujuan secara terus menerus, delay yang terjadi dapat bervariasi nilainya.
+
+<img src={Congestion} />
+
+### Queuing Algorithm
+
+Dalam mengimplementasikan QoS dalam jaringan, dibutuhkan algoritma yang sesuai agar response keadaan ketika terjadi congestion dapat mengatasinya dengan baik. Queuing merupakan metode yang digunakan untuk melakukan manajemen saat terjadinya congestion. Hal tersebut dapt dilakukan dengan melakukan buffer, prioritizing, dan bahkan jika dibutuhkan akan melakukan pengurutan paket sebelum ditransmisikan pada tujuannya. Terdapat beberapa algoritma yang dapat digunakan dalam queuing diantaranya adalah :
+
+1. **First in First Out (FIFO)**
+
+   Algoritma ini merupakan yang paling sederhana dalam melakukan queuing dengan konsep meneruskan paket dari yang pertama masuk. FIFO tidak memiliki konsep prioritas atau pengkelasan sehingga dalam algoritma ini semua paket akan diperlakukan secara sama. FIFO merupakan metode queuing yang paling cepat dan efektif untuk link besar yang memiliki delay dan kemungkinan congestion yang rendah.
+
+   <img src={FIFO} />
+
+2. **Weighted Fair Queuing (WFQ)**
+
+   Berbeda dengan FIFO yang memperlakukan semua paket secara sama, pada WFQ paket akan diidentifikasi dan mengklasifikasikannya ke dalam suatu flow. WFQ akan menentukan seberapa banyak bandwidth untuk setiap flow yang relatif terhadap flow lainnya. Algoritma yang berbasiskan flow ini digunakan oleh WFQ secara bersamaan untuk melakukan penjadwalan traffic ke dalam antrian untuk mengurangi response time. Gambar dibawah menunjukkan alur dalam WFQ. Terlihat bahwa dalam paket yang masuk akan diklasifikasikan menjadi flow high, medium, nnormal dan low. Setelah diklasifikasikan barulah packet akan diteruskan pada interfacenya.
+
+   <img src={WFQ} />
+
+3. **Class-Based Weighted Fair Queuing (CBWFQ)**
+
+   CBWFQ merupakan peningkatan dari algoritma queuing WFQ yang mendukung pendefinisian kelas traffic pada queue. Pada algoritma ini, kita dapat mendefinisikan suatu kelas baik berdasarkan protocol yang digunakan, ACL, maupun input interface nya ke dalam satu kelas. Gambar dibawah menjelaskan bagaimana alur dari CBWFQ melakukan pengantrian. Pada gambar dibawah terdapat tiga buah kelas dimana masing-masing kelas didefinisikan ketentuannya oleh user. Ketika paket masuk ke dalam interface kemudian paket tersebut akan masuk ke dalam kelas nya dan kemudian barulah di teruskan seperti pada WFQ.
+
+   <img src={CBWFQ} />
+
+4. **Low Latency Queuing (LLQ)**
+
+   Algoritma ini memberikan ketentuan yang lebih ketat daripada CBWFQ dimana dalam algoritma ini voice traffic dapat dipisahkan ke dalam kelasnya sendiri sehingga prioritas terhadap voice traffic dapat diutamakan dalam pengirimannya.
+
+   <img src={LLQ} />
+
+## B. QoS Models
+
+QoS model merupakan pemodelan bagaimana QoS dapat diimplementasikan di dalam perangkat jaringan. Terdapat tiga model dari QoS yang dapat digunakan diantaranya adalah:
+
+1. **Best-effort model**
+
+   Pada pemodelan ini setiap paket akan diperlakukan secara sama sehingga tidak memberikan jaminan bahwa paket akan terkirimkan pada tujuan. Model ini merupakan yang paling mudah dan cepat untuk dilakukan dan tidak membutuhkan mekanisme QoS khusus.
+
+2. **Integrated Services (IntServ)**
+
+   Model ini disebut juga dengan Hard QoS yang bekerja berdasarkan flow seperti sumber dan tujuan IP address dan port nya. Pada model ini, aplikasi akan meminta kepada jaringan untuk memesan bandwidth setiap flow nya sebelum mengirimkan data. IntServ menggunakan Resource Reservation Protocol (RSVP) untuk mensinyakan kebutuhan QoS traffic aplikasi di sepanjang perangkat pada jalur end-to-end pengirimannya. Jika perangkat jaringan pada jalur tersebut dapat melayani kebutuhan bandwidth nya maka aplikasi tersebut dapat mengirimkan data nya. Apabila gagal, maka aplikasi tidak dapat mengirimkan data-nya.
+
+3. **Differentiated Services (DiffServ)**
+
+   DiffServ merupakan QoS model yang menspesifikasikan mekanisme yang sederhana dan scalable untuk pengklasifikasian dan pengelolaan traffic jaringan. DiffServ dapat menyediakan jaminan layanan low-latency pada critical network seperti video atau voice traffic. Pada model ini tidak dibutuhkan permintaan bandwidth oleh aplikasi kepada jaringan karena pada model ini bekerja berdasarkan statistik preferensi per traffic kelasnya. Di dalam model ini terdapat level service yang telah didefiniskan untuk dapat digunakan oleh aplikasi. Diffserv mengizinkan perangkat atau host untuk dapat mengklasifikasikan paket dengan perlakuan yang berbeda atau Traffic Classes (TC) dimana setiap TC akan menerima Per-Hop-Behavior (PHB) yang berbeda pada setiap hop dari sumber dan tujuannnya.
+
+## C. QoS Implementation Techniques
+
+Terdapat tiga kategori tools yang dapat digunakan dalam mengimplementasikan QoS di antara nya adalah Classification and marking tools, congestion avoidance tools, dan congestin management tools. Berikut ini gambara urutan dari penggunaan tools tersebut pada saat menggunakan QoS.
+
+<img src={Sequence} />
+
+1. **Classification and Marking**
+
+   Tahapan pertama yang dilakukan dalam implementasi QoS adalah melakukan klasifikasi. Kasifikasi dilakukan untuk menentukan kelas dari trafik dimana paket yang masuk akan disesuaikan ke dalam kelasnya. Marking merupakan tahapan yang menambahkan nilai ke dalam header dari paket untuk menandai paket sehingga dapat disesuaikan dengan policy yang telah dibuat. Perangkat penerima akan menyesuaikan policy yang ada terhadap paket yang masuk dengan cara melihat field marking nya. Cara melakukan marking terhadap paket biasanya dibedakan berdasarkan teknologi yang dipakanya. Table dibawah menunjukka beberapa marking yang dapat digunakan dalam layer 2 atau 3.
+
+   | QoS Tools                 | Layer | Marking Field                            | Width in Bits |
+   | ------------------------- | ----- | ---------------------------------------- | ------------- |
+   | Ethernet (802.1Q, 802.1p) | 2     | Class of Service (CoS)                   | 3             |
+   | 802.11 (Wi-Fi)            | 2     | Wi-fi Traffic Identifier (TID)           | 3             |
+   | MPLS                      | 2     | Experimental (EXP)                       | 3             |
+   | IPv4 dan IPv6             | 3     | IP Precedence (IPP)                      | 3             |
+   | IPv4 dan IPv6             | 3     | Differentiated Service Code Point (DSCP) | 6             |
+
+2. **Congestion Avoidance**
+
+   Congestion Avoidance Tools akan mengawasi muatan traffic jaringan dalam upaya untuk menghindari adanya congestion pada jaringan dan bottleneck antar jaringan sebelum congestion tersebut menjadi suatu masalah. Tool tersebut dapat mengawasi average depth dari queue seperti yang terlihat pada gambar dibawah.
+
+   {" "}
+
+   <img src={Avoidance} />
+
+   Pada saat queue berada dibawah minimum threshold maka tidak akan terjadi pembuangan paket. Apabila queue mencapai maximum threshold maka beberapa persen paket akan di drop. Jika queue melewati maximum threshold maka semua paket akan di drop.
+
+3. **Congestion Management**
+
+   Congestion management dilakukan dengan cara queueing dan scheduling dmana traffic akan di masukkan ke dalam antrian dan akan di buang ketika paket menunggu untuk dikirimkan keluar interface. Setelah memasukannya ke dalam antrian, kemudian dilakukan Policing dan Shaping sebelum diteruskan pada egress interface. Traffic shaping merupakan mekanisme pencegahan congestion yang mengubah paket antrian dengan melakukan penjadwalan untuk transmisi setelahnya. Shaping akan melibatkan queue paket dan memory untuk mem-buffer delay packet sehingga hasil yang didapatkan pada shaping akan lebih lembut daripada policing. Policing merupakan mekanisme pencegahan congestion dengan cara membuang semua paket yang melebihi batasan traffic nya. Gambar dibawah menunjukkan perbedaan hasil pencegahan congestion antrara shaping dan policing.
+
+   **Shaping:**
+
+   <img src={Shaping} />
+   **Policing:**
+   <img src={Policing} />
