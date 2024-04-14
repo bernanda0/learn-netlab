@@ -1,0 +1,247 @@
+---
+sidebar_position: 6
+---
+
+import AuthorList from "../../src/components/Author";
+import Banner from "./assets/Modul6/banner.png";
+import NetscapeWeb from "./assets/Modul6/netscape_web.png"
+import SpiderMonkey from "./assets/Modul6/spider_monkey.png"
+import Bun from "./assets/Modul6/bun.png"
+import Deno from "./assets/Modul6/deno.png"
+import Node from "./assets/Modul6/nodejs.png"
+import NodeSystem from "./assets/Modul6/nodejs_system.png"
+import NPM from "./assets/Modul6/npm.png"
+import Express from "./assets/Modul6/express.png"
+import Postman from "./assets/Modul6/postman.png"
+import Apidog from "./assets/Modul6/apidog.png"
+import PostmanInterface from "./assets/Modul6/postman_interface.png"
+import ApidogInterface from "./assets/Modul6/apidog_interface.png"
+import Swagger from "./assets/Modul6/swagger.png"
+
+# MODUL 6: NodeJS
+
+<AuthorList authorsName={["bernanda"]} />
+
+## TUJUAN PRAKTIKUM
+
+1. Memahami dasar cara pembuatan CRUD API dengan menggunakan Node JS.
+2. Memahami dasar pengujian API.
+
+<img src={Banner} width="80%" className="rounded-xl" />
+
+source : blog.fiverr.com
+
+
+## A. JavaScript
+
+### History
+---
+ 
+JavaScript is a fundamental programming language for web development, complementing HTML and CSS by adding functionality and interactivity to websites. 
+It enables users to engage with websites in diverse ways. Before JavaScript, websites were predominantly static and lacked interactivity. 
+They typically consisted of basic HTML markup for content structure and CSS for styling. 
+
+<img src={NetscapeWeb} width="100%" className="rounded-xl" />
+
+Mosaic, the first web browser with a graphical user interface, debuted in 1993, significantly advancing the web's evolution. 
+Its creators later founded Netscape, which launched Netscape Navigator in 1994, further shaping the web's trajectory.
+
+In September 1995, Brendan Eich, a Netscape programmer, developed a new scripting language in only 10 days. 
+Originally named Mocha, it swiftly transitioned to LiveScript, and ultimately became JavaScript. 
+This rapid development marked the birth of a language that would profoundly influence web development.
+
+_[Reference: https://dev.to/dboatengx/history-of-javascript-how-it-all-began-92a]_
+
+### Runtime
+---
+
+A JavaScript runtime is an environment that executes JavaScript code. 
+It provides the necessary infrastructure and resources for running JavaScript applications. 
+JavaScript code is typically run within web browsers, with each browser having its own JavaScript engine responsible 
+for interpreting and executing the code.
+
+<img src={SpiderMonkey} width="80%" className="rounded-xl" />
+
+Brendan Eich developed the first JavaScript engine in 1995 specifically for the Netscape Navigator browser. 
+Initially, it served as a basic interpreter for the newly introduced language. 
+Over time, this engine evolved into SpiderMonkey, which remains in use by the Firefox browser today.
+
+Here are some popular web browsers and the engines they use to run JavaScript
+| Browser             | JavaScript Engine |
+|---------------------|-------------------|
+| Google Chrome       | V8                |
+| Mozilla Firefox     | SpiderMonkey      |
+| Safari              | JavaScriptCore    |
+| Microsoft Edge      | Chakra            |
+| Opera               | Nitro             |
+| Internet Explorer (older versions) | JerryScript |
+
+More about the engine : https://dev.to/mihirverma7781/inside-javascript-engine-373
+
+
+### Evlotion of JS Runtime
+---
+
+The evolution of JavaScript engines from running solely in the browser to also running on servers, as exemplified by Node.js, marks a significant milestone in the history of web development. 
+
+In 2009, Ryan Dahl introduced Node.js, a runtime environment built on Chrome's V8 JavaScript engine. Node.js enabled developers to execute JavaScript code on the server-side, outside of the browser environment. This shift expanded the scope of JavaScript from purely client-side scripting to full-stack development, allowing developers to use a single language across both client and server environments.
+
+Apart from Node.js, there are several other JavaScript runtime environments available
+
+1. **Bun**.
+
+<img src={Bun} width="100%" className="rounded-xl" />
+
+Bun is a JavaScript runtime written primarily in Zig, aiming to enhance the development experience compared to Node.js. Leveraging JavaScriptCore for improved performance, Bun features a built-in standard library, eliminating the need for external dependencies like npm. It provides out-of-the-box support for TypeScript and internally transpiles every source file, streamlining development with fast startup times and efficient memory usage.
+
+2. **Deno**. 
+
+<img src={Deno} width="100%" className="rounded-xl" />
+
+Created by Ryan Dahl, the original creator of Node.js, Deno is a secure runtime for JavaScript and TypeScript. It addresses some of the design flaws and security concerns present in Node.js while providing a modern, feature-rich environment for building server-side and command-line applications. Deno offers built-in support for TypeScript, a secure execution model, and a standardized set of APIs. It has gained attention for its improved module system, enhanced developer experience, and focus on security.
+
+## B. NodeJS
+
+<img src={Node} width="100%" className="rounded-xl" />
+
+Node.js is an open-source, cross-platform JavaScript runtime environment built on Chrome's V8 JavaScript engine. It allows developers to execute JavaScript code outside of a web browser, typically on the server-side. Node.js provides an event-driven, non-blocking I/O model that makes it lightweight and efficient, making it ideal for building scalable and real-time applications.
+
+### Architecture
+
+---
+<img src={NodeSystem} width="100%" className="rounded-xl" />
+
+Node.js system architecture revolves around three core components:
+
+1. **V8 Engine**. The V8 engine is Google's open-source JavaScript engine, written in C++. It's the same engine used in Google Chrome to execute JavaScript code. V8 compiles JavaScript code into machine code for efficient execution. In the context of Node.js, V8 serves as the JavaScript runtime, responsible for executing JavaScript code on the server-side. It provides high-performance execution, optimizing code execution through features like just-in-time (JIT) compilation and garbage collection.
+
+2. **Node.js Binding**. Node.js binding is a layer that bridges JavaScript code with native C/C++ code. It allows Node.js to interact with operating system APIs and other native libraries. Through bindings, Node.js can access system resources, perform I/O operations, and execute platform-specific functionality. Bindings facilitate seamless integration between JavaScript and lower-level system components, enabling Node.js applications to leverage the full power of the underlying operating system.
+
+3. **Libuv and Event Loop**. Libuv is a multi-platform library written in C that provides asynchronous I/O support and abstracts operating system-specific details related to asynchronous operations. It forms the backbone of Node.js's event-driven architecture. At the heart of Node.js is its event loop, powered by Libuv. The event loop manages asynchronous operations, such as file I/O, network requests, and timers, in a non-blocking manner. It continuously polls for events, dispatches event handlers, and executes callback functions, ensuring efficient resource utilization and responsiveness.
+
+The Node.js system architecture combines the V8 engine's high-performance JavaScript execution with Libuv's asynchronous I/O capabilities, enabling Node.js applications to handle large numbers of concurrent connections and I/O-bound tasks efficiently. The Node.js binding layer bridges the gap between JavaScript and native system components, providing access to system resources and facilitating platform-specific functionality. Overall, this architecture enables Node.js to excel in building scalable, real-time, and data-intensive applications.
+
+More about NodeJS internals : https://smit90.medium.com/deep-dive-into-the-event-loop-understanding-node-js-internals-f9263ef91233
+
+### Node Package Manager (NPM)
+
+---
+
+<img src={NPM} width="100%" className="rounded-xl" />
+
+NPM, short for Node Package Manager, is the default package manager for Node.js. It is a command-line tool that allows developers to discover, install, manage, and share reusable packages of code written in JavaScript. npm is also used for managing project dependencies, running scripts, and publishing packages to the npm registry.
+
+Here are some basic npm commands and their functionalities
+
+```bash
+npm init
+```
+Initializes a new Node.js project by creating a package.json file, which contains metadata about the project and its dependencies.
+
+```bash
+npm install [package-name]
+```
+Installs a package from the npm registry locally in the current project. For example, npm install express installs the Express web framework.
+
+```bash
+npm install [package-name] --save-dev
+```
+Installs a package and adds it to the devDependencies list in the package.json file. This flag is used for packages that are only needed during development, such as testing frameworks or build tools.
+
+```bash
+npm install 
+```
+Installs all dependencies listed in the package.json file. Running npm install without any arguments installs both regular and development dependencies.
+
+```bash
+npm uninstall [package-name]
+```
+Uninstalls a package from the local project and removes it from the dependencies or devDependencies list in the package.json file.
+
+```bash
+npm update [package-name]
+```
+Updates a package to the latest version available on the npm registry.
+
+
+```bash
+npm run [script]
+```
+Executes the script specified in the "scripts" section of the package.json file. This command is commonly used to run custom scripts defined for the project, such as starting the application, running tests, or building the project.
+
+_[Reference : https://spectrumstutz.wordpress.com/2020/11/22/npm-node-package-manager/]_
+
+### Express JS
+
+---
+
+<img src={Express} width="100%" className="rounded-xl" />
+
+Express.js, is a popular and minimalist web application framework for Node.js. It provides a robust set of features for building web applications and APIs with Node.js, simplifying the process of creating server-side applications.
+
+Key aspects of Express.js include
+
+1. **Middleware** functions are at the core of Express.js. Middleware functions are functions that have access to the request and response objects, and the next middleware function in the application's request-response cycle. They can perform tasks such as parsing incoming requests, logging, authentication, error handling, and more. Middleware functions can be added to the application's request-response pipeline in a modular and composable manner, making it easy to customize and extend the functionality of Express applications.
+
+2. **Routing**. Express.js provides a simple and intuitive routing mechanism for defining application routes and handling HTTP requests. Developers can define route handlers for different HTTP methods (GET, POST, PUT, DELETE, etc.) and URL patterns, making it easy to create RESTful APIs and implement CRUD operations. Express.js supports route parameters, query parameters, route nesting, and route middleware, allowing for flexible and expressive routing configurations.
+
+3. **Static File Serving**. Express.js includes middleware for serving static files, such as HTML, CSS, JavaScript, images, and other assets, from a directory on the server. This simplifies the process of serving static content and enables developers to build full-stack web applications with Express.js.
+
+It's pretty simple to create REST API with Express. Here is a basic example:
+
+```javascript
+// index.js
+
+const express = require("express");
+const bodyParser = require("body-parser");
+
+// We create the handler function for the routing in this file
+const eventRepo = require("./repositories/repository.event");
+
+const port = 8463;
+const app = express();
+
+// Middleware
+app.use(bodyParser.json());
+
+// Routing endpoint
+app.post("/events", eventRepo.addEvent);
+app.get("/events", eventRepo.getAllEvents);
+
+app.listen(port, () => {
+  console.log("🚀 Server is running and listening on port", port);
+});
+```
+
+_[Reference : https://medium.com/@rahulrulz680/about-express-js-69551246f533]_
+
+## C. API Testing
+
+API testing is a type of software testing that focuses on verifying the functionality, reliability, performance, and security of an application programming interface (API). APIs serve as the interface between different software systems, allowing them to communicate and interact with each other. API testing ensures that the API behaves as expected, meets the requirements, and functions correctly under various conditions.
+
+Here's an overview of API testing:
+
+Types of API Testing:
+
+- **Functional Testing**. This involves testing the functionality of the API by sending requests and verifying responses against expected outcomes. It includes testing different HTTP methods (GET, POST, PUT, DELETE), query parameters, request headers, and response status codes and payloads.
+- **Integration Testing**. Integration testing focuses on testing the interaction between multiple APIs or components within a system. It ensures that APIs work together as expected and that data is exchanged correctly between them.
+- **Performance Testing**. Performance testing evaluates the API's responsiveness, scalability, and throughput under various load conditions. It helps identify bottlenecks, latency issues, and performance degradation.
+- **Security Testing**. Security testing checks the API for vulnerabilities, such as authentication flaws, authorization issues, injection attacks, and data exposure. It ensures that the API protects sensitive data and adheres to security best practices.
+- **Regression Testing**. Regression testing ensures that changes or updates to the API do not introduce new bugs or regressions. It involves retesting the API's existing functionality after modifications to ensure that it still behaves as expected.
+
+Tools for API Testing:
+
+- Postman
+<img src={Postman} width="100%" className="rounded-xl" />
+
+More about how to use postman : https://www.guru99.com/postman-tutorial.html
+ 
+- ApiDog 
+<img src={Apidog} width="100%" className="rounded-xl" />
+
+More about apidog : https://apidog.com/help/
+
+- Swagger (OpenAPI)
+<img src={Swagger} width="100%" className="rounded-xl" />
+
+More about api testing using swagger : https://apidog.com/blog/what-is-swagger-ui 
