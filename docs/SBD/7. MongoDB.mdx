@@ -1,0 +1,156 @@
+---
+sidebar_position: 7
+---
+
+import AuthorList from "../../src/components/Author";
+import Table_Example from "./assets/Modul1/Table_Example.png";
+import Config from "./assets/Modul1/Config.jpg";
+import Shell from "./assets/Modul1/Shell.jpg";
+import Sel from "./assets/Modul1/Select.jpg";
+import MetaCom from "./assets/Modul1/MetaCom.jpg";
+import CRole from "./assets/Modul1/CRole.jpg";
+import CRole2 from "./assets/Modul1/CRole2.jpg";
+import du from "./assets/Modul1/du.jpg";
+import List from "./assets/Modul1/list.jpg";
+import List2 from "./assets/Modul1/list2.jpg";
+
+import MongoEx from "./assets/Modul7/MongoEx.png";
+import SQLEx from "./assets/Modul7/SQLEx.png";
+
+# MODUL 7: MongoDB
+
+<AuthorList authorsName={["dito"]} />
+
+## TUJUAN PRAKTIKUM
+
+1. Memahami cara kerja salah satu basis data yang bersifat NoSQL (MongoDB)
+2. Memahami penggunaan NoSQL sebagai alternatif dari SQL untuk penyimpanan data
+3. Melakukan integrasi API dengan basis data NoSQL.
+
+## A. MongoDB
+
+### Pengertian MongoDB
+
+MongoDB adalah program manajemen database NoSQL open source. NoSQL (Not only SQL) digunakan sebagai alternatif untuk database relasional tradisional. Database NoSQL sangat berguna untuk bekerja dengan set data yang besar dan terdistribusi. MongoDB adalah tools yang dapat mengelola document oriented information, menyimpan atau mengambil informasi. Bahasa Query Terstruktur (SQL) adalah bahasa pemrograman standar yang digunakan untuk mengelola database relasional. SQL menormalisasi data sebagai skema dan tabel, dan setiap tabel memiliki struktur tetap. Sebaliknya, sebagai database NoSQL, arsitektur MongoDB terdiri dari collection dan documents. Dokumen terdiri dari key value pairs unit data dasar MongoDB. Collections, yang setara dengan tabel SQL, mengandung set dokumen.
+
+Environtment MongoDB menyediakan server untuk membuat database dengan MongoDB. MongoDB menyimpan data sebagai records yang terdiri dari collections dan dokumen. Dokumen mengandung data yang ingin pengguna simpan dalam database MongoDB. Dokumen terdiri dari pasangan bidang dan nilai. Mereka adalah unit data dasar dalam MongoDB. Dokumen ini mirip dengan JavaScript Object Notation (JSON) tetapi menggunakan variasi yang disebut Binary JSON (BSON). Keuntungan menggunakan BSON adalah dapat mengakomodasi lebih banyak jenis data. Dokumen akan memasukkan primary key sebagai pengidentifikasi unik.
+
+## B. Mongoose
+
+Mongoose merupakan Object Data Modeling (ODM) library untuk MongoDB dan Node.js. Mongoose mengatur hubungan antar data. Mongoose juga menyediakan fitur validasi, query building, business logic hooks, dan lainnya. Mongoose memungkinkan kita untuk mendefinisikan skema untuk dokumen MongoDB. Dengan menggunakan Mongoose, kita dapat melakukan operasi CRUD (Create, Read, Update, dan
+Delete) dengan hanya menggunakan fungsi yang disediakan oleh Mongoose.
+
+### 1. Schema
+
+Schema mendefinisikan struktur dari dokumen yang akan disimpan di dalam koleksi MongoDB. Schema ini mendefinisikan properti-properti yang akan disimpan di dalam dokumen, termasuk tipe data, validasi, dan lainnya. Schema ini juga mendefinisikan relasi antar dokumen, seperti relasi one-to-one, one-to-many, dan lainnya. Berikut tipe data yang didukung oleh Mongoose:
+
+- String
+- Number
+- Date
+- Buffer
+- Boolean
+- Mixed
+- ObjectId
+- Array
+- Decimal128
+- Map
+
+### 2. Model
+
+Model adalah kelas yang digunakan untuk berinteraksi dengan koleksi MongoDB. Model ini menyediakan metode-metode untuk melakukan operasi CRUD, seperti membuat dokumen baru, membaca dokumen, memperbarui dokumen, dan menghapus dokumen. Model ini juga menyediakan metode-metode untuk melakukan operasi lain, seperti mencari dokumen, mengurutkan dokumen, dan lainnya.
+
+**Contoh pembuatan schema dan model pada mongoose:**
+
+```javascript
+import mongoose from "mongoose";
+const { Schema, model } = mongoose;
+
+const blogSchema = new Schema({
+  title: String,
+  slug: String,
+  published: Boolean,
+  author: String,
+  content: String,
+  tags: [String],
+  createdAt: Date,
+  updatedAt: Date,
+  comments: [
+    {
+      user: String,
+      content: String,
+      votes: Number,
+    },
+  ],
+});
+
+const Blog = model("Blog", blogSchema);
+export default Blog;
+```
+
+Pada kode diatas, pertama, kita melakukan import Mongoose dari modul "mongoose". Kemudian, kita mendeklarasikan Schema (skema) untuk model blog dengan menggunakan objek Schema yang disediakan oleh Mongoose. Skema ini mendefinisikan struktur data untuk entitas blog, termasuk properti-properti seperti judul (title), slug, status terbit (published), penulis (author), konten (content), tag, tanggal dibuat (createdAt), tanggal diperbarui (updatedAt), dan komentar (comments).
+Setelah mendefinisikan skema, kita membuat model "Blog" dengan menggunakan fungsi "model" yang disediakan oleh Mongoose. Model ini akan digunakan untuk berinteraksi dengan basis data MongoDB, di mana "Blog" adalah nama koleksi yang akan dibuat di dalam basis data.
+Terakhir, kita mengekspor model "Blog" agar dapat digunakan di tempat lain.
+
+### 3. Mongoose CRUD Operations
+
+(Note : Pelajari Javascript Asynchronous Programming terlebih dahulu untuk memahami kode dibawah ini)
+
+#### A. Create
+
+Pertama, kita membuat instance baru dari model Blog dengan menyediakan objek yang berisi properti-properti yang diperlukan seperti title, slug, published, author, content, dan tags. Kemudian, kita memanggil metode save() pada instance tersebut untuk menyimpan entri baru ke dalam database. Metode save() adalah operasi asynchronous, sehingga kita menggunakan await untuk menunggu operasi selesai sebelum melanjutkan.
+
+```javascript
+const blog = new Blog({
+  title: "Judul Blog Baru",
+  slug: "judul-blog-baru",
+  published: true,
+  author: "Nama Penulis",
+  content: "Isi konten blog baru...",
+  tags: ["javascript", "nodejs", "mongodb"],
+});
+
+await blog.save();
+```
+
+#### B. Read
+
+- allBlogs: Mengambil semua blog yang ada dalam basis data MongoDB.
+- specificBlog: Mengambil blog dengan ID tertentu.
+- publishedBlogs: Mengambil semua blog yang telah dipublikasikan (dengan status terbit = true).
+
+```javascript
+const allBlogs = await Blog.find(); // Mendapatkan semua blog
+
+const specificBlog = await Blog.findById("id_blog"); // Mendapatkan blog dengan ID tertentu
+
+const publishedBlogs = await Blog.find({ published: true }); // Mendapatkan blog yang dipublikasikan
+```
+
+#### C. Update
+
+Pada bagian ini, sebuah blog diambil dari basis data MongoDB berdasarkan ID tertentu menggunakan metode findById(). Kemudian, properti judul dan kontennya diperbarui. Setelah itu, perubahan tersebut disimpan ke dalam basis data dengan menggunakan metode .save().
+
+    ```javascript
+
+const blogToUpdate = await Blog.findById("id_blog");
+
+blogToUpdate.title = "Judul Blog Diperbarui";
+blogToUpdate.content = "Isi konten blog diperbarui...";
+
+await blogToUpdate.save();
+
+````
+
+#### D. Delete
+
+Menghapus blog dari basis data MongoDB berdasarkan ID tertentu menggunakan metode findByIdAndDelete().
+
+```javascript
+await Blog.findByIdAndDelete("id_blog"); // Menghapus blog dengan ID tertentu
+````
+
+#### **Referensi untuk membantu pembelajaran :**
+
+- [MongoDB Explanation](https://www.techtarget.com/searchdatamanagement/definition/MongoDB)
+- [Introduction to Mongoose for MongoDB](https://www.freecodecamp.org/news/introduction-to-mongoose-for-mongodb-d2a7aa593c57/)
+- [Getting Started With MongoDB and Mongoose](https://www.mongodb.com/developer/languages/javascript/getting-started-with-mongodb-and-mongoose)
