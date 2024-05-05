@@ -1,0 +1,138 @@
+---
+sidebar_position: 8
+---
+
+# MODUL 8: Network Virtualization
+
+import AuthorList from "./../../src/components/Author";
+import ConventionalComputers from "./assets/Modul8/ConventionalComputers.png";
+import DeviceBasedSDN from "./assets/Modul8/DeviceBasedSDN.png";
+import Hypervisor from "./assets/Modul8/Hypervisor.png";
+import PolicyBasedSDN from "./assets/Modul8/PolicyBasedSDN.png";
+import Type1Hypervisor from "./assets/Modul8/Type1Hypervisor.png";
+import Type2Hypervisor from "./assets/Modul8/Type2Hypervisor.png";
+import ControllerBasedSDN from "./assets/Modul8/ControllerBasedSDN.png";
+
+<AuthorList authorsName={["althaf"]} />
+
+## TUJUAN PRAKTIKUM
+
+1. Praktikan dapat menjelaskan kegunaan dari network virtualization
+2. Praktikan dapat menjelaskan karakteristik dari network virtualization
+
+## A. Network Virtualization
+
+---
+
+Network virtualization adalah salah satu upaya yang dilakukan untuk melakukan
+penghematan sumber daya. Misalkan sebuah perusahaan memerlukan 2000 komputer untuk
+mencakup seluruh karyawan dari berbagai divisi, maka penyediaan 2000 komputer di kantor
+memerlukan hal yang sangat memakan sumber daya.
+
+Dua masalah sumber daya tersebut adalah biaya pengadaan 2000 komputer dan biaya penggunaan daya listrik serta perawatan komputer
+tersebut. Maka dari itu, perusahaan dapat mengadakan atau menyewa sebuah atau beberapa
+server yang dapat menampung 2000 karyawan tersebut. Selain lebih hemat sumber daya,
+karyawan juga bisa mengakses server tersebut dimana saja dengan beberapa batasan yang
+diterapkan perusahaan.
+
+Ada beberapa keuntungan yang dapat diambil dari network virtualization:
+
+1. **Prototyping yang lebih mudah** - memungkinkan dibuatnya isolated networks sehingga
+   variabel bisa dikontrol sesuai dengan kriteria yang dibutuhkan dalam prototyping. Dan jika
+   ada kegagalan, dapat dikembalikan ke versi sebelumnya.
+2. **Lebih cepat dalam pengadaan server** - mengadakan server dalam platform virtual lebih
+   cepat daripada mengadakan server fisik.
+3. **Server uptime yang lebih tinggi** - kebanyakan platform server virtual sudah menyediakan
+   fitur fault tolerance seperti live migration, storage migration, dan distributed resource
+   scheduling.
+4. **Peningkatan kecepatan disaster recovery** - karena virtualisasi memungkinkan hardware
+   abstraction (penggunaan hardware yang bisa disesuaikan) maka jika ada masalah pada
+   server production, server recovery tidak perlu menyesuaikan hardware yang ada pada
+   server production. Beberapa perusahaan penyedia jasa virtualisasi menyediakan simulasi
+   dan test jika terjadi masalah.
+5. **Upgrade support** - virtualisasi menyediakan support yang lebih panjang untuk OS dan
+   aplikasi yang disediakan
+
+## B. Hypervisor
+
+---
+
+Untuk lebih memahami cara kerja virtualization, berikut merupakan bagan abstraksi bagian
+komputer.
+
+{" "}
+
+<img src={ConventionalComputers} width="500" />
+Pada bagan tersebut, dapat dilihat di antara Operating System (OS) dengan hardware
+terdapat firmware. Firmware berfungsi menghubungkan antara software/OS dengan hardware
+sehingga suatu task dapat diselesaikan.
+
+<img src={Hypervisor} width="500" />
+Namun hal ini berbeda untuk virtualisasi. Pada virtualisasi dikenal suatu istilah
+yang bernama Hypervisor. Hypervisor adalah sebuah software yang memungkinkan sebuah
+komputer untuk membuat dan menjalankan Virtual Machine (VM). Hypervisor dapat menjalankan
+beberapa VM sekaligus pada sebuah Physical Machine (hardware).
+
+Terdapat dua tipe hypervisor:
+
+### Type 1 Hypervisor
+
+Hypervisor diinstal langsung pada hardware, sehingga hypervisor juga
+menggantikan firmware. Disebut juga sebagai bare metal hypervisor. Hypervisor ini
+membutuhkan software console untuk mengatur VM nya.
+
+<img src={Type1Hypervisor} width="500" />
+### Type 2 Hypervisor
+
+Hypervisor diinstal pada operating system server. Hypervisor berjalan seperti
+software pada umumnya. Disebut juga sebagai hosted hypervisor.
+
+<img src={Type2Hypervisor} width="500" />
+## C. Software Defined Network (SDN)
+
+---
+
+SDN adalah sebuah cara untuk memisahkan antara control plane dan data/forwarding
+plane. Pemisahan ini dilakukan sebagai langkah untuk menambah fleksibilitas ketika melakukan
+otomasi jaringan. SDN sendiri disini berfungsi sebagai control plane. Untuk memahami apa itu
+control plane dan data plane, berikut penjelasannya:
+
+### Control plane
+
+Control plan berfungsi sebagai “otak” dari sebuah perangkat. Digunakan untuk
+menenentukan packet forwarding. Control plane memiliki mekanisme route forwarding untuk
+layer 2 dan layer 3 seperti table routing protocol neighbor dan tabel topologi, tabel routing
+IPv4 dan IPv6, STP, dan tabel ARP. informasi ini kemudian di proses oleh CPU pada control
+plane.
+
+### Data plane
+
+Data plane atau juga bisa disebut forwarding plane, biasanya merupakan switch yang bisa
+terhubung dengan berbagai port pada sebuah perangkat. Data plane pada tiap perangkat
+digunakan sebagai forward traffic flows. Router dan switch menggunakan informasi dari
+control plane untuk memforward traffic yang datang pada interface yang bersesuaian.
+Informasi pada data plane biasanya diproses oleh prosesor khusus tanpa melibatkan CPU.
+
+### Tipe SDN
+
+Berdasarkan tipenya, SDN dibagi menjadi 3:
+
+1. **Device-based SDN** : Perangkat dapat di program oleh aplikasi yang berjalan pada
+   perangkat itu sendiri atau pada sebuah server dalam jaringan. Hal ini memungkinkan
+   programmer untuk membangun sebuah aplikasi menggunakan bahasa pemograman C,
+   Java dan Python untuk berinteraksi dengan perangkat Cisco. Contoh : Cisco OnePK
+
+<img src={DeviceBasedSDN} width="500" />
+2. **Controller-based SDN** : Menggunakan sebuah controller terpusat yang memiliki
+informasi dari semua perangkat dalam jaringan. Aplikasi dapat berinteraksi dengan
+controller yang bertanggungjawab untuk mengatur perangkat dan memanipulasi traffic
+flows pada sebuah jaringan. Contoh : Cisco Open SDN
+
+<img src={ControllerBasedSDN} width="500" />
+3. **Policy-based SDN** : Sama seperi Controller-based SDN dengan tambahan beberapa
+policy yang beroperasi pada level abstraksi yang lebih tinggi. Menggunakan built-in
+application untuk mengotomasi konfigurasi tingkat lanjut melalui sebuah guided workflow
+dan GUI yang user friendly. Tidak memerlukan basic programming untuk mengoperasikan
+Policy-based SDN. Contoh : Cisco APIC-EM
+
+<img src={PolicyBasedSDN} width="500" />
