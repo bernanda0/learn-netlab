@@ -5,6 +5,13 @@ sidebar_position: 8
 # MODUL 8: Network Virtualization
 
 import AuthorList from "./../../src/components/Author";
+import ConventionalComputers from "./assets/Modul8/ConventionalComputers.png";
+import DeviceBasedSDN from "./assets/Modul8/DeviceBasedSDN.png";
+import Hypervisor from "./assets/Modul8/Hypervisor.png";
+import PolicyBasedSDN from "./assets/Modul8/PolicyBasedSDN.png";
+import Type1Hypervisor from "./assets/Modul8/Type1Hypervisor.png";
+import Type2Hypervisor from "./assets/Modul8/Type2Hypervisor.png";
+import ControllerBasedSDN from "./assets/Modul8/ControllerBasedSDN.png";
 
 <AuthorList authorsName={["althaf"]} />
 
@@ -53,14 +60,18 @@ Ada beberapa keuntungan yang dapat diambil dari network virtualization:
 Untuk lebih memahami cara kerja virtualization, berikut merupakan bagan abstraksi bagian
 komputer.
 
-Pada bagan tersebut, dapat dilihat di antara Operating System (OS) dengan hardware terdapat
-firmware. Firmware berfungsi menghubungkan antara software/OS dengan hardware sehingga
-suatu task dapat diselesaikan.
+{" "}
 
-Namun hal ini berbeda untuk virtualisasi. Pada virtualisasi dikenal suatu istilah yang
-bernama Hypervisor. Hypervisor adalah sebuah software yang memungkinkan sebuah komputer
-untuk membuat dan menjalankan Virtual Machine (VM). Hypervisor dapat menjalankan beberapa
-VM sekaligus pada sebuah Physical Machine (hardware).
+<img src={ConventionalComputers} width="500" />
+Pada bagan tersebut, dapat dilihat di antara Operating System (OS) dengan hardware
+terdapat firmware. Firmware berfungsi menghubungkan antara software/OS dengan hardware
+sehingga suatu task dapat diselesaikan.
+
+<img src={Hypervisor} width="500" />
+Namun hal ini berbeda untuk virtualisasi. Pada virtualisasi dikenal suatu istilah
+yang bernama Hypervisor. Hypervisor adalah sebuah software yang memungkinkan sebuah
+komputer untuk membuat dan menjalankan Virtual Machine (VM). Hypervisor dapat menjalankan
+beberapa VM sekaligus pada sebuah Physical Machine (hardware).
 
 Terdapat dua tipe hypervisor:
 
@@ -70,11 +81,13 @@ Hypervisor diinstal langsung pada hardware, sehingga hypervisor juga
 menggantikan firmware. Disebut juga sebagai bare metal hypervisor. Hypervisor ini
 membutuhkan software console untuk mengatur VM nya.
 
+<img src={Type1Hypervisor} width="500" />
 ### Type 2 Hypervisor
 
 Hypervisor diinstal pada operating system server. Hypervisor berjalan seperti
 software pada umumnya. Disebut juga sebagai hosted hypervisor.
 
+<img src={Type2Hypervisor} width="500" />
 ## C. Software Defined Network (SDN)
 
 ---
@@ -109,13 +122,17 @@ Berdasarkan tipenya, SDN dibagi menjadi 3:
    programmer untuk membangun sebuah aplikasi menggunakan bahasa pemograman C,
    Java dan Python untuk berinteraksi dengan perangkat Cisco. Contoh : Cisco OnePK
 
-2. **Controller-based SDN** : Menggunakan sebuah controller terpusat yang memiliki informasi
-   dari semua perangkat dalam jaringan. Aplikasi dapat berinteraksi dengan controller yang
-   bertanggungjawab untuk mengatur perangkat dan memanipulasi traffic flows pada sebuah
-   jaringan. Contoh : Cisco Open SDN
+<img src={DeviceBasedSDN} width="500" />
+2. **Controller-based SDN** : Menggunakan sebuah controller terpusat yang memiliki
+informasi dari semua perangkat dalam jaringan. Aplikasi dapat berinteraksi dengan
+controller yang bertanggungjawab untuk mengatur perangkat dan memanipulasi traffic
+flows pada sebuah jaringan. Contoh : Cisco Open SDN
 
+<img src={ControllerBasedSDN} width="500" />
 3. **Policy-based SDN** : Sama seperi Controller-based SDN dengan tambahan beberapa
-   policy yang beroperasi pada level abstraksi yang lebih tinggi. Menggunakan built-in
-   application untuk mengotomasi konfigurasi tingkat lanjut melalui sebuah guided workflow
-   dan GUI yang user friendly. Tidak memerlukan basic programming untuk mengoperasikan
-   Policy-based SDN. Contoh : Cisco APIC-EM
+policy yang beroperasi pada level abstraksi yang lebih tinggi. Menggunakan built-in
+application untuk mengotomasi konfigurasi tingkat lanjut melalui sebuah guided workflow
+dan GUI yang user friendly. Tidak memerlukan basic programming untuk mengoperasikan
+Policy-based SDN. Contoh : Cisco APIC-EM
+
+<img src={PolicyBasedSDN} width="500" />
