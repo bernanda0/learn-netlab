@@ -1,0 +1,204 @@
+---
+sidebar_position: 8
+---
+
+import AuthorList from "../../src/components/Author";
+import CacheDiagram from "./assets/Modul8/CacheDiagram.jpeg";
+import RedisOld from "./assets/Modul8/RedisOld.png";
+import RedisNew from "./assets/Modul8/RedisNew.png";
+
+# MODUL 8: Redis (NoSQL)
+
+<AuthorList authorsName={["althaf"]} />
+
+## TUJUAN PRAKTIKUM
+
+1. Praktikan dapat menjelaskan kegunaan dari network virtualization
+2. Praktikan dapat menjelaskan karakteristik dari network virtualization
+
+## A. System Design
+
+---
+
+System design is the process of defining the architecture, interfaces, and data for a system that satisfies specific requirements. System design meets the needs of your business or organization through coherent and efficient systems. Once your business or organization determines its requirements, you can begin to build them into a physical system design that addresses the needs of your customers. The way you design your system will depend on whether you want to go for custom development, commercial solutions, or a combination of the two.
+
+### Importance of System Design
+
+Why is it important?
+
+- **Efficiency and Maintainability**: A well-designed system is easier to understand, modify, and scale as requirements evolve.
+- **Performance and Scalability**: The design considers future growth and ensures the system can handle increasing demands without compromising performance.
+
+### Caching
+
+A cache is hardware or software that you use to temporarily store data so it can be accessed quickly. Caches are typically very small, which makes them cost-effective and efficient. They’re used by cache clients, such as web browsers, CPUs, operating systems, and DNS servers. Accessing data from a cache is a lot faster than accessing it from the main memory or any other type of storage.
+
+<img src={CacheDiagram} width="500" />
+
+The diagram above is an API server implemented with a cache memory and rate limiter.
+
+### Cache invalidation
+
+Cache invalidation is a process where a computer system declares cache entries as “invalid” and either removes or replaces them. The basic objective of this process is to ensure that when the client requests the affected content, the latest version is returned.
+
+### Cache eviction
+
+If a cache has space, data will be easily inserted. If a cache is full, some data will be evicted. What gets evicted, and why, depends on the eviction policy used.
+
+_[Reference: https://www.educative.io/blog/complete-guide-to-system-design#caching]_
+
+## B. Redis
+
+---
+
+<img src={RedisOld} width="250" />
+<img src={RedisNew} width="250" />
+_Old Logo | New Logo_
+
+### Why use Redis?
+
+One of the most compelling reasons to use Redis is its effectiveness for caching. Traditional databases store data on disk, which can lead to slower retrieval times compared to accessing data in memory. Here's how Redis excels in caching:
+
+- **Speed**: Being an in-memory data store, Redis offers blazing-fast access times (microseconds) for frequently accessed data. This significantly improves application performance, especially for operations that involve frequent reads or writes to the same data.
+- **Reduced Database Load**: By caching frequently used data in Redis, you can significantly reduce the load on your primary database. This frees up resources for the database to handle more complex tasks and improves overall system efficiency.
+- **Improved Scalability**: Caching with Redis allows you to scale your application horizontally by adding more Redis servers to handle increasing traffic. This ensures smooth performance even with growing user loads.
+- **Flexibility**: Redis supports various data structures like strings, lists, hashes, and sorted sets. This flexibility allows you to cache different types of data efficiently, making it suitable for a wide range of caching scenarios.
+  In essence, Redis acts as a high-speed buffer between your application and the primary database, significantly improving performance, scalability, and reducing database load.
+
+Beyond caching, Redis offers other advantages like:
+
+- **Messaging**: Redis Pub/Sub enables real-time communication between different parts of your application.
+- **Persistence**: While primarily in-memory, Redis offers options to persist data for recovery in case of server restarts.
+
+### Redis data types
+
+---
+
+For the **complete documentation** of the Redis data types and their API, go to https://redis.io/docs/latest/develop/data-types/.
+
+For examples of those API see the _Strings_ datatype below.
+
+#### 1. Strings
+
+The most basic data type, suitable for storing simple text data, integers, or serialized objects.
+
+- **SET** stores a string value.
+- **SETNX** stores a string value only if the key doesn't already exist. Useful for implementing locks.
+- **GET** retrieves a string value.
+- **MGET** retrieves multiple string values in a single operation.
+
+#### 2. Lists
+
+Ordered collections of elements, allowing efficient insertion, deletion, and retrieval of elements from the beginning or end of the list.
+
+#### 3. **Sets**
+
+Unordered collections of unique elements, ideal for membership checks and finding common elements between sets.
+
+#### 4. **Hashes**
+
+Key-value pairs for storing complex data structures, where each key maps to a specific value (can be a string, list, or another hash).
+
+#### 5. **Sorted Sets**
+
+Ordered collections of elements with associated scores, enabling efficient range queries and retrieval of elements based on their score.
+
+#### 6. **Streams**
+
+Ordered sequences of key-value pairs with unique IDs and timestamps. Streams are useful for real-time data processing, building pub/sub systems, and applications that require an append-only log with efficient access capabilities.
+
+#### 7. **JSON**
+
+Redis offers native support for storing and manipulating JSON data. This allows you to store complex data structures with hierarchical relationships efficiently. You can perform operations like adding, removing, or updating specific elements within the JSON document using JSONPath expressions.
+
+### Redis examples with Node.js (_ioredis_)
+
+We will be using the **ioredis** library for Node.js not the official 'redis' library.
+To see the full docs go to https://www.npmjs.com/package/ioredis
+
+#### Installing _ioredis_ library if not already (ioredis != redis)
+
+```
+npm install ioredis
+```
+
+#### Connecting to a Redis database
+
+```javascript
+const Redis = require("ioredis");
+
+const redis = new Redis();
+
+new Redis({
+  port: 6379, // Redis port
+  host: "127.0.0.1", // Redis host
+  username: "default", // Defaults to 'default'
+  password: "my-top-secret",
+  db: 0, // Defaults to 0
+});
+```
+
+#### Basic examples
+
+Basic examples of using **strings** and **sorted sets** with Redis.
+
+```javascript
+redis.set("mykey", "value"); // Returns a promise which resolves to "OK" when the command succeeds.
+
+// Or ioredis returns a promise if the last argument isn't a function
+redis.get("mykey").then((result) => {
+  console.log(result); // Prints "value"
+});
+
+redis.zadd("sortedSet", 1, "one", 2, "dos", 4, "quatro", 3, "three");
+redis.zrange("sortedSet", 0, 2, "WITHSCORES").then((elements) => {
+  // ["one", "1", "dos", "2", "three", "3"] as if the command was `redis> ZRANGE sortedSet 0 2 WITHSCORES`
+  console.log(elements);
+});
+
+// All arguments are passed directly to the redis server,
+// so technically ioredis supports all Redis commands.
+// The format is: redis[SOME_REDIS_COMMAND_IN_LOWERCASE](ARGUMENTS_ARE_JOINED_INTO_COMMAND_STRING)
+// so the following statement is equivalent to the CLI: `redis> SET mykey hello EX 10`
+redis.set("mykey", "hello", "EX", 10);
+```
+
+#### Advanced Examples
+
+Examples of implementing **streams** using Redis.
+
+```javascript
+const Redis = require("ioredis");
+// The different pub & sub objects just simulate
+// the calls for the different side of the stream
+const sub = new Redis();
+const pub = new Redis();
+
+// Usage: As message hub
+const processMessage = (message) => {
+  console.log("Id: %s. Data: %O", message[0], message[1]);
+};
+
+async function listenForMessage(lastId = "$") {
+  // `results` is an array, each element of which corresponds to a key.
+  // Because we only listen to one key (mystream) here, `results` only contains
+  // a single element. See more: https://redis.io/commands/xread#return-value
+  const results = await sub.xread("BLOCK", 0, "STREAMS", "user-stream", lastId);
+  const [key, messages] = results[0]; // `key` equals to "user-stream"
+
+  messages.forEach(processMessage);
+
+  // Pass the last id of the results to the next round.
+  await listenForMessage(messages[messages.length - 1][0]);
+}
+
+listenForMessage();
+
+setInterval(() => {
+  // `redis` is in the block mode due to `redis.xread('BLOCK', ....)`,
+  // so we use another connection to publish messages.
+  pub.xadd("user-stream", "*", "name", "John", "age", "20");
+}, 1000);
+```
+
+_[Reference: https://www.npmjs.com/package/ioredis]_
