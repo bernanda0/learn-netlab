@@ -1,0 +1,117 @@
+---
+sidebar_position: 9
+---
+
+import AuthorList from "../../src/components/Author";
+
+import VirtualDOM from "./assets/Modul9/VirtualDOM.png";
+import Video from "./assets/Modul9/Video.png";
+import ListVideo from "./assets/Modul9/ListVideo.png";
+
+# MODUL 9: React JS
+
+<AuthorList authorsName={["dito"]} />
+
+## TUJUAN PRAKTIKUM
+
+1. Memahami konsep dasar pembangunan antarmuka pengguna (UI) dengan React JS.
+2. Memahami penggunaan dan manfaat hook `useState` dan `useEffect`.
+3. Mengimplementasikan komponen fungsional dan kelas dalam React.
+4. Mampu membuat interaksi antarmuka pengguna yang dinamis dan responsif dengan React JS.
+
+## A. React JS
+
+---
+
+### Pengertian
+
+React JS adalah sebuah library JavaScript yang dikembangkan oleh Facebook. Fungsinya adalah memungkinkan developer untuk membangun antarmuka pengguna (UI) yang interaktif, dinamis, dan efisien untuk aplikasi web. Salah satu aspek yang membuat React begitu populer adalah kemampuannya untuk memecah antarmuka pengguna menjadi serangkaian komponen kecil yang dapat digunakan kembali. Dengan pendekatan ini, developer dapat membangun UI dengan struktur yang lebih terstruktur dan bersih, serta mempermudah pengelolaan kode.
+
+Konsep utama dalam React adalah penggunaan komponen. Setiap komponen dapat dianggap sebagai unit mandiri yang menggabungkan logika UI dan tampilan dalam satu entitas. Komponen-komponen ini dapat digunakan berulang kali di seluruh aplikasi, membuat developeran lebih efisien dan memungkinkan pemeliharaan yang lebih mudah.
+
+**Beberapa fitur utama dari react:**
+
+### 1. JSX (JavaScript XML)
+
+JSX adalah singkatan dari JavaScript XML. Ini adalah ekstensi sintaks JavaScript yang memungkinkan penggunaan kode HTML di dalam JavaScript. Dalam konteks React, JSX digunakan untuk mendefinisikan tampilan antarmuka pengguna (UI) secara deklaratif di dalam file JavaScript. JSX juga berfungsi sebagai lapisan keamanan yang membantu mencegah serangan XSS (Cross-Site Scripting). Secara bawaan, React mengonversi nilai yang disisipkan dalam JSX menjadi string sebelum merendernya ke dalam DOM. Hal ini mengakibatkan sulitnya bagi pihak ketiga untuk menyisipkan kode tambahan melalui input pengguna, kecuali jika disengaja ditulis dalam logika aplikasi dengan jelas. Berikut beberapa poin penting tentang JSX:
+
+- **Kode HTML dalam JavaScript**: Dengan JSX, Kita dapat menulis kode HTML secara langsung di dalam file JavaScript. Ini membuat kode lebih bersih dan lebih mudah dibaca, karena struktur tampilan UI terlihat lebih jelas.
+
+- **Ekspresi JavaScript**: Selain elemen HTML statis, JSX juga mendukung ekspresi JavaScript di dalamnya. Kita dapat menulis kode JavaScript di dalam kurung kurawal {} di dalam JSX untuk mengevaluasi ekspresi dan menyertakan hasilnya dalam tampilan. Contoh:
+
+  ```jsx
+  const name = "John Doe";
+  const element = <h1>Hello, {name}</h1>;
+  ```
+
+### 2. Virtual DOM
+
+DOM (Document Object Model) berperan dalam merepresentasikan halaman web dalam bentuk struktur data berhierarki. ReactJS menyimpan struktur data ini dalam Virtual DOM, memungkinkan untuk perubahan pada bagian tertentu tanpa merender ulang keseluruhan halaman. Ketika ada perubahan data, ReactJS membuat struktur data DOM Virtual baru dan membandingkannya dengan yang sebelumnya, mengaplikasikan perubahan hanya pada bagian yang berubah, proses yang dikenal sebagai diffing. Pendekatan ini memungkinkan render perubahan lebih cepat dan efisien, mengurangi penggunaan sumber daya, yang sangat bermanfaat terutama dalam proyek skala besar dengan banyak interaksi pengguna.
+
+<img src={VirtualDOM} width="500" />
+
+### 3. Reusable Component dan Props (Properties)
+
+ReactJS mengorganisir antarmuka pengguna ke dalam komponen yang terpisah, yang dapat digunakan kembali. Mirip dengan fungsi JavaScript, komponen React menerima input yang disebut properti atau props. Elemen yang dihasilkan oleh komponen menentukan tampilan akhir antarmuka pengguna yang akan dilihat oleh pengguna di sisi klien. Berikut adalah contoh sebuah komponen fungsi yang menghasilkan elemen React:
+
+```jsx
+function HelloName(props) {
+  return <h1>Hello, {props.name}</h1>;
+}
+```
+
+Berikut adalah contoh penggunaan component :
+
+```jsx
+function Video({ video }) {
+  return (
+    <div>
+      <Thumbnail video={video} />
+      <a href={video.url}>
+        <h3>{video.title}</h3>
+        <p>{video.description}</p>
+      </a>
+      <LikeButton video={video} />
+    </div>
+  );
+}
+```
+
+```jsx
+function VideoList({ videos, emptyHeading }) {
+  const count = videos.length;
+  let heading = emptyHeading;
+  if (count > 0) {
+    const noun = count > 1 ? "Videos" : "Video";
+    heading = count + " " + noun;
+  }
+  return (
+    <section>
+      <h2>{heading}</h2>
+      {videos.map((video) => (
+        <Video key={video.id} video={video} />
+      ))}
+    </section>
+  );
+}
+```
+
+<img src={Video} width="450" />
+
+<img src={ListVideo} width="450" />
+
+Dapat dilihat pada contoh di atas, komponen Video digunakan secara berulang dalam komponen VideoList. Hal ini memungkinkan penggunaan kembali komponen yang sama di berbagai bagian aplikasi, mempercepat pengembangan dan memudahkan pemeliharaan.
+
+### 4. State Management
+
+State management dalam React merujuk pada proses mengelola dan menyimpan data keadaan (state) dari sebuah aplikasi React. State dalam React adalah data yang dimiliki oleh komponen dan dapat berubah seiring waktu sesuai dengan interaksi pengguna atau perubahan data dari sumber eksternal.
+
+Ada beberapa pendekatan untuk mengelola state dalam React:
+
+1. **State Local**: Komponen React dapat memiliki state lokal yang dikelola menggunakan fungsi `useState`. State lokal cocok digunakan untuk data yang spesifik hanya untuk komponen itu dan tidak dibutuhkan di tempat lain dalam aplikasi.
+
+2. **State Global**: Kadang-kadang, data state perlu diakses oleh berbagai komponen di seluruh aplikasi. Untuk kasus ini, Kita dapat menggunakan teknik seperti `Context API` atau manajer state eksternal seperti `Redux`. Context API memungkinkan Kita menyimpan state yang dapat diakses secara global tanpa harus meneruskan properti dari komponen ke komponen secara manual. Redux adalah library yang lebih kuat dan kompleks yang menyediakan mekanisme untuk mengelola state aplikasi secara terpusat, membuatnya lebih mudah untuk dikelola dan diperbarui.
+
+3. **State Asinkron**: Terkadang, aplikasi perlu mengelola state yang berasal dari permintaan data asinkron, misalnya dari backend server. Untuk ini, Kita bisa menggunakan fungsi `useEffect` untuk melakukan pembaruan state saat data asinkron tiba.
+
+Pemilihan metode state management tergantung pada kebutuhan dan kompleksitas aplikasi Kita. Pendekatan yang sederhana dengan state lokal mungkin cukup untuk aplikasi kecil atau menengah, sementara aplikasi yang lebih besar dan kompleks mungkin memerlukan manajemen state eksternal yang lebih canggih.
