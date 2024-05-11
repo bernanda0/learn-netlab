@@ -1,0 +1,124 @@
+---
+sidebar_position: 9
+---
+
+# MODUL 9: Network Automation
+
+import AuthorList from "./../../src/components/Author";
+import CICD from "./assets/Modul9/cicd.png";
+import Ansible from "./assets/Modul9/ansible.png";
+import Adhoc from "./assets/Modul9/adhoc.png";
+import Playbook from "./assets/Modul9/playbook.png";
+import Step1 from "./assets/Modul9/step1.png";
+import Step2 from "./assets/Modul9/step2.png";
+import Step3 from "./assets/Modul9/step3.png";
+
+<AuthorList authorsName={["bernanda"]} />
+
+## TUJUAN PRAKTIKUM
+
+1. Praktikan memahami konsep dasar Network Automation 
+2. Praktikan memahami fungsi dan kegunaan Network Automation 
+3. Praktikan memahami konsep dasar implementasi Network Automation 
+4. Praktikan dapat menerapkan automasi menggunakan Ansible 
+
+## A. Network Automation
+
+---
+
+Otomatisasi jaringan adalah proses mengotomatiskan konfigurasi, pengelolaan, pengujian, penerapan, dan pengoperasian perangkat fisik dan virtual dalam jaringan. Dengan tugas dan fungsi jaringan sehari-hari, proses otomatis dan berulang dapat dikontrol dan dikelola secara otomatis, dengan melakukan hal tersebut, ketersediaan layanan jaringan akan meningkat. Semua jenis jaringan dapat menggunakan otomatisasi jaringan. Dengan melakukan otomatisasi jaringan, memungkinkan pusat data, penyedia layanan, dan perusahaan menerapkan otomatisasi jaringan untuk meningkatkan efisiensi, mengurangi kesalahan manusia, dan menurunkan biaya pengoperasian. 
+
+Otomatisasi jaringan memainkan peran kunci dalam network virtualization, network orchestration, dan juga software-defined networking. Automasi dapat diterapkan dalam beberapa tipe jaringan yaitu termasuk data center network, wide area network (WANs), wireless network, local area network (LANs), dan cloud networks. Intinya, sumber daya jaringan apa pun yang dikontrol melalui application programming interface (API) maupun command-line interface (CLI) dapat di automasi.
+
+### Siklus Hidup Otomasi Jaringan 
+
+Pemahaman tentang siklus hidup otomasi jaringan penting untuk dampak positif terhadap operasi jaringan dan orkestrasi layanan. Dalam jaringan dinamis, perubahan adalah konstan. Layanan dapat dikembangkan, divalidasi, diuji, dan disebarkan dengan biaya dan waktu yang lebih murah menggunakan infrastruktur ter virtualisasi, fungsi jaringan virtual (VNF), dan fungsi asli cloud (CNF). 
+
+Proses ini dikenal sebagai continuous integration, continuous testing, dan continuous deployment (CI-CT-CD). Penyebaran layanan menjadi sesuai permintaan. Pemantauan jaringan dan layanan dilakukan secara otomatis, dan sebagian besar jaringan telah pulih dengan sendirinya. Yang terpenting, layanan dapat diubah atau dihentikan dengan cepat melalui streaming katalog produk dan layanan komersial. 
+
+<img src={CICD} width="600" />
+Network Automation Lifecycle according to ericsson.com
+
+
+## B. Manfaat Otomatisasi Jaringan 
+---
+Seiring penggunaan cloud terus berlanjut dan berkembang, perusahaan dan aplikasi yang menggunakan cloud akan semakin sangat bergantung pada kehandalan jaringan. Karena pergeseran ini, jaringan diharapkan sangat andal dan minim permasalahan sehari-hari. Untuk penyedia layanan, otomatisasi adalah strategi landasan untuk meningkatkan keandalan jaringan sambil mengontrol pengeluaran operasional, sehingga untung perusahaan akan semakin maksimal. Berikut merupakan manfaat lain dari otomatisasi jaringan : 
+
+1. Mengurangi jumlah masalah yang akan muncul 
+Dengan memanfaatkan coding dan playbook, masalah jaringan yang umum akan dapat diselesaikan secara spontan. Potensi kesalahan terkait proses manual seperti kesalahan konfigurasi, kesalahan ketik, dan lainnya akan jauh lebih berkurang. 
+
+2. Biaya yang lebih rendah 
+Karena otomatisasi mengurangi kerumitan infrastruktur yang mendasarinya, maka lebih sedikit jam kerja yang diperlukan untuk mengkonfigurasi, menyediakan, dan mengelola layanan dan jaringan. Otomatisasi jaringan dapat membuat kegiatan-kegiatan yang berulang dapat dilakukan secara otomatis tanpa perlu tenaga kerja tambahan. Dengan menyederhanakan operasi, maka akan semakin sedikit pula tenaga kerja yang dibutuhkan untuk merawat sebuah jaringan. 
+
+3. Peningkatan Ketahanan Jaringan 
+Dengan menghilangkan kebutuhan akan gangguan manual jika terjadi suatu peristiwa, perusahaan dapat menawarkan dan memberikan tingkat layanan yang lebih tinggi dengan lebih konsistensi di seluruh cabang dan wilayah. 
+
+4. Pengurangan Network Downtime 
+Dengan menghilangkan kemungkinan kesalahan manusia, perusahaan dapat menawarkan dan memberikan layanan tingkat yang lebih tinggi dengan lebih konsisten di seluruh cabang dan wilayah. Hal ini merupakan efek dari keunggulan otomatisasi jaringan yang menghilangkan kesalahan-kesalahan yang mungkin akan muncul apabila dilakukan konfigurasi manual. 
+
+5. Analisis dan kontrol jaringan 
+Otomatisasi membantu membuat operasi IT lebih responsif terhadap perubahan melalui analisis. Pengguna mendapatkan lebih banyak visibilitas ke dalam jaringan dan memahami dengan tepat apa yang terjadi di jaringan tersebut dengan kemampuan untuk mengontrol dan beradaptasi sesuai kebutuhan. 
+
+## C. Penggunaan Otomatisasi Jaringan 
+---
+Saat ini, otomatisasi jaringan dapat melakukan berbagai tugas, beberapa di antaranya meliputi: 
+- Perencanaan dan desain jaringan, termasuk perencanaan skenario dan manajemen inventaris. 
+- Pengujian perangkat dan verifikasi konfigurasi. 
+- Pengumpulan data jaringan yang berkaitan dengan perangkat, sistem, perangkat lunak, topologi jaringan, lalu lintas, dan layanan secara real-time. 
+- Analisis data, termasuk analisis prediktif AI dan ML, yang memberikan wawasan tentang perilaku jaringan saat ini dan masa depan. 
+- Configuration compliance, yang memastikan bahwa semua perangkat dan layanan jaringan berjalan sebagaimana mestinya. 
+- Update software, termasuk rollback perangkat lunak jika diperlukan. 
+- Memberikan informasi tentang laporan, dasbor, peringatan, dan alarm. 
+- Menerapkan security compliance. 
+- Memantau jaringan dan layanannya untuk memastikan keselarasan dengan SLA dan jaminan kepuasan pelanggan.
+
+## D. Ansible 
+---
+<img src={Ansible} width="400" />
+
+Ansible merupakan salah satu alat network automation yang banyak digunakan pada saat ini. Ansible biasanya digunakan untuk melakukan deployment aplikasi, update pada workstation dan server, manajemen konfigurasi, dan masih banyak hal lainnya yang biasa dilakukan sistem administrator sehari-hari. Ansible memungkinkan penggunanya untuk mengkonfigurasi lebih dari satu komputer pada jaringan secara bersamaan tanpa memerlukan skill programming. 
+
+Dalam analogi skrip Shell ini, banyak perintah shell disatukan dalam bentuk skrip shell untuk melakukan serangkaian tugas dan mereka juga memberi kita manfaat seperti pernyataan conditional, loop, fungsi, dll. 
+
+Demikian juga, **Ansible Playbooks** adalah sekelompok perintah **ad-hoc** dengan elemen pemrograman tambahan seperti loop, iterasi, bersyarat dll. 
+
+Dalam satu playbook, Anda dapat melihat beberapa modul dan penangan diorganisir. Dengan kata lain, ini disebut sebagai Orkestrasi. 
+
+<img src={Adhoc} width="600" />
+
+### Cara Kerja Ansible 
+Di Ansible, ada dua kategori komputer: node kontrol dan node yang dikelola. Node kontrol adalah komputer yang menjalankan Ansible. Harus ada setidaknya satu node kontrol, meskipun node kontrol cadangan mungkin juga ada. Node yang dikelola adalah perangkat apa pun yang dikelola oleh node kontrol. 
+
+Ansible bekerja dengan menghubungkan ke node (klien, server, atau apa pun yang sedang dikonfigurasikan) di jaringan, lalu mengirimkan program kecil yang disebut modul Ansible ke node itu. Ansible mengeksekusi modul ini melalui SSH dan menghapusnya setelah selesai. Satu-satunya persyaratan untuk interaksi ini adalah bahwa node kontrol Ansible tersebut memiliki akses login ke node yang dikelola. Kunci SSH adalah cara paling umum untuk memberikan akses, tetapi bentuk autentikasi lain juga dapat digunakan. 
+
+- Ansible Playbook 
+Playbook adalah file konfigurasi yang ditulis dalam YAML yang memberikan instruksi tentang apa yang perlu dilakukan untuk membawa node yang dikelola ke keadaan yang diinginkan. Playbook digunakan agar perintah tersebut sederhana, dapat mudah dibaca oleh siapa saja, dan dapat mendokumentasikan secara otomatis. Playbook juga bersifat idempoten, artinya adalah playbook dapat dijalankan pada suatu sistem kapan saja tanpa menimbulkan efek negatif padanya. Jika playbook dijalankan pada sistem yang telah dikonfigurasi dengan benar dan dalam keadaan yang diinginkan, maka sistem itu akan tetap berjalan sesuai dengan konfigurasi tersebut meskipun setelah menjalankan playbook. 
+
+Perhatikan gambar dibawah untuk melihat contoh file ansible playbook.
+<img src={Playbook} width="600" />
+
+### Ansible Inventory 
+Ansible bekerja dengan beberapa node terkelola atau "host" di infrastruktur Anda secara bersamaan, menggunakan daftar atau grup daftar yang dikenal sebagai inventaris. Setelah inventaris Anda ditentukan, Anda menggunakan pola untuk memilih host atau grup yang Anda ingin Ansible eksekusi. 
+
+Lokasi default untuk inventaris adalah file bernama /etc/ansible/hosts. Anda dapat menentukan file inventaris yang berbeda di baris perintah menggunakan 
+opsi **-i [path]**.
+
+Anda juga dapat menggunakan beberapa file inventaris secara bersamaan, dan/atau menarik inventaris dari sumber dinamis atau cloud atau format yang berbeda (YAML, ini, dan seterusnya). Diperkenalkan pada versi 2.4, Ansible memiliki Plugin Inventaris untuk menjadikannya fleksibel dan dapat disesuaikan.
+
+### Langkah awal menjalankan Playbook Ansible 
+1. Membuat Ansible Playbook 
+File Playbook ditulis dengan format YAML dan umumnya diberi ekstensi .yml. Fitur ini membantu untuk menyimpan kumpulan perintah yang dapat kita eksekusi sehingga mengurangi repetisi dalam memasukkan perintah ini pada setiap event. 
+
+<img src={Step1} width="800" />
+ 
+
+2. Menjalankan Playbook 
+Silakan mereferensikan kepada ad hoc command pada ansible untuk lebih dalam mempelajari tentang fungsionalitas yang dapat dilakukan terhadap playbook. 
+
+<img src={Step2} width="800" />
+ 
+ 
+3. Memperoleh Hasil Keluaran Playbook 
+Sebagai engineer, ini adalah tugas kita untuk menganalisa apakah hasil keluaran sudah sesuai dengan yang diharapkan.
+
+<img src={Step3} width="800" />
