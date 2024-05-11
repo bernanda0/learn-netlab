@@ -110,8 +110,13 @@ Ada beberapa pendekatan untuk mengelola state dalam React:
 
 1. **State Local**: Komponen React dapat memiliki state lokal yang dikelola menggunakan fungsi `useState`. State lokal cocok digunakan untuk data yang spesifik hanya untuk komponen itu dan tidak dibutuhkan di tempat lain dalam aplikasi.
 
-2. **State Global**: Kadang-kadang, data state perlu diakses oleh berbagai komponen di seluruh aplikasi. Untuk kasus ini, Kita dapat menggunakan teknik seperti `Context API` atau manajer state eksternal seperti `Redux`. Context API memungkinkan Kita menyimpan state yang dapat diakses secara global tanpa harus meneruskan properti dari komponen ke komponen secara manual. Redux adalah library yang lebih kuat dan kompleks yang menyediakan mekanisme untuk mengelola state aplikasi secara terpusat, membuatnya lebih mudah untuk dikelola dan diperbarui.
+2. **State Global**: Kadang-kadang, data state perlu diakses oleh berbagai komponen di seluruh aplikasi. Untuk kasus ini, Kita dapat menggunakan teknik seperti `Context API` atau manajer state eksternal seperti `Redux` atau `React Query`. Context API memungkinkan Kita menyimpan state yang dapat diakses secara global tanpa harus meneruskan properti dari komponen ke komponen secara manual. Redux adalah library yang lebih kuat dan kompleks yang menyediakan mekanisme untuk mengelola state aplikasi secara terpusat, membuatnya lebih mudah untuk dikelola dan diperbarui.
 
 3. **State Asinkron**: Terkadang, aplikasi perlu mengelola state yang berasal dari permintaan data asinkron, misalnya dari backend server. Untuk ini, Kita bisa menggunakan fungsi `useEffect` untuk melakukan pembaruan state saat data asinkron tiba.
 
 Pemilihan metode state management tergantung pada kebutuhan dan kompleksitas aplikasi Kita. Pendekatan yang sederhana dengan state lokal mungkin cukup untuk aplikasi kecil atau menengah, sementara aplikasi yang lebih besar dan kompleks mungkin memerlukan manajemen state eksternal yang lebih canggih.
+
+Referensi:
+
+- https://react.dev/learn
+- https://geeksforgeeks.org/reactjs-virtual-dom/
