@@ -1,0 +1,164 @@
+---
+sidebar_position: 2
+---
+import AuthorList from "../../src/components/Author"
+import Coax from "./assets/Modul2/coax.png"
+import Cross from "./assets/Modul2/cross.png"
+import Fiber from "./assets/Modul2/fiber.jpg"
+import FullDuplex from "./assets/Modul2/fullduplex.png"
+import HalfDuplex from "./assets/Modul2/halfduplex.png"
+import Hub from "./assets/Modul2/hub.jpeg"
+import Roll from "./assets/Modul2/roll.png"
+import Simplex from "./assets/Modul2/simplex.png"
+import STP from "./assets/Modul2/STP.webp"
+import Str1 from "./assets/Modul2/str1.png"
+import Str2 from "./assets/Modul2/str2.png"
+import Switch from "./assets/Modul2/switch.jpg"
+import UTP from "./assets/Modul2/UTP.jpg"
+
+# MODUL 2: Perkabelan, Perbandingan antara Hub dan Switch, dan Eksplorasi Packet Tracer
+
+<AuthorList authorsName={["emiw"]} />
+
+## TUJUAN PRAKTIKUM
+
+1. Praktikan memahami tentang jenis – jenis kabel pada jaringan komputer.
+2. Praktikan memahami perbandingan antara hub dan switch. 
+3. Praktikan memahami perbedaan TCP dan UDP pada IPv4 serta IPv6. 
+4. Praktikan mengenal lebih jauh mengenai aplikasi Packet Tracer.
+
+## A. Perkabelan
+
+Kabel adalah media transmisi yang digunakan untuk menghubungkan perangkat-perangkat dalam jaringan komputer. Penggunaan jenis kabel yang berbeda dapat mempengaruhi kecepatan transmisi dalam jaringan tersebut. Kesalahan dalam pemilihan kabel dapat berdampak pada berbagai faktor penting seperti kinerja, stabilitas, skalabilitas, dan efisiensi energi. Ada berbagai jenis kabel yang bisa digunakan untuk menghubungkan perangkat, namun beberapa jenis yang paling umum digunakan dalam jaringan.
+
+### Jenis-jenis kabel dalam jaringan
+
+1. Kabel Coaxial
+
+    Kabel koaksial terdiri dari empat lapisan, dengan dua lapisan konduktor dan dua lapisan isolator. Berikut ini merupakan lapisan-lapisan dari yang terdalam hingga terluar:
+    - Copper Wire, kabel ini merupakan lapisan konduktor yang digunakan untuk transfer data.
+    - Plastic Insulation, lapisan isolator ini berfungsi sebagai pelindung akhir untuk menghindari dari goresan kabel. 
+    - Copper Mesh, berperan sebagai kabel kedua dalam sirkuit dan mengamankan copper wire. 
+    - Outside Insulation, lapisan terluar untuk melindungi dari kerusakan fisik dan pengaruh elektromagnet.
+    Kabel ini dulu digunakan sebagai pilihan utama untuk menghubungkan perangkat dalam jaringan. Namun saat ini, kabel koaksial telah banyak diganti oleh kabel lain seperti fiber optic dan kabel UTP/STP dalam infrastruktur jaringan modern.
+
+<img src={Coax} />
+
+2. Kabel Unshielded Twisted Pair (UTP)
+
+    Kabel UTP terdiri dari empat pasang kabel (total 8 kabel, dipasangkan dua-dua) dengan color code yang berbeda-beda, dimana masing-masing pasang saling dililit satu sama lain sebanyak enam lilitan per inchi untuk memberikan perlindungan terhadap gangguan interferensi listrik. Kabel ini merupakan kabel yang paling umum digunakan dalam jaringan komputer untuk menghubungkan antar perangkat, karena murah dan mudah dipasang, serta bisa bekerja untuk jaringan skala kecil. 
+
+<img src={UTP} />
+
+3. Kabel Shielded Twisted Pair (STP)
+
+    Kabel STP hampir sama dengan kabel UTP, akan tetapi kawatnya lebih besar dan diselubungi dengan lapisan pelindung isolasi untuk mencegah gangguan interferensi. 
+
+<img src={STP} />
+
+4. Kabel Fiber Optic
+
+    Kabel serat optik mengirim data sebagai pulsa cahaya melalui kabel serat optik. Kabel serat optik mempunyai keuntungan yang menonjol dibandingkan dengan semua pilihan kabel tembaga. Kabel serat optik memberikan kecepatan transmisi data tercepat dan lebih reliable, karena jarang terjadi kehilangan data yang disebabkan oleh interferensi listrik. Kabel serat optik juga sangat tipis dan fleksibel sehingga lebih mudah dipindahkan dari pada kabel tembaga yang berat. 
+
+<img src={Fiber} />
+
+### Tipe-tipe kabel jaringan
+1. Straight-Through
+
+    Kabel straight-through menghubungkan pin yang sama pada ujung yang satu dengan pin yang sesuai pada ujung yang lain sesuai dengan tipe (568A atau 568B yang dapat dilihat gambar di bawah). Straight-through memiliki kegunaan untuk menghubungkan perangkat jaringan yang berbeda, seperti komputer ke switch atau router.
+
+<img src={Str1} />
+<img src={Str2} />
+
+2. Crossover
+
+    Kabel crossover memiliki konfigurasi pin yang berbeda di kedua ujungnya. Perbedaannya dapat dilihat gambar di bawah yaitu posisi kabel hijau dan orange yang berbeda di ujung satu dan ujung yang lainnya. Berbeda dengan straight-through, Kabel crossover digunakan untuk menghubungkan dua perangkat sejenis tanpa menggunakan switch atau hub sebagai perantara.
+
+<img src={Cross} />
+
+3. Rollover
+
+    Kabel rollover atau kabel konsol memiliki konfigurasi pin yaitu terbalik antara ujung satu ke ujung lain. Pin 1 diujung A maka di ujung B akan berada di Pin 8. Kegunaan kabel ini untuk mengelola, mengkonfigurasi, atau memulihkan perangkat jaringan seperti router. 
+
+<img src={Roll} />
+
+## B. Network Interface Port
+Port adalah bagian pada komputer yang memungkinkan koneksi dengan perangkat atau komputer lain dalam jaringan. Dalam jaringan komputer, terdapat berbagai jenis port, termasuk Network Interfaces Port dan Network Numbering Port. 
+Network Numbering Port digunakan untuk mengidentifikasi aplikasi dan layanan dalam jaringan TCP/IP. Port ini dikenal dengan angka 16-bit yang disebut Port Number, diklasifikasikan berdasarkan protokol transport yang digunakan, seperti TCP dan UDP. Jumlah maksimum port untuk setiap protokol adalah 65.536.
+Network Interfaces Port adalah port yang digunakan sebagai antarmuka perangkat keras dalam jaringan, memungkinkan koneksi fisik ke perangkat lain.
+Beberapa jenis port yang umum digunakan dalam instalasi jaringan adalah:
+
+1. Fast Ethernet Port
+
+    Diperkenalkan pada tahun 1995 dalam standar IEEE 802.3u, port ini mendukung transmisi data dengan kecepatan 100 Mbit/s. Hingga kini, Fast Ethernet Port masih menjadi pilihan utama pada perangkat jaringan seperti router, switch, dan hub, serta perangkat end-user seperti PC.
+
+2. Gigabit Ethernet Port
+
+    Didefinisikan pada tahun 1999 dalam standar IEEE 802.3ab untuk UTP dan pada tahun 2004 dalam standar IEEE 802.3ah untuk fiber optic. Port ini memungkinkan transmisi data dengan kecepatan 1 Gbit/s. Meski lebih mahal dibandingkan Fast Ethernet Port, Gigabit Ethernet Port digunakan untuk perangkat dan tujuan khusus, seperti jaringan server data, karena kemampuannya yang unggul.
+
+3. Serial Port
+
+    Dikenal dengan nama RS 232, port ini digunakan untuk komunikasi dengan mentransmisikan 1 bit dalam satu waktu. Terdiri dari 9 pin, masing-masing pin memiliki fungsi khusus. Serial Port sering digunakan untuk komunikasi dengan perangkat tertentu yang membutuhkan transmisi data bit per bit.
+
+## C. Hub
+
+<img src={Hub} />
+Perangkat ini bekerja dengan meneruskan setiap bit informasi yang dikirimkan dari satu host ke semua host lain yang terhubung dengannya. Metode kerja ini menyebabkan setiap host di jaringan harus berbagi bandwidth, yang pada akhirnya menurunkan kualitas jaringan. Misalnya, dalam sebuah LAN dengan bandwidth 100 Mbps dan 10 host, setiap host akan mendapatkan kurang lebih 10 Mbps saja. Selain itu, penggunaan hub sering meningkatkan tingkat collision di jaringan, membuat transfer data menjadi kurang efisien. Oleh karena itu, meskipun hub jarang digunakan di jaringan besar saat ini, mereka masih dipakai untuk kebutuhan sederhana seperti berbagi file dan printer di jaringan kecil yang tidak memerlukan performa tinggi.
+Meskipun terlihat kuno, hub tetap memiliki tempat dalam beberapa skenario sederhana. Misalnya, jika Anda hanya membutuhkan koneksi dasar untuk berbagi file atau printer dalam jaringan kecil, hub masih bisa menjadi solusi yang praktis dan ekonomis. Namun, untuk jaringan yang lebih besar dan kompleks, perangkat seperti switch dan router menjadi pilihan yang lebih efisien dan handal. 
+Adapun beberapa isu penting yang disebabkan oleh implementasi hub antara lain:
+1. Skalabilitas yang Terbatas
+
+    Dengan semakin banyaknya host yang terhubung ke hub, bandwidth yang tersedia untuk setiap host akan semakin berkurang, menurunkan kualitas jaringan secara keseluruhan. Hal ini membuat hub kurang ideal untuk jaringan yang berkembang atau memiliki banyak perangkat.
+2. Meningkatnya Latency
+
+    Latency mengacu pada waktu yang dibutuhkan oleh sinyal untuk mencapai host tujuan. Menambahkan jarak antar media atau menambah jumlah perangkat pada segmen jaringan yang menggunakan hub akan meningkatkan latency. Latency yang tinggi dapat menyebabkan paket data gagal mencapai tujuan, mengganggu kinerja jaringan. 
+3. Meningkatnya jumlah Collision
+
+    Latency yang tinggi juga dapat menyebabkan masalah komunikasi antar host, seperti collision. Collision terjadi ketika sinyal awal gagal mencapai host lainnya, sehingga menyebabkan beberapa host mengirimkan paket data secara bersamaan. Ini mengakibatkan hilangnya paket data dan membuat setiap host harus menunggu secara acak untuk mencoba mengirimkan paket lagi, menurunkan efisiensi jaringan.
+4. Network Failure
+
+    Jika ada host yang menghasilkan traffic yang merugikan, ini dapat mempengaruhi komunikasi di seluruh jaringan. Traffic yang merugikan ini bisa disebabkan oleh konfigurasi kecepatan atau pengaturan transmisi full-duplex pada NIC yang tidak tepat, yang pada akhirnya dapat mengakibatkan kegagalan jaringan secara keseluruhan.
+
+## D. Switch
+
+<img src={Switch} />
+Switch adalah perangkat jaringan yang, seperti hub, menghubungkan beberapa perangkat dalam sebuah jaringan. Namun, perbedaan utama terletak pada kecerdasannya. Switch tidak mengirimkan informasi ke semua perangkat yang terhubung, melainkan menggunakan metode yang lebih efisien yang dikenal sebagai selective forwarding. Switch memiliki tabel switching atau tabel alamat hardware yang menyimpan informasi tentang setiap perangkat yang terhubung, memungkinkan switch untuk mengarahkan paket data langsung ke port yang sesuai dengan MAC address perangkat tujuan. Hasilnya, setiap pengiriman paket melalui switch terasa seperti koneksi point-to-point antara pengirim dan penerima.
+Karena mekanisme ini, setiap perangkat dalam jaringan yang terhubung melalui switch dapat menikmati bandwidth penuh. Switch mampu memberikan bandwidth yang didedikasikan untuk setiap perangkat, meningkatkan efisiensi dan performa jaringan secara keseluruhan. Meskipun koneksi point-to-point ini tidak terjadi secara bersamaan, switch memiliki kemampuan untuk men-buffer paket data yang akan dikirim dan mengirimkan data ketika port tujuan sedang dalam kondisi idle, menggunakan mekanisme store and forward. Teknik ini mencegah terjadinya tabrakan data dan memungkinkan perangkat untuk mentransmisi serta menerima data secara bersamaan dalam mode full-duplex.
+Berikut adalah operasi dasar yang dilakukan switch: 
+1. Learning 
+
+    Switch memiliki switching table / hardware address table yang berisi informasi tentang MAC address setiap host yang terhubung dengannya. Informasi tersebut didapat dari setiap frame yang masuk ke switch yang kemudian “dipelajari” isinya, terutama MAC address asal paket tersebut. Bila pada tabel belum memiliki MAC address yang ada pada frame tersebut, maka informasi tersebut akan dimasukkan ke tabel dan dipasangkan dengan port dimana frame tersebut masuk ke switch.
+2. Aging 
+
+    Informasi yang terdapat pada switching table diberikan penanda waktu ( timestamp ). Dari mulai pertama kali informasi tersebut dimasukkan ke tabel, akan ada prosedur penghitungan mundur timestamp. Bila timestamp mencapai 0, informasi tersebut akan dibuang. Namun timestamp dapat diperbaharui, dimana setiap kali switch menerima paket dari MAC address, maka timestamp untuk informasi dari MAC address tersebut akan diperbarui kembali ke nilai awal. 
+3. Flooding 
+
+    Jika switch belum memiliki informasi mengenai MAC address tujuan dari suatu frame, maka switch akan melakukan broadcast suatu frame ke semua port kecuali port dimana frame yang akan dikirimkan itu berasal. 
+4. Selective Forwarding 
+
+    Selective forwarding berarti sebelum mengirimkan suatu frame, switch akan mencari tahu MAC address tujuan frame tersebut dan meneruskannya ke port dimana host yang memiliki MAC address tersebut terhubung (bila sudah terdapat informasinya di switching table). Ini adalah perbedaan mendasar antara switch dan hub yang langsung meneruskan frame ke semua port. 
+5. Filtering 
+
+    Pada beberapa kondisi, frame tidak akan diteruskan oleh switch. Ini dapat terjadi bila frame tersebut rusak dan gagal pada tes CRC (cyclic redundancy check). Switch juga mampu melakukan tugas keamanan seperti melakukan blocking pada frame yang berasal dari MAC address tertentu. 
+
+## E. Mode Transmisi
+Sebuah transmisi pada komunikasi antara dua mesin dapat terjadi dalam beberapa bentuk berbeda. Transmisi data dapat digolongkan berdasarkan arah pertukaran data & jumlah bit yang dikirimkan secara simultan. Berdasarkan arah pertukaran data, mode transmisi dibagi menjadi tiga yaitu :
+
+
+1. Simplex
+
+    Sebuah koneksi simplex merupakan komunikasi di mana data hanya mengalir pada satu arah, dari transmitter menuju receiver. Pada mode ini tidak ada mekanisme agar informasi dapat dikirimkan kembali ke pengirim. Tipe koneksi seperti ini bermanfaat jika data yang ditransmisikan tidak perlu mengalir secara dua arah. Contoh dari mode transmisi simplex diantaranya adalah komunikasi antara keyboard dengan PC, atau komunikasi pada sistem broadcast TV. 
+
+<img src={Simplex} />
+
+2. Half-Duplex
+
+    Mode transmisi half-duplex dapat melakukan komunikasi dua arah namun hanya mengizinkan transmisi satu arah pada satu waktu. Kedua devices yang terhubung dapat mengirimkan dan menerima data namun tidak secara simultan. Ketika device A sedang mengirimkan data maka device B hanya dapat menerima data dan begitu juga sebaliknya. Mode transmisi ini bisanya digunakan untuk transmisi data dengan kecepatan rendah yang biasanya terjadi pada koneksi dengan menggunakan analog circuit. Dengan adanya proses pergantian pada arah komunikasi data, transmisi data pada mode ini memerlukan waktu yang lebih lama dibandingkan mode transmisi lainnya. Contoh penggunaan mode ini adalah walkie talkie dan komunikasi pada modem.
+
+<img src={HalfDuplex} />
+
+3. Full-Duplex
+
+    Pada mode full-duplex, transmisi data dapat dilakukan secara bersamaan pada kedua arah. Kedua devices yang terhubung dapat mengirim dan menerima data pada saat yang bersamaan, yang artinya bandwidth yang tersedia dibagi dua untuk masing-masing arah transmisi data jika media transmisi yang sama digunakan untuk tranmisi data pada kedua arah. Contoh dari penerapan mode full-duplex adalah jaringan telepon di mana kedua orang yang sedang menelpon dapat berbicara dan mendengarkan pada satu waktu. 
+
+<img src={FullDuplex} />
