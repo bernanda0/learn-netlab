@@ -47,6 +47,54 @@ const authorsData = {
     url: "https://github.com/PhoebeIvana",
     image_url: "https://github.com/PhoebeIvana.png",
   },
+  emiw: {
+    name: "Emir [EF]",
+    title: "Netlab Assistant 2024/2025",
+    url: "https://github.com/emirfateen",
+    image_url: "https://github.com/emirfateen.png",
+  },
+  isan: {
+    name: "Isan [IS]",
+    title: "Netlab Assistant 2024/2025",
+    url: "https://github.com/patuyyy",
+    image_url: "https://github.com/patuyyy.png",
+  },
+  den: {
+    name: "Dermawan [DN]",
+    title: "Netlab Assistant 2024/2025",
+    url: "https://github.com/den-dimas",
+    image_url: "https://github.com/den-dimas.png",
+  },
+  ryan: {
+    name: "Ryan [ST]",
+    title: "Netlab Assistant 2024/2025",
+    url: "https://github.com/ryansatj",
+    image_url: "https://github.com/ryansatj.png",
+  },
+  yasmin: {
+    name: "Yasmin [RY]",
+    title: "Netlab Assistant 2024/2025",
+    url: "https://github.com/SinurayaYasmin",
+    image_url: "https://github.com/SinurayaYasmin.png",
+  },
+  kamal: {
+    name: "Kamal [KL]",
+    title: "Netlab Assistant 2024/2025",
+    url: "https://github.com/kamalMakarim",
+    image_url: "https://github.com/kamalMakarim.png",
+  },
+  george: {
+    name: "George [GG]",
+    title: "Netlab Assistant 2024/2025",
+    url: "https://github.com/georgewtg",
+    image_url: "https://github.com/georgewtg.png",
+  },
+  fairuz: {
+    name: "Fairuz [FZ]",
+    title: "Netlab Assistant 2024/2025",
+    url: "https://github.com/nargafrz",
+    image_url: "https://github.com/nargafrz.png",
+  },
 };
 
 export default authorsData;

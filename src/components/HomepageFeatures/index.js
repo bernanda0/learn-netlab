@@ -19,6 +19,13 @@ const SubjectList = [
       description: "Learn how to design a network with the large scale by considering aspects of scalability and reliability.",
       navigate: "/docs/category/DMJ",
     },
+    {
+      card_bg: require("@site/static/img/card-bg.jpg").default,
+      icon: require("@site/static/img/dmj-icon.png").default,
+      title: "Jaringan Komputer (JARKOM)",
+      description: "Explore the fundamental concepts of Computer Networking.",
+      navigate: "/docs/category/JARKOM",
+    },
 ];
 
 export default function HomepageFeatures() {
