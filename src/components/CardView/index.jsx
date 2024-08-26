@@ -19,7 +19,7 @@ export default function CardView({
   return (
     /* <div className={clsx("col col--6")}> */
     <Link to={navigate} className="inline-block">
-      <Card className="w-[32rem] min-h-[35rem] lg:mx-0 mx-9 overflow-hidden dark:bg-blue-gray-900/75 bg-gray-50 hover:bg-gray-100 hover:scale-105 transition-transform duration-300 ease-in-out">
+      <Card className="lg:w-[32rem] w-[25rem] lg:h-[37rem] h-[35rem] lg:mx-0 mx-9 overflow-hidden dark:bg-blue-gray-900/75 bg-gray-50 hover:bg-gray-100 hover:scale-105 transition-transform duration-300 ease-in-out">
         <CardHeader
           floated={true}
           shadow={false}
@@ -50,7 +50,7 @@ export default function CardView({
             {description}
           </Typography>
         </CardBody>
-        <CardFooter className="pt-0">
+        <CardFooter className="mt-auto pt-0">
           <Button
             size="md"
             variant="text"
