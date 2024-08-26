@@ -1,0 +1,165 @@
+---
+sidebar_position: 1
+---
+
+import AuthorList from "../../src/components/Author";
+
+# MODUL 1: Dasar NOS
+
+<AuthorList authorsName={["kamal"]} />
+
+Jaringan komputer merujuk kepada perangkat komputasi yang saling terhubung untuk bertukar dan berbagi data satu sama lain. Dalam pembuatan jaringan komputer terdapat model yang menggambarkan bagaimana perangkat saling terhubung antara satu sama lain, yaitu topologi. Selain topologi berikut hal dasar lain yang perlu diketahui.
+
+## Tujuan
+
+1. Memahami tentang Network Operating System (NOS)
+2. Mengenai NOS berbasis CISCO IOS
+3. Mengenai komponen arsitektur CISCO IOS
+4. Mengetahui tingkat user pada CISCO IOS
+5. Mengenaili teknik troubleshooting CISCO IOS
+
+## Switch dan Router
+
+Switch dan Router merupakan dua perangkat terpenting untuk membuat sebuah jaringan. Walaupun keduanya terlihat mirip, mereka memiliki fungsi yang berbeda di jaringan.
+
+1. **Switch**
+
+   Switch bertugas untuk membagikan resource dengan cara menghubungkan semua perangkat, termasuk komputer, printer, dan server. Dengan switch semua perangkat yang terhubung dapat berbagi informasi. Biasanya digunakan untuk menghubungkan perangkat yang berada di gedung yang sama.
+
+2. **Router**
+
+   Mirip seperti switch yang menghubungkan berbagai perangkat untuk membuat jaringan, router menghubungkan berbagai switch termasuk jaringan nya masing-masing, untuk membuat jaringan yang lebih besar. Jaringan-jaringan ini dapat berada di satu lokasi ataupun di beberapa lokasi. Selain menghubungkan berbagai jaringan, router membuat perangkat lain dapat mengakses internet.
+
+3. **Interface**
+
+   Interface adalah titik koneksi pada perangkat jaringan. Setiap perangkat bisa memiliki beberapa interface yang dapat dihubungkan ke perangkat lain melalui kabel jaringan. Interface ini diantaranya adalah FastEthernet, GigabitEthernet, dan Serial.
+
+## Network Models
+
+Network Model merujuk pada kerangka kerja atau panduan yang digunakan untuk memahami dan menggambarkan bagaimana komunikasi dalam jaringan komputer berlangsung. Salah satu model yang sangat umum dan luas digunakan dalam industri jaringan adalah OSI (Open Systems Interconnection) model. Berikut Penjelasan mengenai OSI model:
+
+<img
+  src={
+    "https://miro.medium.com/v2/resize:fit:1400/1*7yPBGx_K8GymgeGfzhfznA.gif"
+  }
+/>
+
+1. **Physical Layer**
+
+   Lapisan ini berurusan dengan perangkat keras fisik dalam jaringan, seperti kabel, sinyal listrik, dan media transmisi. Tugasnya adalah untuk mengirimkan bit-bit data melalui media transmisi.
+
+2. **Data Link Layer**
+
+   Lapisan ini bertanggung jawab atas pengiriman data antara dua perangkat pada segmen jaringan yang sama. Hal ini juga mengatur alamat fisik perangkat (MAC address) dan mendeteksi dan memperbaiki kesalahan pada tingkat fisik.
+
+3. **Network Layer**
+
+   Lapisan ini mengelola pengiriman paket data dari satu node ke node lain di jaringan. Melibatkan routing, pengalamatan logis (IP address), dan pengendalian aliran data.
+
+4. **Transport Layer**
+
+   Lapisan ini memastikan pengiriman data yang handal dan terurut antara perangkat pengirim dan penerima. Hal ini juga dapat memecah data besar menjadi segmen lebih kecil untuk pengiriman yang efisien.
+
+5. **Session Layer**
+
+   Lapisan ini mengelola pembuatan, pengaturan, dan penghentian sesi komunikasi antara aplikasi di perangkat yang berbeda. Hal ini membantu dalam mengelola dialog antara aplikasi.
+
+6. **Presentation Layer**
+
+   Lapisan ini bertanggung jawab atas enkripsi, kompresi, dan konversi format data agar kompatibel antara perangkat yang berbeda. Hal ini juga mengatasi perbedaan antara format data yang digunakan oleh aplikasi dan format data yang digunakan dalam jaringan.
+
+7. **Application Layer**
+
+   Lapisan ini adalah lapisan teratas dan berisi aplikasi dan layanan yang dapat diakses oleh pengguna akhir. Hal ini mencakup protokol dan layanan seperti HTTP (web browsing), SMTP (email), FTP (file transfer), dan banyak lagi.
+
+## Network Operating System
+
+NOS adalah suatu sistem operasi yang berfungsi untuk mengoneksikan komputer dan divais ke dalam jaringan LAN. Istilah ini pada umumnya didefinisikan sebagai software yang berfungsi meningkatkan sistem operasi dasar dengan menambahkan fitur networking. Dengan NOS pengguna dapat membagi file dan mengakses shared printer melalui jaringan LAN tersebut. NOS dapat diimplementasikan dalam struktur peer-to-peer dan client/server. Dalam jaringan peerto-peer, user dapat membagi file dan resource dalam komputer user kepada user lainnya tanpa adanya pembagian peran sebagai pengguna file dan manajemen file yang terpusat berupa file server dalam sistem client/server . Dalam sistem ini NOS memberikan mekanisme untuk mengintegrasi seluruh komponen dalam suatu jaringan untuk mengijinkan beberapa user secara bersama-sama membagi resource yang sama tanpa keterbatasan lokasi fisik file tersebut.
+
+NOS diimplementasikan dalam router dan divais firewall yang berfungsi di layer network. Contohnya antara lain: CISCO IOS, Juniper OS (JUNOS), Quagga, Vyatta, TiMOS, dan sebagainya. CISCO IOS digunakan terutama di router dan switch produk CISCO. IOS merupakan satu paket yang mencakup fungsi routing, switching, internetworking, dan telekomunikasi yang terintegrasi dalam sistem operasi multitask. CISCO IOS akan dijelaskan lebih lanjut dalam bagian selanjutnya. Juniper JUNOS adalah sistem operasi berbasis FreeBSD yang digunakan dalam router produk Juniper Networks. Merupakan sistem operasi yang digunakan di divais routing, switching, dan security. Menariknya, JUNOS menawarkan Software Development Kit (SDK) kepada pengguna dan partner untuk menambahkan fitur. Quagga adalah kumpulan perangkat lunak network yang menyediakan implementasi Open Shortest Path First (OSPF), Routing Information Protocol (RIP), Border Gateway 5 Protocol (BGP), dan ISIS untuk platform berbasis UNIX. Vyatta memberikan perangkat lunak router, firewall, dan VPN berbasis virtual untuk IPv4 dan IPv6.
+
+## Arsitektur Sistem
+
+CISCO IOS adalah perangkat lunak sistem jaringan yang bekerja pada router dan switch CISCO yang digunakan untuk mengonfigurasi, memonitor, dan troubleshoot sistem. Seperti komputer, router juga memiliki CPU yang bervariasi baik dari sisi performa dan kapabilitas tergantung platform yang digunakan. CISCO IOS pada router berfungsi untuk memutuskan bridging dan routing, mengelola tabel routing, dan fungsi manajemen sistem lainnya. CPU harus dapat mengakses memori untuk menerima instruksi dan membuat keputusan. Terdapat empat macam memori dalam router:
+
+1. ROM
+
+   biasanya berupa memori pada chip atau beberapa chip. Berada di papan prosesor router dan bersifat read-only. Software pertama yang aktif/berjalan pada router disebut dengan bootstrap software dan biasanya disimpan di ROM. Software tersebut aktif saat router dalam proses booting.
+
+2. Flash
+
+   banyak digunakan untuk menyimpan satu atau lebih software image CISCO IOS. File konfigurasi atau informasi sistem juga dapat disalin ke Flash. Dalam beberapa sistem yang lebih canggih, Flash dapat digunakan untuk penyimpanan bootstrap software.
+
+3. RAM
+
+   memori yang kontennya akan hilang setelah di-restart. Digunakan di PC untuk menyimpan data dan aplikasi yang sedang berjalan. RAM pada router digunakan untuk menyimpan tabel sistem IOS dan buffer. Memori ini pada dasarnya digunakan untuk seluruh keperluan operasional sistem
+
+4. NVRAM
+
+   di router NVRAM digunakan untuk menyimpan konfigurasi awal (startup configuration) saat router sedang melakukan booting. Bedanya dengan RAM, konten dalam memori ini tidak hilang saat di-reboot.
+
+## CLI in CISCO IOS
+
+CLI digunakan untuk mengakses software CISCO IOS. Perintah-perintah CLI sendiri dibagi menjadi beberapa tipe, sehingga perintah yang tersedia adalah perintah yang sesuai dengan tipe. Jika kita mengetik simbol tanda tanya (?) maka akan muncul daftar perintah yang dapat digunakan saat itu. Saat kita masuk ke CLI, default tipe perintah adalah User EXEC yang perintahnyqa cukup terbatas. Untuk dapat mengakses seluruh perintah, maka kita harus masuk ke tipe selanjutnya.
+
+1. User EXEC  
+   Perintah pertama saat user masuk ke sistem router. Tipe ini mengizinkan user untuk mengeksekusi perintah dasar, contohnya status sistem. Sistem tidak dapat di-restart melalui tipe ini. Prompt yang digunakan oleh User EXEC adalah nama divais yang diikuti oleh simbol (\>): Router\>
+
+2. Previledge EXEC  
+   Tipe ini mengizinkan user untuk melihat konfigurasi sistem, me-restart sistem, dan masuk ke sistem konfigurasi. Tipe ini mengizinkan eksekusi perintah dari tipe User dan dapat dilindungi dengan menggunakan password, serta memperbolehkan penggunaan seluruh perintah tipe EXEC. Untuk masuk ke dalam tipe ini, gunakan perintah ‘enable’, dan perintah ‘disable’ untuk keluar. Prompt yang digunakan adalah nama divais diikuti dengan simbol (\#): Router\#
+
+   ```
+   Router\> enable
+   Router\#
+   ```
+
+3. Global EXEC  
+   Perintah dalam tipe ini secara umum saat diaplikasikan akan lebih berefek pada sistem secara keseluruhan bukan hanya pada satu protocol atau interface. Tipe konfigurasi spesifik (dijelaskan selanjutnya) juga dapat digunakan dalam level perintah ini. Untuk memasuki Global Configuration, pengguna harus mengetikkan perintah ‘configure terminal’ dari level Privileged EXEC, sedangkan untuk keluar dapat menggunakan perintah ‘end’ atau melalui Ctrl+Z
+
+   ```
+   Router\# configure terminal
+   Enter configuration commands, one per line. End with CNTL/Z.
+   ```
+
+4. ROM Monitor  
+   Jika router atau server tidak menemukan file system image yang benar untuk dieksekusi, maka sistem akan masuk ke tipe ini. ROM monitor (ROMMON) juga dapat diakses dengan memberi interupsi ke proses booting saat dinyalakan (startup). Melalui mode ini, kita dapat melakukan boot pada divais atau melakukan tes performa. Untuk masuk ke tipe ini, gunakan tombol Break atau Ctrl-C di 60 detik pertama startup. Prompt berupa simbol (\>) atau rommon diikuti nomor dan simbol (\>): \> atau rommon1\>.
+
+5. Setup  
+   Tipe ini sebenarnya tidak dapat disebut sebagai tipe dari perintah CLI CISCO. Tipe ini merupakan fitur yang memudahkan kita untuk menjalankan konfigurasi pertama kali dan prosedur konfigurasi dasar lainnya di semua router. Prompt saat kita masuk di level ini adalah informasi dasar untuk memulai fungsi router untuk parameter global kemudian baru parameter interface. Tipe ini menggunakan System Configuration Dialog, yang memandu user dalam melakukan konfigurasi. Contohnya adalah sebagai berikut:
+   ```
+   Continue with configuration dialog? \[ yes \]:
+   Enter host name \[ Router \]:
+   ```
+
+## Debugging dan Logging
+
+Fitur debugging disediakan oleh CISCO IOS secara mendetail untuk seluruh protokol dan proses yang sedang berjalan untuk tujuan troubleshooting. Namun perlu diingat bahwa men-disable atau enable perintah debug adalah tindakan yang beresiko.
+
+Pesan sistem berisi level parahnya kerusakan router dalam delapan level:
+
+1. Emergency (severity 0)—Sistem tidak bisa digunakan
+2. Alert (severity 1)—Perlu penanganan secepatnya
+3. Critical (severity 2)—Kondisi kritis
+4. Error (severity 3)—Error 9
+5. Warning (severity 4)—Warning
+6. Notification (severity 5)—Normal namun signifikan
+7. Informational (severity 6)—Pesan informatif
+8. Debugging (severity 7)—Pesan debugging
+
+Perintah logging mengarahkan output ke bermacam-macam terminal yang terpasang pada sistem atau terkoneksi secara virtual, misalkan pada koneksi Telnet. Berikut adalah contoh perintah logging:
+
+```
+IOS(config)\# logging ?
+
+Hostname or A.B.C.D IP address of the logging host buffered Set buffered logging parameters console
+
+Set console logging level exception Limit size of exception flush output facility Facility parameter for syslog messages history Configure syslog history table host Set syslog server host name or IP address
+
+monitor Set terminal line (monitor) logging level on Enable logging to all supported destinations rate-limit Set messages per second limit source-interface Specify interface for source address in logging transactions
+
+trap Set syslog server logging level
+
+( severity \=7) errors Error conditions ( severity \=0) guaranteed Guarantee console messages informational Informational messages ( severity \=6) notifications Normal but significant conditions ( severity \=5) warnings Warning conditions ( severity \=4)
+```
+
+Jika kita mengaktifkan pesan untuk level yang lebih tinggi, maka pesan di level lebih rendah lainnya juga akan diperlihatkan. Perintah alternatif lain adalah show logging di level privileged. Pesan logging juga dapat dikirim ke server logging dengan perintah logging host di level configuration. Server tersebut dapat dikonfigurasi di divais UNIX atau PC untuk menerima informasi logging dari router dan kemudian dikumpulkan menjadi satu file.
