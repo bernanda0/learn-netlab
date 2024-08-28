@@ -101,10 +101,19 @@ const config = {
           {
             title: "Docs",
             items: [
+              // di hide dulu
+              // {
+              //   label: "Module",
+              //   to: "/docs/category/SBD",
+              // },
               {
-                label: "Module",
-                to: "/docs/category/SBD",
+                label: "OOP",
+                to: "/docs/category/OOP",
               },
+              {
+                label: "JARKOM",
+                to: "/docs/category/JARKOM",
+              }
             ],
           },
           {
