@@ -17,8 +17,9 @@ export default function CardView({
   navigate,
 }) {
   return (
-    <div className={clsx("col col--6")}>
-      <Card className="max-w-[32rem] mb-12 lg:mx-0 mx-9 overflow-hidden dark:bg-blue-gray-900/75 bg-gray-50 hover:bg-gray-100 hover:scale-110 transition-transform duration-300 ease-in-out">
+    /* <div className={clsx("col col--6")}> */
+    <Link to={navigate} className="inline-block">
+      <Card className="lg:w-[32rem] w-[25rem] lg:h-[37rem] h-[35rem] lg:mx-0 mx-9 overflow-hidden dark:bg-blue-gray-900/75 bg-gray-50 hover:bg-gray-100 hover:scale-105 transition-transform duration-300 ease-in-out">
         <CardHeader
           floated={true}
           shadow={false}
@@ -44,36 +45,35 @@ export default function CardView({
           </Typography>
           <Typography
             variant="lead"
-            className="mt-3 text-base font-mono text-gray-700 dark:text-white"
+            className="mt-3 text-base font-mono text-gray-700 dark:text-white line-clamp-4 text-justify"
           >
             {description}
           </Typography>
         </CardBody>
-        <CardFooter className="pt-0">
-          <Link to={navigate} className="inline-block">
-            <Button
-              size="md"
-              variant="text"
-              className="flex items-center gap-2 bg-transparent dark:hover:bg-blue-gray-800 dark:text-white border-0 hover:cursor-pointer"
+        <CardFooter className="mt-auto pt-0">
+          <Button
+            size="md"
+            variant="text"
+            className="flex items-center gap-2 dark:hover:bg-blue-gray-800 dark:text-white border-0 hover:cursor-pointer"
+          >
+            Learn More
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              className="h-4 w-4 dark:stroke-white stroke-black"
             >
-              Learn More
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={2}
-                className="h-4 w-4 dark:stroke-white stroke-black"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
-                />
-              </svg>
-            </Button>
-          </Link>
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+              />
+            </svg>
+          </Button>
         </CardFooter>
       </Card>
-    </div>
+    </Link>
+    /* </div> */
   );
 }

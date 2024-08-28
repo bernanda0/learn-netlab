@@ -19,7 +19,7 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--primary button--lg rounded-3xl hover:scale-110 dark:hover:text-white w-64"
-            to="/docs/category/SBD"
+            to="/docs/category/JARKOM"
           >
             Start Exploring! 🤓
           </Link>
