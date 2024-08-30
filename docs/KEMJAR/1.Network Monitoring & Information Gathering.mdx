@@ -1,0 +1,216 @@
+---
+sidebar_position: 1
+---
+
+import AuthorList from "../../src/components/Author";
+import FPGoogleHacking from "./assets/Modul1/footprinting-google-hacking.png";
+import NetworkFP from "./assets/Modul1/network-footprinting.png";
+import NmapBasicCommand from "./assets/Modul1/nmap-basic-command.png";
+import ScanningTechniques from "./assets/Modul1/scanning-techniques.png";
+import WhoIsFP from "./assets/Modul1/who-is-footprinting.png";
+import TcpImg from "./assets/Modul1/tcp-image.png";
+import FlagHeaderTcp from "./assets/Modul1/flag-header-tcp.png";
+import ScanningMethodology from "./assets/Modul1/scanning-methodology.png";
+
+# MODUL 1: Network Monitoring & Information Gathering
+
+<AuthorList authorsName={["dito"]} />
+
+## Tujuan
+
+- Memahami tahap pertama dari Ethical Hacking, yaitu Footprinting dan Reconaissance
+- Mampu melakukan pengumpulan informasi dari suatu sistem target
+- Mampu mengidentifikasi kerentanan dari hasil monitoring jaringan
+
+## Information Gathering
+
+Tahap pertama dalam ethical hacking adalah mengumpulkan informasi dari sistem target
+yang akan diretas. Informasi yang dikumpulkan dapat membantu untuk mengidentifikasi
+kerentanan suatu sistem, untuk dapat mendapatkan akses. Informasi tersebut dapat
+mengurangi area focus dari serangan dan mendekatkan attacker dengan sistem target.
+
+## Konsep Footprinting
+
+Footpriting merupakan tahapan dalam mengumpulkan informasi target serta jaringannya.
+Informasi yang dikumpulkan memudahkan dalam mengidentifikasi setiap kemungkinan
+untuk mendapatkan akses masuk ke dalam jaringan. Tujuan utama dari tahap ini yaitu
+menjaga interaksi dengan target untuk mendapatkan informasi tanpa terdeteksi. Sehingga,
+biasanya tahap footprinting dan reconnaissance ini perlu dilakukan dengan beberapa teknik
+seperti social engineering, serangan sistem atau jaringan, atau metode lain.
+
+Tujuan utama dari footprinting antara lain:
+
+- Mengetahui postur keamanan
+- Mengurangi atau membatasi area fokus dari serangan
+- Mengidentifikasi kerentanan pada jaringan atau sistem
+- Memetakan jaringan suatu sistem organisas
+
+Terdapat beberapa metodologi dalam melakukan footprinting yang dapat digunakan:
+
+### ● Footprinting menggunakan search engines
+
+Search engines atau mesin pencarian dapat menyediakan informasi dari pencarian
+dengan mudah. Tidak hanya informasi yang bersifat umum, namun cache dari
+website dan search engines terkadang menyediakan informasi yang tidak tersedia,
+yang sudah diperbarui, atau bahkan telah diubah dari website aslinya. Dengan
+search engines, hacker dapat menemukan beberapa informasi seperti lokasi
+organisasi, identitas seseorang, informasi keuangan perusahaan, dan informasi
+lainnya.
+
+### ● Footprinting menggunakan Google Hacking
+
+Beberapa opsi dapat digunakan untuk mencari suatu topik spesifik dengan
+menggunakan mesin pencarian. Operator ini dapat membuat pencarian lebih focus
+pada topik tertentu. Anda dapat melakukan pencarian lebih spesifik pada google
+melalui link berikut
+https://www.google.com/advanced_search
+
+<img src={FPGoogleHacking} width="500" />
+Gambar 1. Operator Umum Pada Advanced Search dengan Google
+<br />
+
+Kita juga dapat menemukan Google hacking untuk menemeukan celah keamanan pada
+suatu jaringan dan sistem pada Google dengan menggunakan query dalam sebuah
+database yang bernama Google Hacking Database (GHDB). Google hacking dapat
+digunakan untuk mempercepat pencarian.
+
+### ● Footprinting melalui situs Social Networking
+
+Social engineering dalam Information security merupakan teknik manipulasi
+psikologi. Teknik ini digunakan untuk mendapatkan informasi dari jejaring social dan
+platform lain untuk lebih dekat dengan target. Dalam jejaring sosial terdapat banyak
+informasi pribadi dan kontak yang dapat digunakan oleh attacker untuk
+mengidentifikasi target.
+
+### ● Website Footprinting
+
+Footprinting suatu situs web dilakukan dengan memonitor dan menelusuri situs resmi
+dari organisasi atau perusahaan target untuk mendapatkan informasi seperti
+software yang sedang dijalankan, versi software tersebut, sistem operasi yang
+digunakan, database, informasi scripting, dan informasi lain. Dengan informasi ini,
+attacker dapat menganalisis source code, detail pengembang, struktur direktori file,
+dan scripting
+
+### ● Email Footprinting
+
+Email merupakan salah satu alat komunikasi yang sering digunakan pada bisnis
+organisasi/perusahaan. Isi dari Email sangat penting bagi attacker karena dapat
+berisi innformasi hardware dan software, informasi pengguna, informasi jaringan dan
+keamanan perangkat yang bermanfaat dalam melakukan penetration testing dan
+serangan lain.
+
+### ● Competitive Intelligence
+
+Teknik ini merupakan metode mengumpulkan informasi, menganalisis, dan
+mengumpulkan statistik dari kompetitor target. Proses pencarian informasi ini dapat
+dilakukan melalui website resmi competitor, iklan pekerjanaa, laporan analisis, dan
+sumber lain yang berkairan dengan bisnis organisasi. Dengan melakukan teknik ini,
+attacker dapat mengidentifikasi detail perusahaan yang menjadi target.
+
+### ● WHOIS Footprinting
+
+WHOIS membantu mendapatkan informasi melalui domain name, alamat IP, DNS
+dan informasi kepemilikan lain. WHOIS lookup membantu mencari siapapemilik
+nama domain target
+
+<img src={WhoIsFP} width="500" />
+Gambar 2. Contoh Informasi yang Diperoleh dengan WHOIS Lookup
+<br />
+
+### ● Network Footprinting
+
+Salah satu teknik penting dalam footprinting yaitu network footprinting. Pada tahap
+ini, pencari informasi dapat membuat pemetaan dari jaringan target. Informasi
+jaringan yang dapat diperoleh yaitu range alamat jaringan, hostname, OS dan versi
+informasi aplikasi, struktur aplikasi dan back-end server. Tools yang dapat digunakan
+yaitu whois, ping, tracert, nslookup.
+
+<img src={NetworkFP} width="700" />
+Gambar 3. Contoh Visual Mapping dari Suatu Komunikasi Jaringan
+<br />
+
+### ● Footprinting menggunakan Social Engineering
+
+Salah satu teknik paling mudah untuk melakukan footprinting yaitu melalui manusia.
+Kita dapat mengumpulkan informasi lebih mudah melalui manusia itu sendiri
+dibandingkan dari sistem yang digunakannya. Terdapat beberapa teknik dalam social
+engineering, yaitu:
+
+- Eavesdropping
+- DumpsterDiving
+- Shouldersurfing
+- Impersonation
+
+## Network Monitoring
+
+Setelah melalui tahap footprinting dan mendapatkan cukup informasi dari target, tahap
+selanjutnya yaitu memonitoring jaringan. Metode ini dilakukan untuk mengidentifikasi host,
+port, dan layanan dengan memindai jaringan dan port target. Tujuan dari pemindaian
+jaringan yaitu:
+
+- Mengidentifikasi host yang sedang aktif dalam sebuah jaringan
+- Mengidentifikasi port yang terbuka dan tertutup
+- Mengidentifikasi informasi sistem operasi
+- Mengidentifikasi layanan yang sedang dijalankan pada jaringan
+- Mengidentifikasi proses yang sedang berjalan
+- Mengidentifikasi arsitektur sistem
+- Mengidentifikasi celah keamanan
+
+### Network Scanning
+
+Terdapat tiga jenis scanning:
+
+- Port scanning untuk menentukan port dan layanan yang aktif. Beberapa well-known
+  port yang perlu diingat yaitu FTP (21), Telnet (23), HTTP (80), SMTP (25), POP3
+  (110), HTTPS (443), RPC (TCP/ Port 135), IMAP (143), DHCP Server (UDP/ Port
+  67), SMPT (25)
+- Network scanning untuk mengidentifikasi alamat ip dari network address atau subnet
+- Vulnerability scanning untuk menemukan kelemahan sistem target.
+
+Metodologi scanning dimulai dengan memerika sistem yang aktif pada jaringan, dengan
+mengetahui apakah sistem membalas request yang dikirim atau tidak. Salah satu cara yaitu dengan Ping Sweep. Jika sistem merespon dengan membalas pesan ICMP, maka sistem
+tersebut sedang aktif. Tahap selanjutnya yaitu dengan melakukan port scanning. Tahap ini untuk mengetahui port yang sedang aktif pada host. Dengan mengetahui port yang aktif, kita juga dapat mengetahui layanan yang sedang berjalan pada host tersebut. Salah satu tools yang dapat digunakan yaitu dengan **nmap**.
+
+<img src={NmapBasicCommand} width="500" />
+Gambar 4. Nmap Basic Command
+
+Teknik scanning dapat diklasifikasikan ke dalam dua jenis traffic Internet Protocol yaitu TCP
+dan UDP. Kedua traffic komunikasi ini dapat digunakan untuk menemukan informasi lain
+yang bermanfaat untuk mengidentifikasi jaringan.
+
+<img src={ScanningTechniques} width="600" />
+Gambar 5. Scanning Techniques
+
+TCP merupakan connection-oriented dimana komunikasi dua arah akan mengutamakan
+keberhasilan koneksi melalui proses three-way handshake.
+
+<img src={TcpImg} width="600" />
+
+Flag pada header TCP terdiri dari 9 bits, yang dapat berupa 6 jenis flag:
+
+<img src={FlagHeaderTcp} width="600" />
+
+Hacker dapat masuk ke dalam koneksi TCP dengan menggunakan flag seperti koneksi
+normal yang terjadi tanpa terdeteksi. Salah satu cara yang dapat digunakan untuk
+mencegah hal tersebut yaitu dengan menggunakan TCP port scanner, seperti IPEye,
+hping2, dan IPSecScan.
+
+Setelah mengidentifikasi layanan, tahap selanjutnya yaitu banner grabbing dan OS
+Fingerprinting. Tahap ini memungkinkan hacker untuk mengidentifikasi jenis kerentanan
+tertentu pada target jaringan. Banner grabbing merupakan proses dari membuka koneksi
+dan membacabanner atau respons yang dikirim pada aplikasi.
+
+Beberapa email, FTP, dan web server akan merespon nama dan versi software melalui koneksi telnet. Contoh, email server Microsoft Exchange hanya dapat diinstal pada sistem operasi Windows.
+Tahap terakhir yaitu menyiapkan proxy server. Proxy server merupakan komputer yang
+bertindak sebagai perantara antara hacker dengan sistem target. Dengan menggunakan
+proxy ini hacker dapat masuk ke dalam jaringan secara anonymous, sehingga dapat
+bersembunyi dalam melakukan serangan.
+
+<img src={ScanningMethodology} width="300" />
+Gambar 6. Scanning Methodology
+
+Referensi :
+
+- CEHv10 Module 02
+- CEHv10 Module 03
+- Kimberly Graves, CEH Study Guide

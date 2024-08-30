@@ -34,13 +34,21 @@ const SubjectList = [
     description: "Explore the fundamental concepts of Computer Networking.",
     navigate: "/docs/category/JARKOM",
   },
+  {
+    card_bg: require("@site/static/img/card-bg.jpg").default,
+    icon: require("@site/static/img/dmj-icon.png").default,
+    title: "Keamanan Jaringan (KEMJAR)",
+    description:
+      "The Computer Network Security course teaches the basic concepts of communication network security, aspects of security, and potential threats and attacks on network security.",
+    navigate: "/docs/category/KEMJAR",
+  },
 ];
 
 export default function HomepageFeatures() {
   return (
     <section className={styles.features}>
       <div className="container mb-12">
-        <div className="flex justify-evenly flex-wrap">
+        <div className="flex justify-evenly flex-wrap gap-y-10">
           {SubjectList.map((props, idx) => (
             <CardView key={idx} {...props} />
           ))}
