@@ -1,209 +1,162 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 import AuthorList from "../../src/components/Author";
+import TypeInheritance from "./assets/Modul2/tipe-inheritance.png";
 
 # MODUL 2: Inheritance and Access Modifier
 
 <AuthorList authorsName={["emiw"]} />
 
-## Class dan Object
+## Inheritance
 
-**Class** secara dasarnya merupakan sebuah template/blueprint dari sebuah objek dan merepresentasikan tipe dari objek tersebut. **Object** dibuat dari class dan menyimpan state, behavior, dan identity yang membuat object tersebut unik.
+### Pengertian
 
-Bayangkan kamu sedang berada di sebuah pabrik penghasil madu. Di pabrik ini, ada produk madu yang sudah jadi (Object), dan ada resep dari madu tersebut (Class). Class adalah "perencanaan" atau blueprint, sedangkan Object adalah implementasi dari "perencanaan" tersebut.
+Inheritance adalah salah satu dari empat konsep dalam Object-Oriented Programming (OOP) yang memungkinkan sebuah class mewarisi properti dan method dari class lain.
 
-Sebuah class pada Java biasanya mengandung beberapa hal antara lain adalah:
+Terminologi yang umum dalam konsep inheritance yaitu
 
-1. Fields/Data Member
-   Menyimpan data ataupun atribut dari suatu objek, dalam bentuk sebuah variabel. Ibaratkan seperti bahan-bahan yang dibutuhkan untuk membuat madu. Dalam class, ini dikenal sebagai atribut atau properti.
-2. Method
-   Mengandung implementasi dari fungsionalitas/behavior objek tersebut, biasanya dalam bentuk sebuah fungsi. Ibaratkan seperti mesin yang mengolah madu. Dalam class, ini dikenal sebagai metode atau fungsi, yang menjalankan tindakan atau proses tertentu.
-3. Constructor
-   Digunakan saat menginisialisasi objek baru, dan merupakan fungsi yang akan selalu dipanggil pertama ketika objek baru dibuat
-4. Nested Class/Inner Class
-   Sebuah class dapat mengandung class lain. Sesuai dengan access modifier-nya, class tersebut dapat disebut sebagai nested class jika static dan inner class jika non-static
+- Class, sebuah kumpulan object yang memiliki properti yang sama. Sering dianggap sebagai template atau blueprint terhadap object
+- Subclass atau Child class, class yang mewarisi property dan method dari class lain.
+- Super Class atau Parent Class, class dimana subclass membawa sifat turunannya.
 
-```
-access_modifier class <class_name>{
-    data member;
-   method;
-   constructor;
-   nested class;
+Dengan inheritance, subclass dapat menggunakan atau bahkan mengoverride properti dan method yang ada di superclass, sehingga meminimalkan redundansi kode dan meningkatkan keteraturan.
+
+Sebagai contoh, jika kita memiliki superclass Agent dengan properti bahwa suatu agent pasti memiliki skill dan suara yang masing-masing, subclass seperti Astra dan Brimstone bisa mewarisi properti dan method tersebut, serta menambahkan atau mengubahnya sesuai kebutuhan dari subclass tersebut. Keyword 'super; digunakan dalam konstruktor subclass untuk memanggil konstruktor dari superclass. Pemanggilan 'super' ini biasanya dilakukan di baris pertama konstruktor subclass untuk memastikan bahwa bagian dari objek yang diturunkan dari superclass sudah diinisialisasi dengan benar.
+
+### Tipe-tipe Inheritance:
+
+1. Single Inheritance
+
+   Sebuah subclass hanya mewarisi dari satu superclass. Contohnya, 'Astra' yang mewarisi dari 'Agent'.
+
+2. Multiple Inheritance
+
+   Sebuah subclass mewarisi properti dan method dari lebih dari satu superclass. Di Java, multiple inheritance di level class tidak didukung secara langsung, tetapi dapat diimplementasikan melalui penggunaan interfaces.
+
+3. Multilevel Inheritance
+
+   Sebuah subclass mewarisi dari superclass yang juga merupakan subclass dari class lain. Misalnya, 'ChamberOmega' mewarisi dari 'Chamber' yang juga mewarisi dari 'Agent'.
+
+4. Hierarchical Inheritance
+
+   Satu superclass diwarisi oleh lebih dari satu subclass. Misalnya, 'Astra' dan 'Brimstone' keduanya mewarisi dari 'Agent'.
+
+5. Hybrid Inheritance
+
+   Kombinasi dari satu atau lebih tipe inheritance lainnya. Sebagian besar, ini adalah situasi dari single dan multiple inheritance. Di Java, hybrid inheritance juga tidak mungkin dilakukan dengan kelas, tetapi dapat dicapai melalui Interfaces.
+
+![alt text](assets/modul2/tipe-inheritance.png)
+
+### Syntax dalam Java Inheritance
+
+1. Class
+
+   ```java
+   class Subclass extends Superclass { ... }
+   ```
+
+2. Interface
+
+   ```java
+   class Subclass implements OtherInterface { ... }
+   ```
+
+3. Kombinasi
+   ```java
+   class Subclass extends Superclass implements OtherInterface, ... { ... }
+   ```
+
+### Contoh program inheritance dalam java
+
+```java
+class Animal {
+	void eat() { System.out.println("eating..."); }
+}
+
+class Dog extends Animal {
+	void bark() { System.out.println("barking..."); }
+}
+
+class TestInheritance {
+	public static void main(String args[]) {
+		Dog d=new Dog();
+		d.bark();
+		d.eat();
+	}
 }
 ```
 
-Dalam Java, ada beberapa tipe class yang dapat digunakan, antara lain:
+### Kenapa Perlu Inheritance?
 
-1. Regular
-   Class biasa yang digunakan untuk mendefinisikan objek dengan atribut dan perilaku tertentu. Class ini tidak memiliki modifikasi khusus seperti static, final, atau abstract.
-2. Static
-   Static Class mengacu pada static nested class. Static nested class adalah class yang dideklarasikan di dalam class lain dan dapat diakses tanpa harus membuat instance dari class luar.
-3. Final
-   Final Class sesuai namanya “Final” dimana perilaku atau properti dari class tersebut tidak bisa diubah oleh class lain. Oleh karena itu, final class tidak bisa diwariskan atau di-subclass.
-4. Abstract
-   Class yang tidak dapat diinstansiasi dan mungkin mengandung metode abstrak (metode tanpa implementasi). Class lain harus mewarisi dan mengimplementasikan metode abstrak ini.
+1. Reusabilitas kode
 
-**Object** dibuat dari template yang didefinisikan oleh sebuah class dan sering dipanggil sebagai suatu “instance” (dari class yang digunakan). Untuk membuat sebuah objek dapat dipanggil constructor-nya, seperti contoh di bawah yang melakukan pembuatan beberapa objek tipe Madu dengan keunikannya masing-masing yang membuat setiap objek unik. Berikut contoh pembuatan class dan object:
+   Dengan inheritance, kode yang sudah ada dapat digunakan kembali tanpa perlu menulis ulang. Ini mengurangi redundansi dan mempermudah pemeliharaan kode.
 
-```java
-public class Madu {
-    //Fields
-    public int madu_kg; // madu dalam kg
-    public int gula_kg; // gula dalam kg
-    public int air_lt; // air dalam liter
+2. Kemampuan abstraksi method overriding
 
-    // Constructor
-    public Madu(int banyak_madu, int banyak_gula, int banyak_air) {
-        this.madu_kg = banyak_madu;
-        this.gula_kg = banyak_gula;
-        this.air_lt = banyak_air;
-    }
+   Inheritance memungkinkan objek dari subclass yang berbeda diperlakukan sebagai objek dari superclass yang sama. Ini sangat berguna dalam konteks polimorfisme, di mana metode yang sama dapat memiliki implementasi yang berbeda tergantung pada jenis objeknya.
 
-    // Metode untuk menampilkan resep
-    public void displayResep() {
-        System.out.println("Resep Madu TJ:");
-        System.out.println("Madu: " + madu_kg + " kg");
-        System.out.println("Gula: " + gula_kg + " kg");
-        System.out.println("Air: " + air_lt + " liter");
-    }
+### Konsep Upcasting dan Downcasting
 
-    //Main
-    public static void main(String[] args) {
-        // Object
-        Madu maduTJ = new Madu(5, 2, 3);
-        maduTJ.displayResep();
-    }
-}
-```
+Sebuah proses untuk mengkonversi sebuah tipe data disebut sebagai Typecasting. Dalam konsep inheritance, tumbuh sebuah konversi yang umum disebut sebagai Upcasting dan Downcasting. Pada java, kita diperbolehkan melakukan typecasting dari primitive type wrapper (Integer, Double, dll) kepada tipe data primitif atau sebaliknya. Diluar dari fitur tersebut, object hanya boleh di typecast terhadap jenis objek lain saja.
 
-Pada kode diatas, Class terdapat method ‘main’. Dalam Java, class yang berisi metode ‘main’ adalah titik awal dari program Java dieksekusi. Keberadaan metode ‘main‘ sangat penting karena JVM (Java Virtual Machine) membutuhkan metode ini sebagai titik masuk untuk menjalankan aplikasi Java. Deklarasi standar metode ‘main’ meliputi:
+a. Upcasting
 
-- ‘public’ untuk aksesibilitas dari luar kelas.
-- ‘static’ agar dapat dipanggil tanpa membuat instance kelas.
-- ‘void’ yang menandakan metode ini tidak mengembalikan nilai.
-- ‘String[] args’ untuk menerima argumen baris perintah.
+    Upcasting adalah jenis type casting objek dimana objek child diketik ke objek kelas parent. Dengan menggunakan Upcasting, kita dapat dengan mudah mengakses variabel dan metode dari kelas parent ke kelas child. Upcasting juga dikenal sebagai Generalisasi.
 
-## Interface
+b. Downcasting
 
-Interface pada Java merupakan sebuah kontrak atau kesepakatan yang mendefinisikan metode atau fungsi yang harus diimplementasikan oleh suatu kelas. Interface tidak mengandung implementasi logika dari metode-metode tersebut, melainkan hanya mendefinisikan apa saja metode yang harus ada.
+    Dalam Downcasting, objek referensi kelas induk direferensikan sebagai kelas anak. Perilaku downcasting harus dilakukan secara hati-hati karena tidak menghasilkan compile-time error. Jika casting tidak sesuai dengan objek pembentuknya, ketika dijalankan akan melempar "ClassCastException". Kenapa jika berbahaya downcasting diizinkan oleh kompiler? Di Java, beberapa skenario perilaku downcasting dapat bermanfaat.
 
-Interface ini adalah blue print dari class. Method-method yang ada di dalam interface tersebut kosong dan nantinya harus diimplementasi pada class lain. Misalnya, terdapat sebuah blue print yang menggambarkan laptop. Setiap laptop harus memiliki beberapa fitur dasar seperti layar, keyboard, dan baterai, namun cara setiap laptop tersebut mengimplementasikan fitur-fitur tersebut bisa berbeda. Interface dalam hal ini bisa dianggap sebagai panduan umum yang menentukan bahwa setiap laptop harus memiliki fungsi-fungsi tertentu seperti menyala, mati, mengisi daya, dan sebagainya.
+Jika terjadi kondisi overriding, maka method yang akan dipanggil sesuai dengan objek saat instansiasi. Contoh:
 
 ```java
-public interface Laptop {
-       void powerOn();
-       void powerOff();
-       void chargeBattery();
-   }
-
-   public class Applesus implements Laptop {
-       @Override
-       public void powerOn() {
-           System.out.println("Applesus is powering on");
-       }
-
-       @Override
-       public void powerOff() {
-           System.out.println("Applesus is shutting down");
-       }
-
-       @Override
-       public void chargeBattery() {
-           System.out.println("Applesus is charging with a fast charger.");
-       }
-   }
+public class Parent {
+public String foo() { return "parent"; } }
+public class Child extends Parent {
+public String foo() { return "child"; } }
 ```
 
-Apa bedanya Interface dengan Class?  
- ![](assets/modul2/InterfaceClassDifferences.png)
-Interface digunakan ketika:
-
-1. Mendefinisikan suatu “blue print” untuk Class tanpa menentukan implementasi method-method.
-2. Penerapan polymorphism untuk Class yang memiliki method yang sama namun implementasi yang berbeda.
-
-## Enumeration
-
-Enumeration pada Java digunakan untuk merepresentasikan suatu set/group dengan konstan yang memiliki nama. Enumeration ini sebaiknya diimplementasikan ketika kita memiliki sekumpulan nilai yang tetap dan tidak akan berubah sepanjang eksekusi program.
-
-Contoh penggunaan enumeration adalah untuk merepresentasikan bulan-bulan dalam Java. Dikarenakan bulan-bulan seperti January sampai December merupakan nilainya konstan dan tidak akan berubah maka dapat menggunakan enumeration.
+Upcasting:
 
 ```java
-public enum Month{
-       JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
-   }
-
-   Enumeration dapat dideklarasikan di dalam kelas ataupun di luar kelas.
-   class Test {
-       enum Month{
-           JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
-       }
-
-       public static void main(String\[\] args) {
-           Month month \= Month.JANUARY;
-           System.out.println(month);
-           // Output yang dihasilkan adalah JANUARY
-       }
-   }
-
-   public enum Month{
-       JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER
-   }
-
-   public class Test {
-       public static void main(String\[\] args) {
-           Month month \= Month.JANUARY;
-           System.out.println(month);
-           // Output yang dihasilkan adalah JANUARY
-       }
-   }
+Parent a = new Child();
+System.out.println(a.foo()); // output: child
 ```
 
-Enumerasi digunakan karena beberapa alasan berikut:
-
-1. Konsistensi: Enum memastikan bahwa hanya nilai-nilai yang sudah dideklarasikan dalam enum yang valid untuk digunakan, sehingga mengurangi error.
-2. Numerikal: Nilai enum secara internal direpresentasikan sebagai angka, sehingga operasi komparasi dan penyimpanan lebih efisien.
-
-## Encapsulation
-
-Enkapsulasi merupakan **salah satu konsep utama OOP** yang membungkus fields dan methods dalam sebuah unit yang disebut class. Konsep ini mendukung prinsip data hiding, yang menghalangi akses langsung ke fields dan methods dari kode eksternal. Dalam konsep enkapsulasi, implementasi dari sebuah class disembunyikan dari luar dan hanya menunjukkan interface untuk berinteraksi dan mengakses fungsionalitas/data dari class tersebut.
-
-Dalam Java, sebuah variabel dapat dibuat menjadi private untuk memblokir akses langsung dari luar class dan hanya membuka akses dari dalam kelas tersebut. Sehingga, untuk mengakses data tersebut dari luar kelas, digunakan sesuatu dengan istilah getter dan setter (ataupun accessors dan mutators). Sesuai dengan namanya, getter merupakan sebuah fungsi yang akan mengambil (get) data dari variabel yang diinginkan, dan setter berfungsi untuk menyimpan nilai baru di variabel tersebut.
+Downcasting:
 
 ```java
-class Laptop {
-       //fields
-       private String type;
-       // ...
-
-       //constructor
-       public Laptop(String type) {
-           this.type \= type;
-       }
-
-       //getter
-       public String getType() {
-           return type;
-       }
-
-       //setter
-       public void setType(String type) {
-           this.type \= type;
-       }
-   }
+Parent a = new Child();
+Child b = (Child) a;
+System.out.println("a: " + a.foo()); // output: child
+System.out.println("b: " + b.foo()); // output: child
 ```
 
-Dapat dilihat di atas agar type tidak dapat diakses secara langsung dari luar, maka kita ubah variabelnya menjadi private. Kemudian membuat fungsi getter-setter agar variabel tersebut dapat diakses dari luar menggunakan fungsi.
+## Access Modifier
 
-Penggunaan setelah konsep enkapsulasi:
+Access modifier merupakan sebuah hak akses yang diberikan kepada sebuha variable, method atau class tujuan untuk menjaga integritas dari data tersebut ketika ingin diakses object lain.
 
-```java
-public class Main {
-    public static void main(String\[\] args) {
-        Laptop myLaptop \= new Laptop("Notebook, Gaming, Hybrid");
-        myLaptop.setType("Hybrid");
-        System.out.println(myLaptop.getType());
-    }
-}
-```
+### Tipe-tipe Access Modifier di Java
+
+1. Default
+
+   Ketika access modifier tidak ditentukan maka akan secara otomatis memiliki access modifier 'Default'. Anggota data, kelas, atau metode yang tidak dinyatakan menggunakan pengubah akses apa pun yaitu memiliki pengubah akses default dapat diakses hanya dalam paket yang sama.
+
+2. Private
+
+   Metode atau anggota data yang dinyatakan sebagai 'Private' hanya dapat diakses di dalam kelas di mana mereka dinyatakan. Hal ini digunakan untuk menjaga agar variabel atau method tidak dapat diakses dari luar kelas, yang membantu melindungi integritas data.
+
+3. Protected
+
+   Metode atau anggota data yang dinyatakan sebagai 'Protected' dapat diakses dari dalam kelas itu sendiri, subclass, dan kelas lain yang berada dalam paket yang sama. Ini memberikan keseimbangan antara keterbukaan dan perlindungan data.
+
+4. Public
+
+   Metode atau anggota data yang dinyatakan sebagai 'Public' dapat diakses dari mana saja, baik dari dalam kelas, subclass, atau kelas lainnya. Ini memungkinkan interaksi yang luas dengan anggota kelas tersebut.
+
+5. Final
+
+   Metode atau anggota data yang dinyatakan sebagai 'Final' maka nilai variable tersebut bersifat final dan tidak dapat diubah. Hal ini digunakan untuk mencegah perubahan lebih lanjut. Jika diterapkan pada method, method tersebut tidak dapat dioverride oleh subclass. Jika diterapkan pada kelas, kelas tersebut tidak dapat diwariskan.

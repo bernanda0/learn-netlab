@@ -101,11 +101,14 @@ const config = {
           {
             title: "Docs",
             items: [
-              // di hide dulu
-              // {
-              //   label: "Module",
-              //   to: "/docs/category/SBD",
-              // },
+              {
+                label: "SBD",
+                to: "/docs/category/SBD",
+              },
+              {
+                label: "DMJ",
+                to: "/docs/category/DMJ",
+              },
               {
                 label: "OOP",
                 to: "/docs/category/OOP",
