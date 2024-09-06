@@ -24,15 +24,15 @@ Switch dan Router merupakan dua perangkat terpenting untuk membuat sebuah jaring
 
 ### Switch
 
-   Switch bertugas untuk membagikan resource dengan cara menghubungkan semua perangkat, termasuk komputer, printer, dan server. Dengan switch semua perangkat yang terhubung dapat berbagi informasi. Biasanya digunakan untuk menghubungkan perangkat yang berada di gedung yang sama.
+Switch bertugas untuk membagikan resource dengan cara menghubungkan semua perangkat, termasuk komputer, printer, dan server. Dengan switch semua perangkat yang terhubung dapat berbagi informasi. Biasanya digunakan untuk menghubungkan perangkat yang berada di gedung yang sama.
 
 ### Router
 
-   Mirip seperti switch yang menghubungkan berbagai perangkat untuk membuat jaringan, router menghubungkan berbagai switch termasuk jaringan nya masing-masing, untuk membuat jaringan yang lebih besar. Jaringan-jaringan ini dapat berada di satu lokasi ataupun di beberapa lokasi. Selain menghubungkan berbagai jaringan, router membuat perangkat lain dapat mengakses internet.
+Mirip seperti switch yang menghubungkan berbagai perangkat untuk membuat jaringan, router menghubungkan berbagai switch termasuk jaringan nya masing-masing, untuk membuat jaringan yang lebih besar. Jaringan-jaringan ini dapat berada di satu lokasi ataupun di beberapa lokasi. Selain menghubungkan berbagai jaringan, router membuat perangkat lain dapat mengakses internet.
 
 ### Interface
 
-   Interface adalah titik koneksi pada perangkat jaringan. Setiap perangkat bisa memiliki beberapa interface yang dapat dihubungkan ke perangkat lain melalui kabel jaringan. Interface ini diantaranya adalah FastEthernet, GigabitEthernet, dan Serial.
+Interface adalah titik koneksi pada perangkat jaringan. Setiap perangkat bisa memiliki beberapa interface yang dapat dihubungkan ke perangkat lain melalui kabel jaringan. Interface ini diantaranya adalah FastEthernet, GigabitEthernet, dan Serial.
 
 ## Network Models
 
@@ -46,31 +46,31 @@ Network Model merujuk pada kerangka kerja atau panduan yang digunakan untuk mema
 
 ### Physical Layer
 
-   Lapisan ini berurusan dengan perangkat keras fisik dalam jaringan, seperti kabel, sinyal listrik, dan media transmisi. Tugasnya adalah untuk mengirimkan bit-bit data melalui media transmisi.
+Lapisan ini berurusan dengan perangkat keras fisik dalam jaringan, seperti kabel, sinyal listrik, dan media transmisi. Tugasnya adalah untuk mengirimkan bit-bit data melalui media transmisi.
 
 ### Data Link Layer
 
-   Lapisan ini bertanggung jawab atas pengiriman data antara dua perangkat pada segmen jaringan yang sama. Hal ini juga mengatur alamat fisik perangkat (MAC address) dan mendeteksi dan memperbaiki kesalahan pada tingkat fisik.
+Lapisan ini bertanggung jawab atas pengiriman data antara dua perangkat pada segmen jaringan yang sama. Hal ini juga mengatur alamat fisik perangkat (MAC address) dan mendeteksi dan memperbaiki kesalahan pada tingkat fisik.
 
 ### Network Layer
 
-   Lapisan ini mengelola pengiriman paket data dari satu node ke node lain di jaringan. Melibatkan routing, pengalamatan logis (IP address), dan pengendalian aliran data.
+Lapisan ini mengelola pengiriman paket data dari satu node ke node lain di jaringan. Melibatkan routing, pengalamatan logis (IP address), dan pengendalian aliran data.
 
 ### Transport Layer
 
-   Lapisan ini memastikan pengiriman data yang handal dan terurut antara perangkat pengirim dan penerima. Hal ini juga dapat memecah data besar menjadi segmen lebih kecil untuk pengiriman yang efisien.
+Lapisan ini memastikan pengiriman data yang handal dan terurut antara perangkat pengirim dan penerima. Hal ini juga dapat memecah data besar menjadi segmen lebih kecil untuk pengiriman yang efisien.
 
 ### Session Layer
 
-   Lapisan ini mengelola pembuatan, pengaturan, dan penghentian sesi komunikasi antara aplikasi di perangkat yang berbeda. Hal ini membantu dalam mengelola dialog antara aplikasi.
+Lapisan ini mengelola pembuatan, pengaturan, dan penghentian sesi komunikasi antara aplikasi di perangkat yang berbeda. Hal ini membantu dalam mengelola dialog antara aplikasi.
 
 ### Presentation Layer
 
-   Lapisan ini bertanggung jawab atas enkripsi, kompresi, dan konversi format data agar kompatibel antara perangkat yang berbeda. Hal ini juga mengatasi perbedaan antara format data yang digunakan oleh aplikasi dan format data yang digunakan dalam jaringan.
+Lapisan ini bertanggung jawab atas enkripsi, kompresi, dan konversi format data agar kompatibel antara perangkat yang berbeda. Hal ini juga mengatasi perbedaan antara format data yang digunakan oleh aplikasi dan format data yang digunakan dalam jaringan.
 
 ### Application Layer
 
-   Lapisan ini adalah lapisan teratas dan berisi aplikasi dan layanan yang dapat diakses oleh pengguna akhir. Hal ini mencakup protokol dan layanan seperti HTTP (web browsing), SMTP (email), FTP (file transfer), dan banyak lagi.
+Lapisan ini adalah lapisan teratas dan berisi aplikasi dan layanan yang dapat diakses oleh pengguna akhir. Hal ini mencakup protokol dan layanan seperti HTTP (web browsing), SMTP (email), FTP (file transfer), dan banyak lagi.
 
 ## Network Operating System
 
@@ -84,52 +84,58 @@ CISCO IOS adalah perangkat lunak sistem jaringan yang bekerja pada router dan sw
 
 ### ROM
 
-   biasanya berupa memori pada chip atau beberapa chip. Berada di papan prosesor router dan bersifat read-only. Software pertama yang aktif/berjalan pada router disebut dengan bootstrap software dan biasanya disimpan di ROM. Software tersebut aktif saat router dalam proses booting.
+biasanya berupa memori pada chip atau beberapa chip. Berada di papan prosesor router dan bersifat read-only. Software pertama yang aktif/berjalan pada router disebut dengan bootstrap software dan biasanya disimpan di ROM. Software tersebut aktif saat router dalam proses booting.
 
 ### Flash
 
-   banyak digunakan untuk menyimpan satu atau lebih software image CISCO IOS. File konfigurasi atau informasi sistem juga dapat disalin ke Flash. Dalam beberapa sistem yang lebih canggih, Flash dapat digunakan untuk penyimpanan bootstrap software.
+banyak digunakan untuk menyimpan satu atau lebih software image CISCO IOS. File konfigurasi atau informasi sistem juga dapat disalin ke Flash. Dalam beberapa sistem yang lebih canggih, Flash dapat digunakan untuk penyimpanan bootstrap software.
 
 ### RAM
 
-   memori yang kontennya akan hilang setelah di-restart. Digunakan di PC untuk menyimpan data dan aplikasi yang sedang berjalan. RAM pada router digunakan untuk menyimpan tabel sistem IOS dan buffer. Memori ini pada dasarnya digunakan untuk seluruh keperluan operasional sistem
+memori yang kontennya akan hilang setelah di-restart. Digunakan di PC untuk menyimpan data dan aplikasi yang sedang berjalan. RAM pada router digunakan untuk menyimpan tabel sistem IOS dan buffer. Memori ini pada dasarnya digunakan untuk seluruh keperluan operasional sistem
 
 ### NVRAM
 
-   di router NVRAM digunakan untuk menyimpan konfigurasi awal (startup configuration) saat router sedang melakukan booting. Bedanya dengan RAM, konten dalam memori ini tidak hilang saat di-reboot.
+di router NVRAM digunakan untuk menyimpan konfigurasi awal (startup configuration) saat router sedang melakukan booting. Bedanya dengan RAM, konten dalam memori ini tidak hilang saat di-reboot.
 
 ## CLI in CISCO IOS
 
 CLI digunakan untuk mengakses software CISCO IOS. Perintah-perintah CLI sendiri dibagi menjadi beberapa tipe, sehingga perintah yang tersedia adalah perintah yang sesuai dengan tipe. Jika kita mengetik simbol tanda tanya (?) maka akan muncul daftar perintah yang dapat digunakan saat itu. Saat kita masuk ke CLI, default tipe perintah adalah User EXEC yang perintahnyqa cukup terbatas. Untuk dapat mengakses seluruh perintah, maka kita harus masuk ke tipe selanjutnya.
 
-### User EXEC  
-   Perintah pertama saat user masuk ke sistem router. Tipe ini mengizinkan user untuk mengeksekusi perintah dasar, contohnya status sistem. Sistem tidak dapat di-restart melalui tipe ini. Prompt yang digunakan oleh User EXEC adalah nama divais yang diikuti oleh simbol (\>): Router\>
+### User EXEC
 
-### Previledge EXEC  
-   Tipe ini mengizinkan user untuk melihat konfigurasi sistem, me-restart sistem, dan masuk ke sistem konfigurasi. Tipe ini mengizinkan eksekusi perintah dari tipe User dan dapat dilindungi dengan menggunakan password, serta memperbolehkan penggunaan seluruh perintah tipe EXEC. Untuk masuk ke dalam tipe ini, gunakan perintah ‘enable’, dan perintah ‘disable’ untuk keluar. Prompt yang digunakan adalah nama divais diikuti dengan simbol (\#): Router\#
+Perintah pertama saat user masuk ke sistem router. Tipe ini mengizinkan user untuk mengeksekusi perintah dasar, contohnya status sistem. Sistem tidak dapat di-restart melalui tipe ini. Prompt yang digunakan oleh User EXEC adalah nama divais yang diikuti oleh simbol (\>): Router\>
 
-   ```
-   Router\> enable
-   Router\#
-   ```
+### Previledge EXEC
+
+Tipe ini mengizinkan user untuk melihat konfigurasi sistem, me-restart sistem, dan masuk ke sistem konfigurasi. Tipe ini mengizinkan eksekusi perintah dari tipe User dan dapat dilindungi dengan menggunakan password, serta memperbolehkan penggunaan seluruh perintah tipe EXEC. Untuk masuk ke dalam tipe ini, gunakan perintah ‘enable’, dan perintah ‘disable’ untuk keluar. Prompt yang digunakan adalah nama divais diikuti dengan simbol (\#): Router\#
+
+```
+Router\> enable
+Router\#
+```
 
 ### Global Configuration
-   Perintah dalam tipe ini secara umum saat diaplikasikan akan lebih berefek pada sistem secara keseluruhan bukan hanya pada satu protocol atau interface. Tipe konfigurasi spesifik (dijelaskan selanjutnya) juga dapat digunakan dalam level perintah ini. Untuk memasuki Global Configuration, pengguna harus mengetikkan perintah ‘configure terminal’ dari level Privileged EXEC, sedangkan untuk keluar dapat menggunakan perintah ‘end’ atau melalui Ctrl+Z
 
-   ```
-   Router\# configure terminal
-   Enter configuration commands, one per line. End with CNTL/Z.
-   ```
+Perintah dalam tipe ini secara umum saat diaplikasikan akan lebih berefek pada sistem secara keseluruhan bukan hanya pada satu protocol atau interface. Tipe konfigurasi spesifik (dijelaskan selanjutnya) juga dapat digunakan dalam level perintah ini. Untuk memasuki Global Configuration, pengguna harus mengetikkan perintah ‘configure terminal’ dari level Privileged EXEC, sedangkan untuk keluar dapat menggunakan perintah ‘end’ atau melalui Ctrl+Z
 
-### ROM Monitor  
-   Jika router atau server tidak menemukan file system image yang benar untuk dieksekusi, maka sistem akan masuk ke tipe ini. ROM monitor (ROMMON) juga dapat diakses dengan memberi interupsi ke proses booting saat dinyalakan (startup). Melalui mode ini, kita dapat melakukan boot pada divais atau melakukan tes performa. Untuk masuk ke tipe ini, gunakan tombol Break atau Ctrl-C di 60 detik pertama startup. Prompt berupa simbol (\>) atau rommon diikuti nomor dan simbol (\>): \> atau rommon1\>.
+```
+Router\# configure terminal
+Enter configuration commands, one per line. End with CNTL/Z.
+```
 
-### Setup  
-   Tipe ini sebenarnya tidak dapat disebut sebagai tipe dari perintah CLI CISCO. Tipe ini merupakan fitur yang memudahkan kita untuk menjalankan konfigurasi pertama kali dan prosedur konfigurasi dasar lainnya di semua router. Prompt saat kita masuk di level ini adalah informasi dasar untuk memulai fungsi router untuk parameter global kemudian baru parameter interface. Tipe ini menggunakan System Configuration Dialog, yang memandu user dalam melakukan konfigurasi. Contohnya adalah sebagai berikut:
-   ```
-   Continue with configuration dialog? \[ yes \]:
-   Enter host name \[ Router \]:
-   ```
+### ROM Monitor
+
+Jika router atau server tidak menemukan file system image yang benar untuk dieksekusi, maka sistem akan masuk ke tipe ini. ROM monitor (ROMMON) juga dapat diakses dengan memberi interupsi ke proses booting saat dinyalakan (startup). Melalui mode ini, kita dapat melakukan boot pada divais atau melakukan tes performa. Untuk masuk ke tipe ini, gunakan tombol Break atau Ctrl-C di 60 detik pertama startup. Prompt berupa simbol (\>) atau rommon diikuti nomor dan simbol (\>): \> atau rommon1\>.
+
+### Setup
+
+Tipe ini sebenarnya tidak dapat disebut sebagai tipe dari perintah CLI CISCO. Tipe ini merupakan fitur yang memudahkan kita untuk menjalankan konfigurasi pertama kali dan prosedur konfigurasi dasar lainnya di semua router. Prompt saat kita masuk di level ini adalah informasi dasar untuk memulai fungsi router untuk parameter global kemudian baru parameter interface. Tipe ini menggunakan System Configuration Dialog, yang memandu user dalam melakukan konfigurasi. Contohnya adalah sebagai berikut:
+
+```
+Continue with configuration dialog? \[ yes \]:
+Enter host name \[ Router \]:
+```
 
 ## Debugging dan Logging
 
