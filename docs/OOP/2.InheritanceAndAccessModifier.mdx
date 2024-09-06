@@ -3,7 +3,7 @@ sidebar_position: 2
 ---
 
 import AuthorList from "../../src/components/Author";
-import InheritanceTypes from "./assets/modul2/tipe-inheritance.png";
+import TypeInheritance from "./assets/Modul2/tipe-inheritance.png";
 
 # MODUL 2: Inheritance and Access Modifier
 
@@ -27,8 +27,6 @@ Sebagai contoh, jika kita memiliki superclass Agent dengan properti bahwa suatu 
 
 ### Tipe-tipe Inheritance:
 
-<img src={InheritanceTypes} />
-
 1. Single Inheritance
 
    Sebuah subclass hanya mewarisi dari satu superclass. Contohnya, 'Astra' yang mewarisi dari 'Agent'.
@@ -49,15 +47,7 @@ Sebagai contoh, jika kita memiliki superclass Agent dengan properti bahwa suatu 
 
    Kombinasi dari satu atau lebih tipe inheritance lainnya. Sebagian besar, ini adalah situasi dari single dan multiple inheritance. Di Java, hybrid inheritance juga tidak mungkin dilakukan dengan kelas, tetapi dapat dicapai melalui Interfaces.
 
-### Kenapa Perlu Inheritance?
-
-1. Reusabilitas kode
-
-   Dengan inheritance, kode yang sudah ada dapat digunakan kembali tanpa perlu menulis ulang. Ini mengurangi redundansi dan mempermudah pemeliharaan kode.
-
-2. Kemampuan abstraksi method overriding
-
-   Inheritance memungkinkan objek dari subclass yang berbeda diperlakukan sebagai objek dari superclass yang sama. Ini sangat berguna dalam konteks polimorfisme, di mana metode yang sama dapat memiliki implementasi yang berbeda tergantung pada jenis objeknya.
+![alt text](assets/modul2/tipe-inheritance.png)
 
 ### Syntax dalam Java Inheritance
 
@@ -78,6 +68,36 @@ Sebagai contoh, jika kita memiliki superclass Agent dengan properti bahwa suatu 
    class Subclass extends Superclass implements OtherInterface, ... { ... }
    ```
 
+### Contoh program inheritance dalam java
+
+```java
+class Animal {
+	void eat() { System.out.println("eating..."); }
+}
+
+class Dog extends Animal {
+	void bark() { System.out.println("barking..."); }
+}
+
+class TestInheritance {
+	public static void main(String args[]) {
+		Dog d=new Dog();
+		d.bark();
+		d.eat();
+	}
+}
+```
+
+### Kenapa Perlu Inheritance?
+
+1. Reusabilitas kode
+
+   Dengan inheritance, kode yang sudah ada dapat digunakan kembali tanpa perlu menulis ulang. Ini mengurangi redundansi dan mempermudah pemeliharaan kode.
+
+2. Kemampuan abstraksi method overriding
+
+   Inheritance memungkinkan objek dari subclass yang berbeda diperlakukan sebagai objek dari superclass yang sama. Ini sangat berguna dalam konteks polimorfisme, di mana metode yang sama dapat memiliki implementasi yang berbeda tergantung pada jenis objeknya.
+
 ### Konsep Upcasting dan Downcasting
 
 Sebuah proses untuk mengkonversi sebuah tipe data disebut sebagai Typecasting. Dalam konsep inheritance, tumbuh sebuah konversi yang umum disebut sebagai Upcasting dan Downcasting. Pada java, kita diperbolehkan melakukan typecasting dari primitive type wrapper (Integer, Double, dll) kepada tipe data primitif atau sebaliknya. Diluar dari fitur tersebut, object hanya boleh di typecast terhadap jenis objek lain saja.
@@ -89,6 +109,31 @@ a. Upcasting
 b. Downcasting
 
     Dalam Downcasting, objek referensi kelas induk direferensikan sebagai kelas anak. Perilaku downcasting harus dilakukan secara hati-hati karena tidak menghasilkan compile-time error. Jika casting tidak sesuai dengan objek pembentuknya, ketika dijalankan akan melempar "ClassCastException". Kenapa jika berbahaya downcasting diizinkan oleh kompiler? Di Java, beberapa skenario perilaku downcasting dapat bermanfaat.
+
+Jika terjadi kondisi overriding, maka method yang akan dipanggil sesuai dengan objek saat instansiasi. Contoh:
+
+```java
+public class Parent {
+public String foo() { return "parent"; } }
+public class Child extends Parent {
+public String foo() { return "child"; } }
+```
+
+Upcasting:
+
+```java
+Parent a = new Child();
+System.out.println(a.foo()); // output: child
+```
+
+Downcasting:
+
+```java
+Parent a = new Child();
+Child b = (Child) a;
+System.out.println("a: " + a.foo()); // output: child
+System.out.println("b: " + b.foo()); // output: child
+```
 
 ## Access Modifier
 
