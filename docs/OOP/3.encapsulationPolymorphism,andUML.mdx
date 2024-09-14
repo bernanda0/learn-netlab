@@ -1,0 +1,146 @@
+﻿---
+sidebar_position: 2
+---
+
+import AuthorList from "../../src/components/Author";
+import Gambar1 from "./assets/modul3/gambar1.png";
+import Gambar2 from "./assets/modul3/gambar2.png";
+import Gambar3 from "./assets/modul3/gambar3.png";
+import Gambar4 from "./assets/modul3/gambar4.png";
+import Gambar5 from "./assets/modul3/gambar5.png";
+import Gambar6 from "./assets/modul3/gambar6.png";
+import Gambar7 from "./assets/modul3/gambar7.png";
+import Gambar8 from "./assets/modul3/gambar8.png";
+
+# MODUL 3: Encapsulation, Polymorphism, and UML
+
+<AuthorList authorsName={["isan"]} />
+
+## Encapsulation
+
+### Pengertian
+Encapsulation merupakan salah satu dari konsep dasar OOP dimana fields dan juga method dibungkus dalam suatu unit berbentuk class. Hal ini berguna untuk mencapai data hiding, dimana fields atau method tidak bisa diakses secara langsung dari luar kode. Dalam konsep encapsulation ini, implementasi dari sebuah class disembunyikan dari luar dan hanya menunjukkan interface untuk berinteraksi dan mengakses fungsionalitas/data dari class tersebut.
+
+Dalam java, sebuah variabel memiliki access modifiernya masing - masing. Ada tiga access modifier yang paling sering digunakan dalam java yaitu public, private, dan protected. Public berarti bagian kode atau variabel yang diberikan access modifier public dapat diakses dari class mana pun. Lalu private berarti bagian kode atau variabel tersebut hanya dapat diakses oleh kelas yang bersangkutan (kelas yang memiliki variabel tersebut). Sedangkan protected berarti bagian kode atau variabel tersebut dapat diakses pada package yang sama dan pada subclassnya.
+
+Lalu apa hubungan access modifier dengan konsep encapsulation? Seperti yang telah dijelaskan, dalam java sebuah variabel dapat diubah menjadi private agar variabel tersebut tidak dapat diakses dari luar kelas yang bersangkutan. Sehingga untuk mengakses data/variabel tersebut dari luar kelas yang bersangkutan, dibutuhkannya sesuatu yang disebut **getter dan setter** (dapat disebut juga sebagai accessors dan mutators). Sesuai dengan namanya, getter adalah suatu fungsi/method yang digunakan untuk mengambil **(get)** data dari variabel yang diinginkan. Sedangkan setter adalah fungsi/method yang berfungsi untuk mengubah **(set)** data dari variabel yang diinginkan.
+
+
+
+### Car.java
+```java
+class Car{ 
+   //fields
+   private String model;
+   //……
+
+   //constructor
+   //……
+
+   //getter
+   public String getModel() {
+      return this.model;
+   }
+
+   //setter
+   public void setModel(String newModelName) {
+      this.model = newModelName;
+   }
+
+   //other method
+   //……
+}
+```
+
+Seperti yang dapat dilihat pada kode diatas, variabel/fields model tidak dapat diakses secara langsung dari luar karena menggunakan access modifier private. Oleh karena itu dibuatlah method getter-setter  agar variabel model  tersebut dapat diakses dari luar melalui method - method yang telah dibuat. 
+Contoh penggunaan method getter-setter yang benar adalah : 
+
+### Main.java
+```java
+public class Main{ 
+   //fields
+   Public static void main(String[] args) {
+      //Creating a new car object
+      Car myCar = new Car(“Ford”, “Focus”, “red”);
+      //Change model name with setter
+      myCar.setModel(“Ranger”); //Set value of myCar’s model to “Ranger”
+      
+      //Get data from field model with getter
+      System.out.println(myCar.getModel()); // print “Ranger 
+   }
+}
+
+```
+Contoh penggunaan getter-setter yang salah : 
+
+```java
+public class Main{ 
+   //fields
+   Public static void main(String[] args) {
+      //Creating a new car object
+      Car myCar = new Car(“Ford”, “Focus”, “red”);
+      //Change model name with setter
+      myCar.model = “Ranger”; // Error: model berupa private variable
+      
+      //Get data from field model with getter
+      System.out.println(mycar.model); // Error: model berupa private variable
+}
+```
+Beberapa fungsi/kegunaan dari konsep encapsulation ini antara lain : 
+1. Membantu mengontrol value yang diberikan kepada variabel-variabel yang ada di fields.
+2. Dapat berfungsi sebagai error prevention/validation yang menghandle apakah data yang diinput sudah valid dan sesuai. 
+3. Sebagai data transformer dimana data input dapat diubah menjadi unit/format yang sesuai untuk disimpan pada variabel tersebut. 
+4. Data Hiding, dimana akses terhadap implementasi sebuah class disembunyikan dari luar. 
+
+
+## Polymorphism
+### Pengertian
+Selain **Encapsulation**, ada lagi salah satu dari konsep dasar OOP yang harus kalian ketahui. Yaitu adalah **Polymorphism**. Polymorphism dapat diartikan sebagai *“memiliki bentuk yang bermacam - macam”*. Sehingga, dengan menggunakan polymorphism, akan dapat melakukan aksi yang sama namun dengan cara yang berbeda-beda. Jika sebuah class merupakan sebuah child dari class lainnya (inherit) maka dengan menggunakan polymorphism akan dapat membantu untuk menggunakan properti yang dibawa dari parent classnya sesuai dengan kebutuhan. Selain itu, pada sebuah class, dengan menggunakan polymorphism, akan dapat memiliki method dengan nama yang sama namun dengan parameter yang berbeda-beda salah satu dari konsep dasar OOP dimana fields dan juga method dibungkus dalam suatu unit berbentuk class.
+
+Polymorphism dapat dicontohkan dalam kehidupan nyata. Dalam kehidupan, seorang dapat menjadi seorang orang tua, kakak, anak, teman, dan lain sebagainya dalam satu waktu. Sehingga dia akan memiliki beberapa kebiasaan yang berbeda dalam situasi yang berbeda juga. 
+
+Polymorphism dibagi menjadi dua tipe yaitu **Static Polymorphism** (Compile Time Polymorphism) dan **Dynamic Polymorphism** (Runtime Polymorphism). Pada static polymorphism akan dilakukan method **overloading**, sedangkan pada dynamic polymorphism akan dilakukan method **overriding**
+
+<img src={Gambar1} width="500" />
+
+1. Method Overloading  (static polymorphism)
+
+Method overloading memiliki arti yaitu beberapa method dengan nama yang sama, namun memiliki parameter yang berbeda beda. Method-method tersebut akan disebut sebagai overloaded. Terdapat beberapa syarat untuk melakukan method overloading yaitu : 
+
+- Method harus memiliki nama yang sama dengan method lainnya yang ingin dilakukan overloading. 
+- Parameter antar method harus berbeda antara satu dengan yang lain. 
+- Return type antar method boleh sama atau berbeda
+
+<img src={Gambar2} width="500" />
+
+Pada potongan kode diatas, terdapat dua method yang sama yaitu method warna. Method pertama yang tidak memiliki parameter akan mengembalikan return berupa string “putih”. Sedangkan method yang memiliki parameter berupa String akan terlebih dahulu menerima parameter berupa String yang akan dijadikan return oleh method tersebut. 
+
+Berikut contoh penggunaan dari kedua method tersebut.
+
+<img src={Gambar3} width="500" />
+<img src={Gambar4} width="500" />
+
+2. Method overriding (dynamic polymorphism)
+
+Method overriding merupakan sebuah metode yang akan memproses method yang dipanggil akan diubah dan diselesaikan pada saat runtime. Method overriding akan terjadi apabila child class memiliki method yang sama dengan yang ada pada parent classnya. Terdapat syarat untuk melakukan method overriding :
+
+- Access modifier method harus sama atau lebih luas dibandingkan dengan method pada class yang di override
+- Child class hanya dapat melakukan override method yang sama maksimal satu kali. 
+
+<img src={Gambar5} width="500" />
+<img src={Gambar6} width="500" />
+
+Pada potongan kode diatas, pada class mobil terdapat method warna yang tidak memiliki parameter. Lalu pada class sedan yang melakukan extends terhadap class mobil terdapat method dengan nama yang sama dan juga tanpa parameter seperti pada parent classnya. Hal itu lah yang disebut dengan method overriding. Sehingga pada saat method warna dipanggil pada class sedan, yang terpanggil adalah method yang telah mengoverride method sebelumnya. Jika kode tersebut dijalankan akan menghasilkan output sebagai berikut : 
+
+<img src={Gambar7} width="500" />
+<img src={Gambar8} width="500" />
+
+
+## Polymorphism
+### Pengertian
+UML (Unified Modeling Language) adalah sebuah standar untuk memodelkan sebuah sistem software. UML menyediakan berbagai jenis diagram untuk membantu dalam mendesain dan mendokumentasikan sistem yang kompleks. UML digunakan untuk memvisualisasikan, menentukan, membangun, dan mendokumentasikan artefak dari sistem perangkat lunak. Dalam konteks Java, UML digunakan untuk memodelkan struktur dan perilaku program Java. Salah satunya adalah UML class diagram. UML class diagram menunjukkan struktur class dalam program yang kita buat, termasuk atribut, metode, dan relation antar class. Ini sangat berguna dalam merancang struktur dasar dari program Java. 
+
+Untuk cara membuat UML class diagram menggunakan IntelliJ dapat dilihat pada video referensi berikut : https://www.youtube.com/watch?v=yuR7TPlrV_E 
+
+
+
