@@ -1,0 +1,156 @@
+---
+sidebar_position: 2
+---
+import AuthorList from "../../src/components/Author";
+
+# MODUL 2: System Hacking
+
+<AuthorList authorsName={["bintang"]} />
+
+## Tujuan Praktikum
+
+- Able to understand what a system is hacking and its implementation.
+- Able to know the purpose of system hacking and what techniques are used.
+- Able to understand the terms used in system hacking, such as spyware, rootkits, etc.
+
+## Dasar Teori
+
+### System Hacking
+
+Setelah mendapatkan informasi dari fase sebelumnya, sekarang lanjutkan ke fase peretasan sistem. Proses peretasan sistem jauh lebih sulit dan kompleks daripada yang sebelumnya. Sebelum memulai fase peretasan sistem, peretas etis atau pentester harus ingat bahwa Anda tidak dapat memperoleh akses ke sistem target sekaligus. Anda harus menunggu apa yang Anda inginkan, mengamati dan berjuang secara mendalam; maka Anda akan menemukan beberapa hasil.
+
+### System Hacking Methodology
+
+Proses peretasan sistem diklasifikasikan ke dalam beberapa metode peretasan sistem. Metode ini juga disebut sebagai metodologi peretasan CEH oleh EC-Council. Metodologi ini meliputi:
+
+- Cracking passwords 
+- Escalating privileges 
+- Executing applications 
+- Hiding files 
+- Covering tracks
+
+## Goals of System Hacking
+
+Dalam pendekatan metodologis Peretasan Sistem, melewati kontrol akses dan kebijakan dengan peretasan kata sandi atau serangan rekayasa sosial akan menghasilkan akses ke sistem. Menggunakan informasi sistem operasi akan membantu untuk mengeksploitasi kerentanan yang diketahui dari sistem operasi untuk meningkatkan hak istimewa. Setelah Anda mendapatkan akses ke sistem dan memperoleh hak istimewa, dengan menjalankan aplikasi seperti Trojans, backdoors, dan spyware, penyerang dapat membuat backdoor untuk mempertahankan akses jarak jauh ke sistem target. Sekarang, untuk mencuri informasi aktual, data, atau aset lain dari suatu organisasi, penyerang perlu menyembunyikan aktivitas jahatnya. Rootkit dan steganografi adalah teknik paling umum untuk menyembunyikan aktivitas jahat. Setelah penyerang mencuri informasi dan tetap tidak terdeteksi, fase terakhir peretasan sistem memastikan agar tidak terdeteksi dengan menyembunyikan bukti kompromi dengan memodifikasi atau menghapus log.
+
+## Password Cracking
+
+Sebelum melanjutkan ke Cracking Kata Sandi, Anda harus mengetahui tentang tiga jenis faktor otentikasi:
+
+- **Something I have**, like username and password. 
+- **Something I am**, like biometrics.
+- **Something I possess**, like registered/allowed devices.
+
+Password Cracking adalah metode mengekstrak password untuk mendapatkan akses resmi ke sistem target dengan menyamar sebagai pengguna yang sah. Biasanya, hanya otentikasi nama pengguna dan kata sandi yang dikonfigurasi tetapi sekarang, otentikasi kata sandi bergerak menuju otentikasi dua faktor atau otentikasi multi-faktor.
+
+Password yang dapat ditebak, pendek, atau hanya berisi angka atau huruf dapat dipecahkan dengan mudah. Kata sandi yang baik mengandung:
+
+- Case-sensitive letters 
+- Special characters 
+- Numbers 
+- Lengthy password (typically more than 8 letters) 
+
+## Types of Password Attacks
+
+Serangan Kata Sandi diklasifikasikan ke dalam jenis berikut: 
+- Non-Electronic Attacks 
+- Active Online Attacks 
+- Passive Online Attacks 
+- Default Password 
+- Offline Attack
+
+### Non-Electronic Attacks
+
+Non-Electronic attacks atau Serangan Nonteknis tidak memerlukan pemahaman dan pengetahuan teknis. Ini adalah serangan yang bisa dilakukan dengan shoulder surfing, social engineering, dan dumpster diving.
+
+### Active Online Attacks
+
+Active Online Attack mencakup berbagai teknik yang berinteraksi langsung dengan target untuk memecahkan kata sandi. Active Online attacks termasuk: 
+
+- Dictionary Attack 
+- Brute Force Attack 
+- Hash Injection
+
+### Passive Online Attacks
+
+Passive online attacks dilakukan tanpa mengganggu target. Pentingnya serangan ini adalah karena ekstraksi kata sandi tanpa mengungkapkan informasi.
+
+### Default Password
+
+Setiap peralatan baru dikonfigurasi dengan kata sandi default oleh pabrikan. Disarankan untuk mengubah kata sandi default menjadi kumpulan karakter yang unik dan rahasia. 
+
+### Offline Attacks
+
+Contoh serangan offline adalah membandingkan kata sandi menggunakan tabel pelangi.
+
+## Distributed Network Attack (DNA)
+
+Distributed Network Attack (DNA) adalah pendekatan lanjutan untuk memecahkan kata sandi dengan menggunakan kekuatan pemrosesan mesin yang tidak digunakan di seluruh jaringan.
+
+## Password Guessing
+
+Password guessing menggunakan metode coba-coba menebak kata sandi dengan informasi yang diekstraksi dari fase awal.
+
+## USB Drive
+
+Dalam serangan online aktif menggunakan drive USB, penyerang mencolokkan drive USB yang berisi alat peretas kata sandi seperti "Passview."
+
+## Microsoft Authentication
+
+Microsoft Authentication adalah proses verifikasi untuk mengidentifikasi pengguna atau perangkat apa pun. Sistem operasi Microsoft mengimplementasikan protokol otentikasi seperti Kerberos, SAM, NTLM, dan LM untuk memastikan otentikasi pengguna, komputer, dan layanan.
+
+## Security Account Manager (SAM)
+
+Security Account Manager (SAM) adalah database yang menyimpan kredensial dan parameter akun lainnya. Database SAM berisi kata sandi dalam bentuk hash dan informasi akun lainnya.
+
+## NTLM Authentication
+
+NT Lan Manager (NTLM) adalah protokol otentikasi Microsoft. Tantangan 16-byte "nonce" digunakan dalam proses otentikasi untuk membandingkan tantangan terenkripsi yang diterima dengan database.
+
+## Escalating Privileges
+
+Privilege escalation diklasifikasikan menjadi dua jenis: 
+- **Horizontal Privileges Escalation**
+- **Vertical Privileges Escalation**
+
+## Executing Applications
+
+Setelah mendapatkan akses, penyerang mengeksekusi aplikasi jahat untuk mendapatkan akses lebih lanjut atau menyiapkan backdoor. RemoteExec dan keyloggers adalah alat yang digunakan dalam tahap ini.
+
+## Spyware
+
+Spywares adalah perangkat lunak yang mengumpulkan informasi interaksi pengguna seperti kredensial login tanpa memberi tahu pengguna.
+
+### Features of Spyware
+
+Beberapa fitur Spyware termasuk:
+
+- Tracking users (Keylogging)
+- Monitoring web activity
+- Remote delivery of logs
+- Voice and video recording
+
+## Rootkits
+
+Rootkit adalah kumpulan perangkat lunak yang memberikan akses istimewa kepada penyerang melalui sistem target. Rootkits menciptakan pintu belakang dan menghindari deteksi. 
+
+### Types of Rootkits:
+
+- Application Level Rootkits
+- Kernel-Level Rootkits
+- Hardware / Firmware Level Rootkits
+- Hypervisor Level Rootkits
+- Boot Loader Level Rootkits
+
+### Rootkit Tools
+
+Beberapa alat Rootkit termasuk: 
+- Avatar 
+- Necurs 
+- Azazel 
+- ZeroAccess
+
+### Detecting & Defending Rootkits
+
+Deteksi berbasis integritas, perilaku, dan alat deteksi khusus seperti RootkitRevealer dapat digunakan untuk mendeteksi rootkit.
+
