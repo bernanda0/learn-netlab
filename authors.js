@@ -54,7 +54,7 @@ const authorsData = {
     image_url: "https://github.com/emirfateen.png",
   },
   isan: {
-    name: "Isan [IS]",
+    name: "Isan [IP]",
     title: "Netlab Assistant 2024/2025",
     url: "https://github.com/patuyyy",
     image_url: "https://github.com/patuyyy.png",
