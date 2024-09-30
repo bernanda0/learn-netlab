@@ -1,0 +1,187 @@
+---
+sidebar_position: 5
+---
+
+import AuthorList from "../../src/components/Author";
+
+# MODUL 5: Wireless Network Security
+
+<AuthorList authorsName={["althaf"]} />
+
+## Lab Objectives
+
+- Memahami konsep dasar Sistem Keamanan Jaringan Nirkabel.
+- Memahami dasar celah eksploitasi terhadap Jaringan Nirkabel.
+- Memahami dasar teknik pencegahan dan penanggulangan dari
+  eksploitasi kemanan Jaringan Nirkabel.
+
+---
+
+## _Wireless Networks_
+
+**Jaringan nirkabel** telah menjadi teknologi yang sangat umum dan populer, menggantikan jaringan kabel konvensional di banyak aplikasi karena kemudahan implementasi dan mobilitasnya. Penggunaan jaringan nirkabel tidak hanya meningkatkan mobilitas dalam jaringan, tetapi juga memberikan fleksibilitas yang lebih besar bagi pengguna akhir. Salah satu keuntungan signifikan dari teknologi nirkabel adalah kemampuannya untuk menghubungkan daerah-daerah terpencil di mana implementasi jaringan kabel sulit atau tidak praktis. Meskipun di era awal teknologi nirkabel keamanan menjadi perhatian utama, saat ini berbagai teknik enkripsi canggih telah dikembangkan untuk mengamankan saluran komunikasi nirkabel, meningkatkan perlindungan terhadap informasi yang ditransmisikan.
+
+Jaringan nirkabel merupakan jenis jaringan komputer yang memungkinkan pengiriman dan penerimaan data melalui media nirkabel, seperti gelombang radio. Keuntungan utama dari jaringan ini adalah pengurangan biaya kabel, perangkat, dan kompleksitas instalasi dibandingkan dengan jaringan kabel tradisional. Komunikasi nirkabel umumnya bergantung pada teknologi radio, dengan berbagai rentang frekuensi digunakan untuk jenis teknologi nirkabel yang berbeda, disesuaikan dengan kebutuhan spesifik. Contoh umum dari jaringan nirkabel meliputi jaringan telepon seluler, komunikasi satelit, dan komunikasi gelombang mikro. Teknologi ini telah menjadi populer untuk berbagai skala jaringan, mulai dari jaringan area personal (PAN), jaringan area lokal (LAN), hingga jaringan area luas (WAN).
+
+### Keunggulan Jaringan Nirkabel
+
+- Mobilitas dan fleksibilitas tinggi bagi pengguna
+- Mengurangi biaya dan kompleksitas instalasi kabel
+- Memungkinkan konektivitas di area yang sulit dijangkau kabel
+- Skalabilitas yang lebih baik untuk perluasan jaringan
+
+---
+
+## Standar IEEE 802.11
+
+Institute of Electrical and Electronics Engineers (IEEE) telah mengembangkan serangkaian standar untuk jaringan nirkabel yang dikenal sebagai IEEE 802.11. Beberapa revisi penting meliputi:
+
+| Standar  | Tahun Persetujuan | Kecepatan Data Maksimum | Modulasi  | Band Frekuensi |
+| -------- | ----------------- | ----------------------- | --------- | -------------- |
+| 802.11a  | 1999              | 54 Mbps                 | OFDM      | 5 GHz          |
+| 802.11b  | 1999              | 11 Mbps                 | DSSS/CCK  | 2.4 GHz        |
+| 802.11g  | 2003              | 54 Mbps                 | OFDM/DSSS | 2.4 GHz        |
+| 802.11n  | 2009              | 450 Mbps                | OFDM      | 2.4/5 GHz      |
+| 802.11ac | 2014              | 6.77 Gbps               | OFDM      | 5 GHz          |
+
+---
+
+## _Wireless Network Types_
+
+| Tipe                            | Jangkauan                                                     | Aplikasi                                     | Standar                    |
+| ------------------------------- | ------------------------------------------------------------- | -------------------------------------------- | -------------------------- |
+| Personal Area Network (PAN)     | Sekitar beberapa orang dalam ruang lingkup yang sangat kecil. | Koneksi pengganti Kabel.                     | Bluetooth, NFC, dll.       |
+| Local Area Network (LAN)        | Sekitar beberapa ruangan dalam ruang lingkup satu lingkungan. | Bentuk ekstensi wireless dari wired network. | IEEE 802.11 (WiFi)         |
+| Metropolitan Area Network (MAN) | Sekitar ruang lingkup dalam satu kota.                        | Penghubung konektivitas inter-network.       | IEEE 802.15 (WiMAX)        |
+| Wide Area Network (WAN)         | Sekitar seluruh penjuru dunia.                                | Akses jaringan Wireless.                     | Cellular (UMTS, LTE, dll.) |
+
+---
+
+## _Wi-Fi Authentication Modes_
+
+Di dalam sistem jaringan WiFi pasti selalu terdapat komponen autentikasi yang digunakan,
+komponen ini terbagi kedalam 2 tipe dasar yaitu _**Open Authentication**_ dan **_Shared Key
+Authentication_** _(Selain kedua mode dasar autentikasi tersebut masih banyak lagi mode autentikasi untuk
+Jaringan Nirkabel)_. Dengan deskripsinya masing – masing seperti berikut:
+
+### _Open Authentication_
+
+Mekanisme kerja autentikasi ini secara umum terbagi kedalam 6 tahapan yaitu :
+
+1. Dalam jaringan LAN Berbasis Wi-Fi, ketika klien nirkabel mencoba untuk
+   menyambung Wi-Fi, itu memulai proses asosiasi dengan mengirimkan
+   permintaan Probe. Probe ini permintaan adalah untuk menemukan jaringan
+   yang terstandardisasi dalam IEEE 802.11. Permintaan probe ini berisi data
+   yang didukung menilai informasi klien.
+2. Permintaan probe dari klien ini dijawab dengan respon yang
+   mengandung parameter seperti itu sebagai SSID, kecepatan data, enkripsi, dll.
+   jika titik akses menemukan data yang didukung yang kompatibel rate, enkripsi,
+   dan parameter lain dengan klien.
+3. Klien mengirimkan permintaan Open Authentication (authentication frame) ke titik akses dengan urutan
+   0x0001 untuk mengatur Open Authentication.
+4. Permintaan Open Authentication dijawab oleh titik akses dengan
+   tanggapan yang dimiliki urutan 0x0002.
+5. Setelah menerima respons otentikasi sistem terbuka, klien mengirimkan
+   permintaan asosiasi ( Data Frames ) dengan parameter keamanan seperti
+   enkripsi yang dipilih ke Access Point ( yang biasanya menggunakan WEP ).
+6. Access Point merespons dengan permintaan untuk menyelesaikan
+   proses asosiasi dan klien dapat mulai mengirim data
+
+### _Shared Key Authentication_
+
+Mekanisme kerja autentikasi ini secara umum terbagi kedalam 4 tahapan yaitu :
+
+1. Tahapan pertama adalah initial authentication request frame dikirimkan
+   oleh klien kepada bridge / access point.
+2. Access Point merespons permintaan authentication request frame
+   tersebut dengan mengirmkan challenge text tak terenkripsi.
+3. Client kemudian mengenripsi challenge text tersebut beserta shared
+   secret key nya dan mengirimkannya balik kepada bridge / access point.
+4. Bridge / Access Point melakukan dekripsi challenge text dengan shared
+   secret key. Jika hasilnya sesuai dengan challenge text maka, successful
+
+### Methods
+
+Berikut merupakan beberapa **metode Wireless Security Protocols yang biasa digunakan
+dalam metode Shared – Key Autenthication** :
+
+1. **Wired Equivalent Privacy (WEP)**
+
+   Spesifikasi 802.11 asli dirancang untuk mengamankan data menggunakan
+   metode enkripsi Rivest Cipher 4 (RC4) dengan kunci statis. Namun, kuncinya
+   tidak pernah berubah saat bertukar paket. Ini membuat WEP mudah diretas. WEP
+   tidak lagi direkomendasikan dan tidak boleh digunakan.
+
+2. **Wi-Fi Protected Access (WPA)**
+
+   Standar Aliansi Wi-Fi yang menggunakan WEP tetapi mengamankan data dengan
+   algoritme enkripsi Temporal Key Integrity Protocol (TKIP) yang jauh lebih kuat.
+   TKIP mengubah kunci untuk setiap paket, membuatnya lebih sulit untuk diretas.
+
+3. **WPA2**
+
+   Standar industri saat ini untuk mengamankan jaringan nirkabel. Ia menggunakan
+   Advanced Encryption Standard (AES) untuk enkripsi. AES saat ini dianggap
+   sebagai protokol enkripsi terkuat.
+
+4. **WPA3**
+
+   Keamanan Wi-Fi generasi berikutnya. Semua perangkat berkemampuan WPA3
+   menggunakan metode keamanan terbaru, melarang protokol lama, dan
+   memerlukan penggunaan Protected Management Frames (PMF). Namun,
+   perangkat dengan WPA3 belum tersedia.
+
+   ### Tabel Shared Key Authentication
+
+   | Capabilities               | WEP               | WPA/WPA2        | WPA3             |
+   | -------------------------- | ----------------- | --------------- | ---------------- |
+   | Year released              | 1997              | 2004            | 2018             |
+   | En/Decryption (Personal)   | RC4               | TKIP/AES-CCMP   | AES-CCMP         |
+   | En/Decryption (Enterprise) | RC4               | TKIP/AES-CCMP   | AES-GCMP         |
+   | Integrity (Personal)       | No                | CCMP 64-bit MIC | CCMP 64-bit MIC  |
+   | Integrity (Enterprise)     | No                | CCMP 64-bit MIC | GCMP 128-bit MIC |
+   | Key length (Personal)      | 40-bit or 104-bit | 128-bit         | 128-bit          |
+   | Key length (Enterprise)    | 40-bit or 104-bit | 128-bit         | 256-bit          |
+   | Pre-shared key             | PSK               | PSK             | SAE              |
+   | Open network encryption    | Open              | Not Supported   | OWE              |
+   | Easy connect               | Not Supported     | WPS             | DPP              |
+   | PMF                        | Not Supported     | Optional        | Mandatory        |
+   | Offline dictionary attack  | Vulnerable        | Vulnerable      | Invulnerable     |
+
+## _Wireless Encryption Methods_
+
+Enkripsi digunakan untuk melindungi data. Seorang penyusup mungkin dapat menangkap
+data terenkripsi, tetapi dia tidak akan dapat menguraikannya dalam waktu yang wajar.
+Protokol enkripsi berikut digunakan dengan otentikasi nirkabel:
+
+1. **Temporal Key Integrity Protocol (TKIP)**
+
+   TKIP adalah metode enkripsi yang digunakan oleh WPA. Ini memberikan
+   dukungan untuk peralatan WLAN lama dan mengatasi kekurangan asli yang
+   terkait dengan metode enkripsi
+   802.11 WEP. Itu menggunakan WEP tetapi mengenkripsi payload Layer 2
+   menggunakan TKIP dan melakukan Message Integrity Check (MIC) dalam paket
+   terenkripsi untuk memastikan bahwa pesan belum diubah.
+
+2. **Advanced Encryption Standard (AES)**
+
+   AES adalah metode enkripsi yang digunakan oleh WPA2. Ini adalah metode yang
+   disukai karena merupakan metode enkripsi yang sangat kuat. Ini menggunakan
+   Mode Counter Cipher dengan Block Chaining Message Authentication Code
+   Protocol (CCMP), yang memungkinkan host tujuan untuk mengenali jika bit
+   terenkripsi dan nonenkripsi telah diubah.
+
+3. **The Galois/Counter Mode Protocol (GCMP)**
+
+   Ini adalah rangkaian enkripsi terautentikasi yang kuat yang lebih aman dan lebih
+   efisien daripada CCMP. GCMP digunakan di WPA3.
+
+---
+
+### References
+
+- https://www.globalsign.com/en/blog/12-best-practices-wireless-network-security
+- https://www.cisco.com/c/en/us/products/wireless/what-is-wi-fi-security.html#~protocols
+- https://www.securew2.com/blog/complete-guide-wi-fi-security
+- https://www.stationx.net/how-to-use-aircrack-ng-tutorial/
+- https://community.ruijienetworks.com/forum.php?mod=viewthread&tid=5933
