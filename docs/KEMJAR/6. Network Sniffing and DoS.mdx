@@ -1,0 +1,141 @@
+---
+sidebar_position: 6
+---
+
+import AuthorList from "../../src/components/Author";
+import PacketSniffing from "./assets/Modul6/PacketSniffing.png";
+import POD from "./assets/Modul6/PingOfDeath.png";
+import SmurfAttack from "./assets/Modul6/SmurfAttack.png";
+import SYNFlood from "./assets/Modul6/SYNFlood.png";
+import DoS from "./assets/Modul6/DoS.png";
+
+
+
+# MODUL 6: Network Sniffing and Denial of Service (DoS)
+
+<AuthorList authorsName={["reibar"]} />
+
+## Tujuan Praktikum:
+1. Memahami konsep sniffing pada konteks cybersecurity
+2. Memahami konsep dasar serangan Denial of Service (DoS)
+3. Memahami perbedaan antara setiap serangan DoS
+4. Mensimulasikan situasi DoS
+5. Memahami tindakan pencegahan yang diperlukan untuk mencegah serangan DoS
+
+## Sniffing
+
+**Sniffing** adalah proses **memindai** dan **memantau** paket data yang ditangkap saat melewati jaringan menggunakan suatu tools tertentu. 
+Proses sniffing dilakukan dengan menggunakan port **Promiscuous.** Dengan mengaktifkan fungsi mode promiscuous pada interface 
+jaringan yang terhubung, hal ini memungkinkan pelaku sniffing untuk **menangkap semua traffic jaringan**, bahkan ketika traffic 
+tersebut tidak ditujukan kepada interface tersebut. Setelah paket ditangkap, inspeksi dapat dilakukan dengan mudah.
+
+
+Dengan Sniffing, penyerang dapat menangkap paket seperti traffic Syslog, traffic DNS, traffic Web, Email, dan 
+jenis traffic data lainnya yang melewati jaringan. Dengan menangkap paket-paket ini, penyerang dapat **mengungkap informasi**
+seperti data, nama pengguna, dan kata sandi dari protokol seperti HTTP, POP, IMAP, SMTP, NMTP, FTP, Telnet, dan Rlogin serta 
+informasi lainnya. Siapa pun yang berada di jaringan LAN yang sama, atau terhubung ke jaringan target, dapat menyadap paket-paket 
+ini.
+
+## Cara kerja sniffing
+
+Dalam proses Sniffing, penyerang terhubung ke jaringan target untuk menyadap paket. Menggunakan Sniffers, yang mengubah Network 
+interface card (NIC) pada sistem penyerang menjadi mode promiscuous, penyerang akan menangkap paket. Mode promiscuous adalah mode 
+interface di mana NIC merespons setiap paket yang diterimanya. Seperti yang dapat dilihat pada gambar di bawah ini, penyerang 
+terhubung dalam mode promiscuous, menerima setiap paket, bahkan paket-paket yang tidak ditujukan untuknya.
+
+<img src={PacketSniffing}/>
+
+Setelah penyerang menangkap paket, ia dapat mendekripsi paket-paket tersebut untuk **mengekstrak** informasi. Konsep dasar di balik teknik 
+ini adalah jika Anda terhubung ke jaringan target dengan switch, alih-alih hub, lalu lintas broadcast dan multicast dikirimkan ke semua 
+port. Switch meneruskan paket unicast ke port tertentu di mana host sebenarnya terhubung. Switch menjaga tabel MAC-nya untuk memvalidasi 
+siapa yang terhubung ke port mana. Dalam kasus ini, penyerang mengubah konfigurasi switch dengan menggunakan berbagai teknik seperti Port 
+Mirroring atau Switched Port Analyzer (SPAN). Semua paket yang melewati port tertentu akan disalin ke port tertentu (port di mana penyerang 
+terhubung dalam mode promiscuous). Jika Anda terhubung ke hub, hub akan mengirimkan semua paket ke semua port.
+
+### Jenis Sniffing
+
+1. **Passive Sniffing**
+    
+    Passive Sniffing adalah jenis sniffing di mana tidak perlu mengirim paket tambahan atau mengganggu perangkat seperti Hub untuk menerima paket. 
+Seperti yang kita ketahui, Hub menyiarkan setiap paket ke port-portnya, yang membantu penyerang memantau semua lalu lintas yang melewati hub tanpa upaya tambahan.
+
+2. **Active Sniffing**
+
+    Active Sniffing adalah jenis sniffing di mana penyerang harus mengirim paket tambahan ke perangkat yang terhubung seperti Switch untuk mulai 
+menerima paket. Seperti yang kita ketahui, paket unicast dari switch hanya ditransmisikan ke port tertentu. Penyerang menggunakan teknik tertentu 
+seperti MAC Flooding, Serangan DHCP, DNS poisoning, Switch Port Stealing, ARP Poisoning, dan Spoofing untuk memantau lalu lintas yang melewati switch.
+
+## Denial of Service
+
+Serangan Denial-of-Service (DoS) adalah salah satu serangan jaringan yang paling lawas dan umum. Serangan DoS mengakibatkan semacam gangguan 
+layanan kepada pengguna, perangkat, atau aplikasi. Umumnya, sebagian besar serangan DoS dilakukan dengan menggunakan salah satu dari dua metode: 
+memformat ulang paket dengan cara berbahaya atau mengirim sejumlah besar paket untuk membanjiri sistem.
+<img src={DoS}/>
+
+## Berbagai Jenis Serangan DoS
+Berdasarkan dua metode yang disebutkan sebelumnya, ada banyak jenis serangan DoS. Contoh yang paling umum dan bersejarah adalah:
+
+* **Ping of Death Attack**
+<img src={POD}/>
+    Serangan ini melibatkan pengiriman paket ICMP (Internet Control Message Protocol) yang terlalu besar untuk ditangani 
+oleh sistem target. Paket ini terfragmentasi selama transmisi, dan ketika target mencoba menyusunnya kembali, sistem dapat 
+mengalami crash atau menjadi tidak stabil karena ukurannya melebihi batas yang diizinkan.
+
+* **Smurf Attack**
+<img src={SmurfAttack}/>
+    Serangan ini menggunakan pemalsuan alamat IP pengirim dengan mengirimkan permintaan ICMP echo (ping) ke jaringan broadcast.
+Permintaan tersebut akan diteruskan ke semua perangkat di jaringan yang kemudian merespons ke alamat IP target. Akibatnya, 
+target dibanjiri dengan lalu lintas dari banyak perangkat, yang menyebabkan kinerja jaringan atau sistem target menurun drastis.
+
+* **TCP SYN Flood Attack**
+<img src={SYNFlood}/>
+    Serangan ini memanfaatkan proses tiga arah handshake pada protokol TCP. Penyerang mengirimkan sejumlah besar permintaan SYN 
+(synchronize) ke server target tanpa pernah menyelesaikan koneksi dengan mengirimkan ACK (acknowledgment). Hal ini menyebabkan 
+server menunggu respons dari klien palsu dan akhirnya kehabisan sumber daya, sehingga tidak dapat melayani permintaan yang sah.
+
+## Distributed Denial of Service (DDoS)
+
+Serangan Distributed Denial-of-Service (DDoS) adalah serangan DoS dalam skala yang lebih besar, karena berasal dari banyak sumber yang terkoordinasi. Serangan DDoS 
+juga memperkenalkan istilah baru seperti botnet, sistem handler, dan komputer zombie.
+1. Seorang hacker membangun jaringan komputer yang telah terinfeksi. Jaringan host yang terinfeksi disebut botnet. Komputer yang terkompromi disebut komputer zombie, 
+dan mereka dikendalikan oleh sistem handler.
+2. Komputer yang telah menjadi zombie akan terus memindai dan menginfeksi lebih banyak target untuk menciptakan lebih banyak zombie.
+3. Ketika siap, hacker menginstruksikan sistem handler untuk membuat botnet dari zombie melakukan serangan DDoS.
+DDoS menggunakan botnet untuk terus melakukan task. Botnet mendapatkan akses ke sistem menggunakan skrip dan kode berbahaya yang memberi tahu komputer 
+master saat berhasil mengambil alih sistem. Kemudian penyerang dapat mengendalikan sistem dan melakukan serangan DoS.
+
+### Botnet
+Botnet biasanya dibentuk menggunakan Trojan Horse, yang membawa bot sebagai payload yang diteruskan ke korban melalui phishing atau pengalihan ke situs web berbahaya. 
+Setelah Trojan dijalankan, korban akan berada di bawah kendali handler, menunggu instruksi dari command and control (C&C).
+
+Untuk memindai sistem/mesin mana yang rentan, ada beberapa metode, yaitu:
+* Random Scanning Technique
+* Hit-List Scanning Technique
+* Topological Scanning Technique
+* Subnet Scanning Technique
+* Permutation Scanning Technique
+
+## Alat-Alat untuk Simulasi atau Melakukan Serangan DoS
+Ada beberapa alat yang populer untuk mensimulasikan atau benar-benar melakukan serangan DoS, antara lain:
+
+1. **Metasploit**
+
+    Metasploit adalah framework keamanan yang digunakan untuk menguji kerentanan jaringan dan perangkat lunak. Metasploit memiliki modul untuk melakukan berbagai jenis serangan, termasuk serangan DoS.
+
+2. **Hping3**
+
+    Hping3 adalah alat baris perintah yang digunakan untuk menghasilkan paket TCP/IP dan sering digunakan untuk menguji keamanan jaringan. Hping3 juga dapat digunakan untuk melakukan serangan DoS, seperti flood SYN atau ICMP.
+
+3. **Pandora DDoS Bot Toolkit**
+
+    Pandora adalah toolkit bot DDoS yang digunakan untuk mengorganisir serangan DDoS besar-besaran. Toolkit ini memanfaatkan bot untuk melakukan serangan dengan volume lalu lintas yang tinggi ke target.
+
+4. **BanglaDoS**
+
+    BanglaDoS adalah alat yang digunakan untuk melakukan serangan DoS terhadap berbagai jenis server. Alat ini dirancang untuk menghasilkan lalu lintas dalam jumlah besar yang dapat menyebabkan server target menjadi tidak responsif.
+
+5. **Derail**
+
+    Derail adalah alat yang dirancang khusus untuk meluncurkan serangan DoS yang menargetkan layanan tertentu. Ini memungkinkan penyerang membanjiri server dengan permintaan palsu yang mengganggu operasi normalnya.
+
+Selain itu, masih ada banyak alat lain yang dapat digunakan untuk melakukan serangan DoS dengan berbagai cara dan teknik.
