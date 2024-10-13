@@ -1,0 +1,59 @@
+---
+sidebar_position: 8
+---
+
+# MODUL 8: DHCP
+
+import AuthorList from "./../../src/components/Author";
+import DHCPDiscover from "./assets/Modul8/dhcp-discover.png";
+import DHCPOffer from "./assets/Modul8/dhcp-offer.png";
+import DHCPRequest from "./assets/Modul8/dhcp-request.png";
+import DHCPAck from "./assets/Modul8/dhcp-ack.png";
+
+<AuthorList authorsName={["george"]} />
+
+Dynamic Host Configuration Protocol
+
+## TUJUAN PRAKTIKUM
+
+- Memahami konsep dasar DHCP (Dynamic Host Configuration Protocol)
+- Mempelajari konfigurasi dan implementasi DHCP pada suatu jaringan komputer
+
+## A. DHCP
+
+### Pengertian DHCP
+
+**DHCP** atau **Dynamic Host Configuration Protocol** adalah protokol pada Application Layer yang berfungsi untuk memberikan alamat IP dan parameter-parameter lainnya secara otomatis, seperti subnet mask, default gateway, dan alamat DNS.
+Pengalokasian alamat IP oleh DHCP dilakukan secara otomatis sesuai dengan alamat IP yang tersedia di dalam *address pool* yang telah ditentukan.
+Pengaturan alamat IP yang dinamis memudahkan proses administrasi jaringan, terutama pada jaringan yang besar, karena tidak perlu memasukkan alamat IP satu per satu ke semua perangkat.
+
+Penggunaan DHCP biasanya digunakan secara berdampingan dengan static addressing. DHCP biasanya digunakan untuk user end device, seperti pc dan laptop, sedangkan static addressing digunakan untuk network device, seperti router, switch, dan server.
+
+### Cara Kerja DHCP
+
+DHCP adalah protokol yang menggunakan **client-server architecture**, artinya terdapat perangkat yang bertindak sebagai DHCP Server dan DHCP Client.
+DHCP Server dapat berupa router atau server, sedangkan DHCP Client adalah perangkat-perangkat lain yang meminta konfigurasi IP ke DHCP Server.
+
+DHCP Server menyimpan suatu pool alamat IP dan parameter-parameter yang bersangkutan, kemudian membagikan alamat IP beserta parameter-parameter tersebut kepada DHCP Client.
+DHCP Client mengirimkan request kepada DHCP Server setiap kali DHCP Client terhubung ke jaringan.
+Hal ini menyebabkan alamat IP sebuah perangkat tidak sama setiap kali dihubungkan ke jaringan.
+
+### DHCPv4
+
+<img src={DHCPDiscover} />
+
+<img src={DHCPOffer} />
+
+<img src={DHCPRequest} />
+
+<img src={DHCPAck} />
+
+### DHCPv6
+
+## B. Pemahaman Penunjang
+
+### Routing
+
+### EIGRP
+
+### ACL
