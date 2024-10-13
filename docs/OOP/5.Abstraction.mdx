@@ -1,0 +1,101 @@
+---
+sidebar_position: 5
+---
+
+import AuthorList from "../../src/components/Author";
+
+# MODUL 5: Abstraction
+
+<AuthorList authorsName={["kamal"]} />
+
+## Tujuan
+
+- Mampu memahami konsep generic type dan collection pada bahasa pemrograman Java
+- Mampu menggunakan generic type dan collection pada bahasa pemrograman Java
+
+## Abstraction**
+
+Abstraction adalah salah satu pilar utama dalam pemrograman berorientasi objek (Object Oriented Programming atau OOP). Konsep ini berfokus pada penyederhanaan kompleksitas sistem dengan hanya menampilkan bagian-bagian penting dan menyembunyikan detail implementasi yang tidak relevan. Dalam Java, abstraction dicapai dengan menggunakan kelas abstrak dan antarmuka (interface).
+
+## Konsep Abstraction**
+
+Abstraction dalam OOP adalah proses di mana kita menyembunyikan detail teknis dari suatu sistem dan hanya menampilkan fungsi yang relevan bagi pengguna. Dalam kehidupan nyata, abstraction dapat dipahami dengan contoh aplikasi ChatGPT. Meskipun di balik aplikasi ini terdapat berbagai sistem yang rumit seperti pemrosesan bahasa alami, jaringan saraf tiruan, dan infrastruktur server, pengguna hanya berinteraksi dengan antarmuka sederhana untuk bertanya dan mendapatkan jawaban. Detail kompleks di belakang layar disembunyikan dan hanya fungsi yang relevan yang diperlihatkan kepada pengguna, sehingga pengalaman pengguna menjadi lebih sederhana.
+
+Dalam Java, abstraction sering diimplementasikan menggunakan metode getter dan setter. Getter dan setter adalah metode yang memungkinkan pengguna kelas untuk mengakses atau memodifikasi nilai dari variabel yang disembunyikan (dideklarasikan sebagai private). Misalnya, kita tidak perlu tahu bagaimana data disimpan atau diolah dalam suatu objek, tetapi kita tetap bisa mengakses dan memodifikasinya dengan menggunakan getter dan setter. Ini adalah contoh nyata dari abstraction, di mana detail implementasi disembunyikan untuk menjaga kesederhanaan.
+
+## Kenapa Abstraction Penting
+
+Abstraction sangat penting karena memungkinkan pengembang untuk merepresentasikan fungsi yang kompleks menjadi lebih sederhana dan mudah dipahami. Dengan abstraction, sistem yang kompleks dapat dipecah menjadi bagian-bagian yang lebih kecil dan lebih dapat dikelola. Hal ini tidak hanya meningkatkan keterbacaan kode, tetapi juga mempermudah proses pemeliharaan dan pengembangan lebih lanjut.
+
+Misalnya, jika kita memiliki kelas untuk menangani data pengguna, kita dapat menyembunyikan detail penyimpanan data dan hanya menyediakan metode untuk mengakses dan memodifikasinya. Ini membuat kode menjadi lebih aman dan mencegah akses langsung yang bisa menyebabkan kerusakan pada data internal.
+
+## Contoh Penerapan Abstraction
+
+Mari kita lihat contoh penerapan abstraction dalam Java:
+
+```java
+// Superclass dengan metode abstrak dan variabel private
+abstract class Vehicle {
+    private String brand;
+
+    // Constructor
+    public Vehicle(String brand) {
+        this.brand = brand;
+    }
+
+    // Getter dan Setter untuk variabel private
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    // Metode abstrak yang akan diimplementasikan oleh subclass
+    abstract void start();
+}
+
+// Subclass yang mewarisi dari superclass
+class Car extends Vehicle {
+
+    public Car(String brand) {
+        super(brand);
+    }
+
+    // Mengimplementasikan metode abstrak
+    @Override
+    void start() {
+        System.out.println(getBrand() + " car is starting with a key.");
+    }
+}
+
+class ElectricScooter extends Vehicle {
+
+    public ElectricScooter(String brand) {
+        super(brand);
+    }
+
+    // Mengimplementasikan metode abstrak
+    @Override
+    void start() {
+        System.out.println(getBrand() + " electric scooter is starting with a button.");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Vehicle myCar = new Car("Toyota");
+        Vehicle myScooter = new ElectricScooter("Xiaomi");
+
+        myCar.start(); // Output: Toyota car is starting with a key.
+        myScooter.start(); // Output: Xiaomi electric scooter is starting with a button.
+
+        // Menggunakan getter dan setter
+        myCar.setBrand("Honda");
+        System.out.println(myCar.getBrand()); // Output: Honda
+    }
+}
+```
+
+Dalam contoh di atas, kita memiliki kelas Vehicle yang merupakan superclass abstrak dengan variabel brand yang disembunyikan dengan akses private. Untuk mengakses variabel brand, kita menggunakan metode getter (getBrand()) dan setter (setBrand(String brand)), yang merupakan contoh abstraction. Selain itu, kelas Vehicle juga memiliki metode abstrak start(), yang diimplementasikan secara berbeda oleh subclass Car dan ElectricScooter. Dengan abstraction, kita dapat menyederhanakan interaksi dengan berbagai jenis kendaraan melalui antarmuka yang sama, tanpa harus mengetahui detail bagaimana masing-masing kendaraan bekerja.

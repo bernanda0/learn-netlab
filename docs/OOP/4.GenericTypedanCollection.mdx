@@ -1,0 +1,257 @@
+---
+sidebar_position: 4
+---
+import AuthorList from "../../src/components/Author";
+
+# MODUL 4: Generic Type dan Collection
+
+
+<AuthorList authorsName={["fairuz"]} />
+
+## Tujuan
+
+- Mampu memahami konsep generic type dan collection pada bahasa pemrograman Java
+- Mampu menggunakan generic type dan collection pada bahasa pemrograman Java
+
+## Generic Type
+
+## Apa itu Generic Type?
+
+Generic type adalah sebuah fitur yang memungkinkan kita untuk membuat kelas, interface, dan metode yang dapat bekerja dengan berbagai tipe data. Dengan menggunakan generic type, kita dapat membuat kelas, interface, dan metode yang dapat menerima tipe data apa pun sebagai parameter, tanpa harus menentukan tipe data secara spesifik.
+
+## Keuntungan Menggunakan Generic Type
+
+- **Type Safety**: Dengan menggunakan generic type, kita dapat memastikan bahwa tipe data yang digunakan dalam kelas, interface, atau metode tersebut sesuai dengan yang diharapkan.
+- **Reusability**: Dengan menggunakan generic type, kita dapat membuat kelas, interface, atau metode yang dapat digunakan untuk berbagai tipe data tanpa harus menulis implementasi yang berbeda.
+- **Code Readability**: Dengan menggunakan generic type, kita dapat membuat kode yang lebih mudah dibaca dan dimengerti oleh orang lain.
+
+## Cara Menggunakan Generic Type
+
+Untuk menggunakan generic type, kita perlu menentukan tipe data yang akan digunakan dalam kelas, interface, atau metode tersebut. Tipe data ini ditentukan dengan menggunakan tanda kurung sudut (`<` dan `>`), diikuti oleh nama tipe data yang akan digunakan.
+
+## Aturan Penggunaan Generic Type
+
+Ada beberapa aturan yang perlu diperhatikan saat menggunakan generic type dalam Java, antara lain:
+
+- Generic type parameter harus ditentukan dengan menggunakan tanda kurung sudut (`<` dan `>`), diikuti oleh nama tipe data yang akan digunakan. Contoh: `Box<T>`.
+- Generic type argument harus ditentukan saat membuat objek dari kelas atau interface yang menggunakan generic type. Contoh: `Box<Integer> box = new Box<>(10);`.
+- Parameter tipe dapat digunakan untuk mendeklarasikan return type dari metode yang menggunakan generic type. Contoh: `public T getValue() { return value; }`.
+- Java menggunakan konsep type erasure untuk menghapus informasi tipe data generic saat kode dikompilasi. Hal ini berarti bahwa informasi tipe data generic tidak tersedia saat kode dijalankan.
+
+**Contoh Penggunaan Generic Type**:
+
+```java
+public class Box<T> {
+    private T value;
+
+    public Box(T value) {
+        this.value = value;
+    }
+
+    public T getValue() {
+        return value;
+    }
+
+    public void setValue(T value) {
+        this.value = value;
+    }
+}
+```
+
+Pada contoh di atas, kita membuat kelas `Box` yang memiliki generic type `T`. Generic type `T` digunakan untuk menentukan tipe data dari nilai yang disimpan dalam `Box`.
+
+**Contoh Penggunaan Generic Type, dengan melakukan print array of generic type**:
+
+```java
+public class GenericMethodTest {
+    // generic method printArray
+    public static < E > void printArray( E[] inputArray ) {
+        // Display array elements
+        for(E element : inputArray) {
+            System.out.printf("%s ", element);
+        }
+        System.out.println();
+    }
+
+    public static void main(String args[]) {
+        // Create arrays of Integer, Double and Character
+        Integer[] intArray = { 1, 2, 3, 4, 5 };
+        Double[] doubleArray = { 1.1, 2.2, 3.3, 4.4 };
+        Character[] charArray = { 'H', 'E', 'L', 'L', 'O' };
+
+        System.out.println("Array integerArray contains:");
+        printArray(intArray); // pass an Integer array
+
+        System.out.println("\nArray doubleArray contains:");
+        printArray(doubleArray); // pass a Double array
+
+        System.out.println("\nArray characterArray contains:");
+        printArray(charArray); // pass a Character array
+    }
+}
+```
+
+**Output**
+
+```
+Array integerArray contains:
+1 2 3 4 5
+
+Array doubleArray contains:
+1.1 2.2 3.3 4.4
+
+Array characterArray contains:
+H E L L O
+```
+
+Pada contoh di atas, kita membuat metode `printArray` yang merupakan generic method. Metode ini dapat menerima array dari berbagai tipe data, dan menampilkan elemen-elemen array tersebut ke layar.
+
+---
+
+## Collection
+
+## Apa itu Collection?
+
+![Collection](https://docs.oracle.com/javase/tutorial/figures/collections/colls-coreInterfaces.gif)
+
+Collection adalah sebuah struktur data yang digunakan untuk menyimpan dan mengelola sejumlah objek. Collection dapat digunakan untuk menyimpan objek-objek dengan tipe data yang berbeda, dan menyediakan berbagai operasi untuk memanipulasi objek-objek tersebut.
+
+## Jenis-Jenis Collection
+
+Ada beberapa jenis collection yang tersedia dalam Java, antara lain:
+
+- **List**: Collection yang menyimpan objek-objek dalam urutan tertentu, dan memungkinkan objek-objek tersebut diakses berdasarkan indeks.
+- **ArrayList**: Implementasi dari List yang menggunakan array untuk menyimpan objek-objek.
+- **Set**: Collection yang menyimpan objek-objek tanpa duplikat, dan tidak memiliki urutan tertentu.
+- **Map**: Collection yang menyimpan pasangan kunci-nilai, dan memungkinkan objek-objek tersebut diakses berdasarkan kunci.
+- **HashMap**: Implementasi dari Map yang menggunakan hash table untuk menyimpan pasangan kunci-nilai.
+
+## Menggunakan Collection
+
+Untuk menggunakan collection dalam Java, kita perlu mengimpor paket `java.util`. Paket ini menyediakan berbagai kelas dan interface yang digunakan untuk membuat dan mengelola collection.
+
+**Contoh Penggunaan List**:
+
+Misalnya kita ingin mempunyai sebuah ArrayList dengan data seperti dalam tabel berikut:
+
+| Nama   |
+| ------ |
+| Kamal  |
+| Emir   |
+| Fairuz |
+
+```java
+import java.util.ArrayList;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> names = new ArrayList<>();
+        names.add("Kamal");
+        names.add("Emir");
+        names.add("Fairuz");
+
+        for (String name : names) {
+            System.out.println(name);
+        }
+    }
+}
+```
+
+**Output**
+
+```
+Kamal
+Emir
+Fairuz
+```
+
+Pada contoh di atas, kita menggunakan kelas `ArrayList` untuk membuat objek `names` yang merupakan list dari string. Kemudian, kita menambahkan beberapa nama ke dalam list tersebut, dan menampilkan nama-nama tersebut menggunakan perulangan `for-each`.
+
+**Contoh Penggunaan Map**
+
+Misalnya kita ingin mempunyai sebuah HashMap dengan data seperti dalam tabel berikut:
+
+| Nama   | Nilai |
+| ------ | ----- |
+| Kamal  | 100   |
+| Emir   | 90    |
+| Fairuz | 80    |
+
+```java
+import java.util.HashMap;
+import java.util.Map;
+
+public class Main {
+    public static void main(String[] args) {
+        Map<String, Integer> scores = new HashMap<>();
+        scores.put("Kamal", 100);
+        scores.put("Emir", 90);
+        scores.put("Fairuz", 80);
+
+        for (String name : scores.keySet()) {
+            int score = scores.get(name);
+            System.out.println(name + ": " + score);
+        }
+    }
+}
+```
+
+**Output**
+
+```
+Kamal: 100
+Emir: 90
+Fairuz: 80
+```
+
+Pada contoh di atas, kita menggunakan kelas `HashMap` untuk membuat objek `scores` yang merupakan map dari string ke integer.
+
+**Contoh Penggunaan Set**
+
+Misalnya kita ingin mempunyai sebuah HashSet dengan data seperti dalam tabel berikut:
+
+| Nama   |
+| ------ |
+| Kamal  |
+| Emir   |
+| Fairuz |
+
+```java
+import java.util.HashSet;
+import java.util.Set;
+
+public class Main {
+    public static void main(String[] args) {
+        Set<String> names = new HashSet<>();
+        names.add("Kamal");
+        names.add("Emir");
+        names.add("Fairuz");
+
+        for (String name : names) {
+            System.out.println(name);
+        }
+    }
+}
+```
+
+**Output**
+
+```
+Kamal
+Emir
+Fairuz
+```
+
+Pada contoh di atas, kita menggunakan kelas `HashSet` untuk membuat objek `names` yang merupakan set dari string.
+
+## Kesimpulan
+
+Generic type dan collection adalah fitur yang sangat berguna dalam bahasa pemrograman Java. Dengan menggunakan generic type, kita dapat membuat kelas, interface, dan metode yang dapat bekerja dengan berbagai tipe data. Sedangkan dengan menggunakan collection, kita dapat menyimpan dan mengelola sejumlah objek dengan berbagai jenis dan struktur data.
+
+## Referensi
+
+- [Java Generics](https://docs.oracle.com/javase/tutorial/java/generics/index.html)
+- [Java Collections Framework](https://docs.oracle.com/javase/tutorial/collections/index.html)
+- [Java Generics - GeeksforGeeks](https://www.geeksforgeeks.org/generics-in-java/)
+- [Java Collections - GeeksforGeeks](https://www.geeksforgeeks.org/collections-in-java-2/)

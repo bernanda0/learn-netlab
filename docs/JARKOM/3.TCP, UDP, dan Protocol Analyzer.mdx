@@ -1,0 +1,223 @@
+---
+sidebar_position: 3
+---
+
+import AuthorList from "../../src/components/Author";
+import Netstat_Example from "./assets/Modul3/Netstat_Example.png";
+import Netstat_StateExplanation from "./assets/Modul3/Netstat_StateExplanation.png";
+import OSI_Model from "./assets/Modul3/OSI_Model.png";
+import TCPHeader_IPv4 from "./assets/Modul3/TCPHeader_IPv4.png";
+import TCPHeader_IPv6 from "./assets/Modul3/TCPHeader_IPv6.png";
+import TCPHeader from "./assets/Modul3/TCPHeader.png";
+import ThreeWayHandshake_Establish from "./assets/Modul3/ThreeWayHandshake_Establish.png";
+import ThreeWayHandshake_Termination from "./assets/Modul3/ThreeWayHandshake_Termination.png";
+import UDP_Connection from "./assets/Modul3/UDP_Connection.png";
+import UDPHeader from "./assets/Modul3/UDPHeader.png";
+import Wireshark_Example1 from "./assets/Modul3/Wireshark_Example1.png";
+import Wireshark_Example2 from "./assets/Modul3/Wireshark_Example2.png";
+
+# MODUL 3: TCP, UDP, dan Protocol Analyzer
+
+<AuthorList authorsName={["yasmin"]} />
+
+## **Transport Layer**
+
+### **Pengertian dan Fungsi**
+
+<img src={OSI_Model} width="500" />
+Gambar 1. OSI Model
+
+Dalam OSI model, Transport layer berada di layer ke-4. Transport layer adalah layer yang berada di antara Session layer dan Network layer. Transport layer adalah layer yang bertanggung jawab dalam transfer data secara end-to-end. Beberapa kegunaan Transport layer yaitu:
+
+1. Addressing
+   Transport layer akan menggunakan port number yang akan digunakan untuk melakukan komunikasi dengan application yang tepat.
+2. End-to-end delivery
+   Transport layer akan membuat end-to-end connection antara sender host dan receiver host. Maksud dari end-to-end connection adalah Transport layer akan menjamin bahwa proses pengiriman data dari sender ke receiver akan dijamin keamanannya dan sampai di tujuan yang benar.
+3. Flow control
+   Transport layer dapat mencegah sender untuk mengirim data yang melebihi batas untuk mencegah terjadinya overload data. Setiap host memiliki resource yang terbatas, salah satu contohnya adalah bandwidth. Ketika sender mengirim data yang terlalu banyak, maka receiver dapat meminta sender untuk mengirim kembali/retransmisson data tersebut. Proses retransmission ini akan meningkatkan network congestion. Oleh karena itu, Transport layer dapat mengatur jumlah data yang dikirim dalam bentuk kelompok untuk mengatur flow pengiriman data agar tidak terjadi overload.
+4. Multiplexing dan Demultiplexing
+   Multiplexing atau Many-To-One terjadi ketika Application layer mengirim data ke Transport layer. Transport layer akan menggabungkan beberapa data yang yang dikirim dari Application layer menjadi segments. Lalu Transport layer akan menambahkan port number yang akan menjadi penanda darimana data/proses tersebut berasal.
+   Demultiplexing atau One-To-Many terjadi ketika Network layer mengirim data ke Transport layer. Data yang diterima ini memiliki port numbers di headersnya, sehingga Transport layer akan mengirim data ke application yang tepat berdasarkan port number-nya.
+5. Reliable delivery
+   Transport layer dapat melakukan beberapa control seperti error control, sequence control, loss control, dan duplication control. Transport layer akan memastikan bahwa segment data yang dikirim berada dalam urutan yang benar, tidak ada bagian data yang hilang, ataupun ada data duplikat yang dikirim ke destination yang sama.
+
+### **Protokol Transport Layer**
+
+Terdapat banyak protokol yang ada di Transport layer, tetapi TCP dan UDP adalah protokol Transport layer yang paling sering digunakan. Berikut adalah beberapa protokol yang ada di Transport layer:
+
+- Transmission Control Protocol (TCP)
+- User Datagram Protocol (UDP)
+- Datagram Congestion Control Protocol (DCCP)
+- Stream Control Transmission Protocol (SCTP)
+- AppleTalk Transaction Protocol (ATP)
+- Fibre Channel Protocol (FCP)
+- Reliable Data Protocol (RDP)
+- Reliable User Data Protocol (RUDP)
+
+### **Cara Kerja**
+
+Ketika Transport layer menerima data dari Application layer yang sudah dibuat menjadi segments, Transport layer akan mengirim segments ini ke Network layer. Segments ini dibuat dalam proses Segmentation, dimana port number ditambahkan pada tiap header. Lalu Transport layer akan mengirim segments data ini ke Network layer.
+Saat segments ini diterima oleh Transport layer yang dikirim oleh Network layer, Transport layer akan menyusun kembali segments data berdasarkan informasi yang ada di header, dan data ini akan dikirim ke Appliaction layer sesuai dengan port number yang ada di header.
+
+## **TCP**
+
+Transmission Control Protocol atau TCP adalah salah satu protokol yang paling sering digunakan. TCP merupakan protokol yang connection-oriented, maksudnya adalah protokol ini akan membangun koneksi antara dua perangkat terlebih dahulu sebelum mulai mengirimkan data.
+TCP memiliki beberapa feature, seperti dapat melakukan error control, flow control, melakukan komunikasi secara full duplex, dan TCP dapat memastikan bahwa data yang diterima akan memiliki urutan atau susunan yang sama seperti saat data tersebut dikirim.
+
+### **Alur Komunikasi TCP**
+
+Karena TCP merupakan protokol connection-oriented, maka TCP harus membangun koneksi antar dua hosts terlebih dahulu. Koneksi tersebut dibangun menggunakan proses Three-way Handshake. Sesuai dengan namanya, Three-way Handshake terdiri dari 3 proses, yaitu SYN, SYN+ACK, dan ACK.
+
+<img src={ThreeWayHandshake_Establish} width="500" />
+Gambar 2. Three-way Handshake saat membentuk koneksi
+
+Koneksi TCP ini dapat diberhentikan ketika kedua hosts sudah selesai mengirim data. Proses pemutusan koneksi ini hampir sama dengan proses membangun koneksi seperti yang dilakukan pada Three-way Handshake. Hanya saja untuk memberhentikan koneksi, kedua hosts perlu mengirimkan flag FIN (finish).
+
+<img src={ThreeWayHandshake_Termination.png} width="500" />
+Gambar 3. Three-way Handshake saat termination koneksi
+
+### **Applications**
+
+Application yang menggunakan TCP umumnya adalah application yang lebih membutuhkan atau mengutamakan integritas data dibandingkan speed. Beberapa aplikasi yang menggunakan protokol TCP yaitu:
+
+- World Wide Web (WWW)
+- Email
+- File Transfer Protocol (FTP)
+- Secure Shell (SSH)
+- SMTP
+- HTTP
+
+### **Header TCP IPv4 dan IPv6**
+
+Berikut adalah header TCP IPv4:
+<img src={TCPHeader_IPv4.png} width="500" />
+Gambar 4. Header TCP pada IPv4
+
+Dan berikut adalah header TCP IPv6:
+<img src={TCPHeader_IPv6.png} width="500" />
+Gambar 5. Header TCP pada IPv6
+
+Pada IPv4 dan IPv6, isi dari TCP header seperti berikut:
+<img src={TCPHeader.png} width="500" />
+Gambar 6. Header TCP keseluruhan
+
+Terdapat beberapa komponen yang berada di dalam TCP header, yaitu:
+
+1. Source Port
+2. Destination Port
+3. Sequence Number
+4. Acknowledgment Number
+5. Data Offset (D. Offset)
+6. Reserved
+7. Flags
+8. Windows Size
+9. Checksum
+10. Urgent Pointer
+11. Options
+
+## **UDP**
+
+User Datagram Protocol atau UDP juga merupakan salah satu protokol Transport layer yang paling sering digunakan. UDP merupakan protokol yang connectionless dan unreliable, maksudnya adalah protokol ini tidak membutuhkan koneksi antar dua hosts untuk mengirim data, dan protokol ini tidak dapat memastikan apakah data yang dikirim sudah benar atau tidak. Walaupun UDP tidak bisa menjamin data yang dikirim, UDP tetap memiliki kelebihan, beberapa diantaranya yaitu:
+
+1. UDP memiliki speed yang lebih cepat dibandingkan TCP
+1. UDP memiliki ukuran packet yang lebih kecil dari TCP
+1. UDP merupakan protokol yang lebih simpel dibandingkan TCP, sehingga lebih mudah untuk digunakan.
+
+### **Alur Komunikasi UDP**
+
+<img src={UDP_Connection.png} width="500" />
+Gambar 7. Komunikasi di UDP
+
+Karena UDP merupakan protokol yang tidak perlu membangun koneksi terlebih dahulu, maka ketika sender dapat langsung mengirim data ke receiver tanpa membutuhkan sinyal acknowledge dari receiver. Dan begitu data sampai di receiver, receiver juga tidak akan mengirim sinyal apapun yang menandakan bahwa data telah diterima dengan benar atau tidak. Hal inilah yang membuat UDP unreliable, karena kedua host tidak menggunakan sinyal apapun untuk menandakan jika data yang dikirim tidak lengkap, tidak berurutan, atau terdapat error.
+
+Packet data yang dikirim ini telah memiliki header yang berisi informasi mengenai UDP, misalnya seperti packet length atau checksum.
+
+### **Applications**
+
+Application yang menggunakan UDP umumnya merupakan application yang lebih mengutamakan speed dibandingkan integritas data. Berikut adalah beberapa application yang menggunakan protokol UDP:
+
+1. Domain Names System (DNS)
+2. Dynamic Host Configuration Protocol (DHCP)
+3. Network Time Protocol (NTP)
+4. Routing Information Protocol
+5. Live video dan aplikasi multimedia.
+
+### **Header UDP**
+
+<img src={UDPHeader} width="500" />
+Gambar 8. Header UDP
+Header yang dimiliki oleh UDP lebih sederhana dibandingkan header TCP, karena header UDP tidak memiliki sequence atau acknowledgment number yang digunakan oleh TCP untuk menjamin integritas data yang dikirim. Header UDP hanya memiliki 4 bagian, yaitu:
+
+1. Source Port
+2. Destination Port
+3. Length
+4. Checksum
+
+## **Port Addressing**
+
+Seperti penjelasan mengenai TCP dan UDP, kedua protokol tersebut menggunakan port number sebagai identifier untuk mengetahui application asal dan tujuan. Port number merupakan angka yang bersifat unik yang diberikan ke aplication yang berbeda-beda.
+Port numbers dimulai dari 0 hingga 65535, dan seluruh port numbers tersebut sudah dikelompokkan menjadi 3 kelompok oleh Internet Assigned Numbers Authority (IANA). Berikut adalah pembagian kelompok port numbers:
+
+| Port Number Range | Port Group                  |
+| :---------------- | :-------------------------- |
+| 0 - 1023          | Well Known (Contact) Ports  |
+| 1024 - 49151      | Registered Ports            |
+| 49152 - 65535     | Private and/or Dynamic Port |
+
+1. Well-known ports
+   Well-known ports merupakan ports yang sudah ditetapkan fungsinya. Misalnya seperti port 80 untuk HTTP, port 53 untuk DNS, port 110 untuk POP3, dan lain-lain.
+
+2. Registered Ports
+   Registered ports merupakan port yang tidak dikontrol oleh IANA tetapi ditetapkan oleh IANA sebagai port yang dapat digunakan oleh user application. Application yang dimaksud adalah individual application yang di-install sendiri oleh user. Salah satu contoh registered ports yaitu port 3306 untuk MySQL, jadi suatu aapplication yang ingin mengakses database MySQL harus membangun koneksi di port 3306.
+
+3. Dynamic Ports
+   Dynamic ports atau ephemeral ports merupakan port yang tidak didaftarkan atau dikontrol, port ini digunakan untuk client application ketika client membuat suatu koneksi yang bersifat sementara dan private.
+   Pembagian port number ini dapat dilihat lebih lengkap pada link berikut:
+   https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
+
+## **Protocol Analyzer**
+
+Protocol analyzer merupakan tool yang digunakan untuk menangkap network traffic. Protocol analyzer dapat digunakan untuk melakukan troubleshooting, monitoring, dan mendeteksi masalah-masalah yang mungkin terjadi pada network traffic tersebut. Dengan menggunakan protocol analyzer, kita dapat mengetahui detail dari tiap packet data yang dikirim maupun diterima.
+Pada praktikum modul ini, software protocol analyzer yang akan digunakan adalah Wireshark. Wireshark merupakan protocol analyzer yang free dan open source.
+
+### **Cara Membaca Hasil Capture Wireshark**
+
+Misalkan ketika membuka website https://www.geeksforgeeks.org/, kita dapat melihat bagaimana komunikasi terjadi saat membuka website tersebut. Karena website tersebut menggunakan HTTPS, maka protokol yang digunakan adalah TCP dengan port number 443. Packet yang diberi warna pink merupakan packet TCP yang dikirim antara host beralamat 192.168.1.10 dengan host beralamat 172.253.118.94. Pada bagian ‘Info’ juga dapat dilihat proses Three-way Handshake yang terjadi, dimulai dari SYN, SYN+ACK, hingga ACK.
+
+<img src={Wireshark_Example1} width="500" />
+Gambar 9. Contoh hasil capture Wireshark
+
+Dan jika kita melihat isi dari packet tersebut, kita bisa mendapatkan informasi lebih lengkap lagi. Misalkan pada packet nomor 273, pada bagian ‘Transmission Control Protocol’ bisa diketahui source port dan destination port-nya.
+<img src={Wireshark_Example2} width="500" />
+Gambar 10. Contoh melihat informasi TCP di Wireshark
+
+## **Netstat**
+
+Network Statistics atau Netstat merupakan tool yang juga dapat digunakan untuk melakukan monitoring terhadap koneksi yang ada di network. Netstat dapat digunakan di Command Prompt (CMD) pada komputer.
+Berikut adalah beberapa command yang bisa digunakan dalam netstat:
+| Command Netstat | Description |
+| :---- | :---- |
+| netstat -p proto | Menampilkan koneksi yang menggunakan protokol sesuai dengan yang dituliskan di “proto” |
+|netstat -a | Menampilkan seluruh koneksi yang ada. |
+| netstat -y | Menampilkan template koneksi TCP |
+| netstat -a I find /? | Menampilkan seluruh koneksi yang ada. Command find digunakan untuk menampilkan koneksi dengan parameter tertentu, maksud dari /? Yaitu untuk menampilkan hal apa saja yang bisa digunakan sebagai parameter command find. |
+| netstat /? | Menampilkan command apa saja yang bisa digunakan |
+
+Berikut adalah contoh tampilan saat menggunakan command netstat -an:
+<img src={Netstat_Example} width="500" />
+Gambar 11. Hasil command netstat -an
+
+Dari hasil tersebut, terdapat beberapa istilah yang memiliki arti seperti berikut:
+
+| Istilah              | Deskripsi                         |
+| :------------------- | :-------------------------------- |
+| Proto                | Protokol yang digunakan           |
+| Local Address        | IP address lokal milik komputer   |
+| Foreign Address      | IP address milik tujuan           |
+| State                | State dari tiap socket            |
+| IP address 0.0.0.0   | Default route atau global address |
+| IP address 127.0.0.1 | IP address loopback               |
+
+Berikut adalah penjelasan singkat dari tiap state yang ada di netstat:
+<img src={Netstat_StateExplanation} width="500" />
+Gambar 12. Penjelasan tiap state pada Netstat

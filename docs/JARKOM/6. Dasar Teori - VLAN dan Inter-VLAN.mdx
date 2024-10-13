@@ -1,0 +1,175 @@
+---
+sidebar_position: 6
+---
+
+import AuthorList from "../../src/components/Author";
+import threevlan from "./assets/Modul6/3vlan.png";
+import konf1 from "./assets/Modul6/konf1.png";
+import konf2 from "./assets/Modul6/konf2.png";
+import konf3 from "./assets/Modul6/konf3.png";
+import legacy from "./assets/Modul6/legacy.png";
+import routeronstick from "./assets/Modul6/routeronstick.png"
+import svi from "./assets/Modul6/svi.png"
+import vtptopol from "./assets/Modul6/vtptopol.png"
+
+# MODUL 6: VLAN dan InterVLAN
+
+<AuthorList authorsName={["den"]} />
+
+# **Virtual Local Area Network (VLAN)**
+
+## Sejarah
+
+Pada praktikum-praktikum sebelumnya, kita sudah menggunakan perangkat *switch* untuk menghubungkan beberapa perangkat akhir (Server, Laptop, dll). Misalkan pada suatu kantor terdapat 3 divisi yang membutuhkan jaringan, maka kita menggunakan 3 *switch* untuk memenuhi kebutuhan tersebut.  
+
+Seperti yang kita sudah ketahui, cara perangkat *switch* menghubungkan beberapa perangkat akhir adalah dengan cara mengirimkan pesan *broadcast*. Jika suatu perangkat *switch* menerima paket atau pesan, *switch* akan mengirimkan paket tersebut ke seluruh perangkat akhir yang terhubung dengan *switch* tersebut. Sehingga bayangkan jika terdapat 100 perangkat akhir yang terhubung, maka setiap ada paket baru masuk, *switch* akan mengirimkan 99 paket ke perangkat akhir lainnya. Hal tersebut membutuhkan daya prosesor yang tinggi dari *switch*, sehingga seiring bertambahnya perangkat akhir maka bertambah juga kebutuhan daya prosesor dari *switch*.  
+
+Untuk menangani masalah tersebut, David Sincoskie pada tahun 1998 menerbitkan sistem LAN baru pada perangkat Ethernet IEEE 802.1Q-1998 Standard yang disebut sebagai Virtual Local Area Network (VLAN).
+
+## Cara Kerja
+
+Di dalam struktur paket, selain isi dari paket tersebut terdapat juga alamat Media Control Access (MAC) pengirim dan penerima paket yang digunakan untuk mengidentifikasi tujuan dan sumber dari paket dan juga informasi-informasi lain. Dengan menggunakan VLAN, *switch* akan menambahkan informasi baru yang disebut sebagai VLAN Tag.  
+
+Kita bisa mengandaikan VLAN Tag tersebut sebagai warna dari setiap paket. Misalkan terdapat paket yang ingin dikirimkan, maka paket tersebut akan diwarnai dan akan dikirim ke jaringan yang menerima warna yang sama dengan paket tersebut. Bayangkan terdapat suatu LAN sebagai berikut:
+
+<img src={threevlan} />
+
+Dengan menggunakan VLAN, kita bisa membagi jaringan LAN tersebut dengan menggunakan satu *switch* saja. Lalu VLAN yang sudah dibuat, akan terisolasi dari VLAN yang lain seperti layaknya LAN jika menggunakan fisik. Seperti contoh, perangkat pada VLAN hijau tidak bisa mengirim pesan ke perangkat pada VLAN merah atau biru dan begitupun sebaliknya. Pembagian LAN tersebut dilakukan secara virtual sehingga kita tidak perlu menambahkan perangkat *switch*.  
+
+Selain itu, paket-paket yang akan dikirimkan secara *broadcast* oleh *switch* juga berkurang karena *switch* akan mengirimkan ke perangkat akhir sesuai dengan warna dari paket tersebut. Misalkan terdapat paket berwarna merah, maka *switch* akan mengirimkan paket tersebut ke seluruh perangkat yang berada di daerah jaringan merah.  
+
+## Contoh Penerapan
+
+Penerapan VLAN dilakukan di setiap perangkat *switch* yang dipakai dan juga di *interface* dari *switch* tersebut. Untuk dapat lebih memahami penerapan dari VLAN, kita lakukan studi kasus. Misalkan terdapat suatu kantor yang ingin membuat sistem jaringan komputer. Di kantor tersebut terdapat 3 divisi yaitu:  
+
+- Project Management (PM) \- 2 orang  
+- Software \- 3 orang  
+- Hardware \- 2 orang
+
+Kantor tersebut memiliki dana yang terbatas sehingga hanya mampu membeli satu perangkat *switch* dengan jumlah *interface* sebanyak 24 Fast Ethernet (Fa01 sampai Fa24). Untuk dapat memenuhi kebutuhan tersebut, kita perlu VLAN untuk membagi *switch* menjadi 3 LAN yang berbeda.  
+
+Pertama kita lihat dulu kapasitas *interface* dan kebutuhan perangkat akhir, total dari perangkat akhir adalah 7 perangkat sedangkan kapasitas *interface* dari *switch* adalah 24 sehingga kondisi tersebut sudah terpenuhi. Kemudian kita ”mewarnai” setiap divisi untuk membedakan setiap divisi:
+
+<img src={threevlan}/>
+
+Warna merah adalah divisi PM, biru adalah Software, dan hijau adalah Hardware. Dengan begitu, sistem jaringan komputer pada kantor tersebut sudah selesai dan bisa digunakan.
+
+## Tipe-Tipe VLAN
+
+Terdapat beberapa tipe VLAN, berikut adalah penjelasannya:  
+
+1. **Default VLAN** **–** Default VLAN adalah tipe VLAN awal sebelum VLAN dikonfigurasi.  
+2. **Native VLAN** **–** Native VLAN adalah tipe VLAN yang akan dipakai oleh paket-paket yang tidak memiliki VLAN Tag.  
+3. **Data VLAN** **–** Data VLAN adalah tipe VLAN yang dikhususkan untuk paket yang berasal dari perangkat akhir.  
+4. **Management VLAN** **–** Management VLAN adalah tipe VLAN untuk paket-paket yang berhubungan dengan manajemen VLAN. Jika suatu paket memiliki tipe VLAN ini maka paket tersebut akan memiliki prioritas yang lebih tinggi dibandingkan paket yang lain.  
+5. **Voice VLAN –** Voice VLAN adalah tipe VLAN yang dikhususkan untuk paket yang berisi paket suara. Paket yang berada di VLAN ini akan memiliki prioritas yang paling tinggi dibandingkan paket lain.
+
+## Konfigurasi Dasar VLAN
+
+   Untuk melakukan konfigurasi VLAN, pertama kita harus membuat VLAN di dalam *switch* tersebut yang akan membedakan LAN-LAN yang ada. Dalam mode **konfigurasi global**, masukkan perintah:  
+
+| Perintah | Contoh | Fungsi |
+| ----- | :---: | ----- |
+| (config)\#vlan \<nomor\> | vlan 10 | Membuat VLAN dengan identitas nomor, VLAN 10 maka identitas VLAN tersebut 10 |
+| (config-vlan)\#name \<nama VLAN\>  | name PM | Menamakan daerah VLAN, bisa dianggap penamaan sebagai warna. **(OPSIONAL)** |
+
+### Mode Interface
+
+Seperti yang sudah disebutkan sebelumnya, VLAN juga diterapkan ke *interface* yang ada pada *switch*. Hal ini berguna untuk membedakan jalur paket untuk perangkat akhir dan untuk antar *switch*. Terdapat dua mode *interface*:
+
+1. **Mode Trunk** \- Mode ini digunakan untuk jalur antar *switch* karena *interface* dengan mode Trunk dapat dilalui oleh banyak paket dengan VLAN yang berbeda.  
+2. **Mode Access** \-  Mode ini digunakan untuk jalur antara *switch* dengan perangkat akhir karena *interface* dengan mode Access hanya dapat dilalui oleh paket dengan satu jenis VLAN saja.
+
+Perlu diketahui bahwa pasangan *interface* harus memiliki jenis mode yang sama. Misalkan terdapat dua *switch* yang saling terhubung pada *interface* Fa0/1, maka kedua *interface* tersebut harus berada pada mode Access atau Trunk.
+
+| Perintah | Contoh | Fungsi |
+| ----- | :---: | ----- |
+| (config)\#interface \<jenis interface\> | interface f0/1 | Masuk ke dalam pengaturan untuk mengubah konfigurasi *interface* |
+| (config-if)\#switchport mode \<access | trunk\> | switchport mode trunk | Mengubah jenis mode *interface*, jika terhubung ke perangkat akhir menggunakan Access. Jika terhubung ke *switch* menggunakan Trunk |
+| (config-if)\#switchport access vlan \<nomor\> | switchport access vlan 10 | Mengatur *interface* dengan mode Access agar dapat menerima dan mengirim paket dengan identifikasi VLAN yang ditentukan (cth: 10). **(COMMAND INI HANYA BERGUNA DALAM MODE ACCESS)** |
+
+Perintah *switchport access vlan \<nomor\>*\-lah yang dapat membuat jaringan LAN menjadi beberapa VLAN karena perintah tersebut mengisolasi suatu *interface* atau *port* agar hanya dapat dilalui oleh paket yang sesuai dengan VLAN yang ditentukan.
+
+## VLAN Trunk Protocol (VTP)
+
+Pada penjelasan sebelumnya, sudah diketahui bahwa untuk membuat VLAN di dalam *switch*, kita harus menggunakan perintah *vlan \<nomor\>* untuk setiap *switch*. Sekarang bayangkan jika kita ingin membuat 20 VLAN untuk 5 *switch* yang ingin kita atur, maka kita harus membuat ke-20 VLAN tersebut untuk setiap *switch*. Lalu kemudian mungkin di tengah jalan kita ingin mengganti nama dari suatu VLAN, maka kita harus memasukkan perintah untuk mengganti nama VLAN ke setiap *switch*. Hal tersebut tentu saja dapat menjadi masalah dengan konsistensi konfigurasi *switch* dan merupakan suatu hal yang berulang. Oleh karena itu, bagaimana jika kita dapat mengatur semua VLAN yang ada hanya di satu *switch* saja dan kemudian konfigurasi tersebut ditransfer ke *switch* lain yang terhubung.  
+
+VLAN Trunk Protocol (VTP) adalah suatu protokol yang tepat untuk mengatasi masalah tersebut. Dengan menggunakan VTP, kita dapat mengatur VLAN di satu *switch* yang kita jadikan sebagai *switch* utama dan kemudian pengaturan VLAN tersebut akan dibagikan ke *switch* lain yang terhubung ke *switch* utama. Sebelum mengetahui bagaimana cara kerja dari VTP, kita perlu mengetahui beberapa mode VTP yang dapat menentukan cara kerja dari VTP:  
+
+- **Transparent** — Mode ini membuat *switch* untuk meneruskan semua paket VTP yang diterima di *interface/port trunk* ke semua *port trunk* lainnya yang ada di *switch* tersebut. Pembuatan atau perubahan konfigurasi VLAN yang dilakukan dalam mode VTP Transparent hanya memengaruhi *switch* itu sendiri dan tidak diteruskan atau dibagikan ke *switch* lain yang terhubung.  
+- **Server** — Mode ini membuat *switch* dapat membuat, menghapus, dan mengubah VLAN di seluruh jaringan. Kita juga bisa mengatur opsi konfigurasi lainnya seperti versi VTP dan VTP Pruning. Pembuatan dan perubahan konfigurasi VLAN yang dilakukan dalam mode VTP Server akan diteruskan dan dibagikan ke *switch* lain yang terhubung dan berada di VTP Domain yang sama sehingga *switch* lain dapat menyinkronkan konfigurasi VLAN-nya dengan *switch* VTP Server.  
+- **Client** — Mode ini membuat *switch* dapat membuat, mengubah, dan menghapus VLAN pada *switch* itu sendiri. Dalam mode VTP Client, *switch* akan menerima dan menyimpan informasi VTP yang dibagikan oleh VTP Server.  
+- **Off** — Mode ini berperilaku mirip dengan mode Transparent, hanya saja *switch* dengan mode VTP Off tidak meneruskan konfigurasi VTP dan VLAN ke *switch* lain yang terhubung.
+
+## Konfigurasi Dasar VTP
+
+Untuk dapat memahami cara melakukan konfigurasi VTP, mari kita lakukan dengan studi kasus. Misalkan terdapat 3 *switch* yang saling terhubung, S1, S2, dan S3:
+
+<img src={vtptopol} />
+
+Kita ingin membuat S1 berada dalam mode VTP Server, berikut adalah konfigurasi yang diperlukan (harus berada dalam mode konfigurasi global):  
+
+| Perintah | Fungsi | Opsi |
+| ----- | ----- | :---: |
+| (config)\#vtp mode server | Perintah ini berguna untuk mengubah dan mengatur mode VTP *switch*. | server | client | transparent |
+| (config)\#vtp version 2 | Perintah ini berguna untuk mengubah versi VTP menjadi versi 2\. | 1 | 2 |
+| (config)\#vtp domain netlab | Perintah ini berguna untuk mengatur dan mengubah nama domain dari VTP. | WORD |
+
+Hal yang perlu diperhatikan adalah domain VTP yang diatur. Domain tersebut harus sama untuk semua *switch* yang diatur untuk menentukan *switch* mana saja yang harus menerima informasi VTP.
+
+Kemudian kita ingin membuat S2 dan S3 berada dalam mode VTP Client, konfigurasi yang diperlukan adalah:
+
+| Perintah | Fungsi | Opsi |
+| ----- | ----- | :---: |
+| (config)\#vtp mode client | Perintah ini berguna untuk mengubah dan mengatur mode VTP *switch*. | server | client | transparent |
+| (config)\#vtp domain netlab | Perintah ini berguna untuk mengatur dan mengubah nama domain dari VTP. | WORD |
+
+Perlu diingat bahwa konfigurasi versi VTP tidak diperlukan karena akan diberikan secara otomatis dari *switch* dengan mode Server. Dengan begitu konfigurasi untuk VTP telah selesai dan kita bisa membuat VLAN seperti konfigurasi VLAN biasa pada S1 (VTP Server). Tapi masih terdapat satu konfigurasi penting yang diperlukan agar VTP bekerja. Paket-paket dari VTP hanya dapat dikirim dan diterima melalui *interface* yang berada dalam mode Trunk. Sehingga kita harus membuat semua *interface* yang terhubung antar *switch* berada dalam mode Trunk.
+
+Berikut adalah hasil akhir dari konfigurasi VTP:
+
+| Konfigurasi |
+| :---: |
+| <img src={konf1} /> |
+|  <img src={konf2} /> |
+|  <img src={konf3} />  |
+
+# **Inter-VLAN**
+
+## Pengertian
+
+Seperti yang kita sudah ketahui, ketika kita menggunakan VLAN untuk membagi LAN pada jaringan, maka setiap VLAN terisolasi dari VLAN-VLAN yang lain. Maksudnya adalah, perangkat akhir atau pengguna jaringan yang berada di suatu VLAN, tidak dapat melakukan komunikasi ke perangkat akhir yang berada di VLAN yang lain.  
+
+Ketika kita membuat desain jaringan komputer, seringkali kita ingin agar setiap LAN dapat melakukan komunikasi. Namun karena karakteristik dari VLAN, hal tersebut tidak memungkinkan seperti yang sudah disebut sebelumnya. Oleh karena itu kita memerlukan bantuan dari perangkat lain untuk dapat menghubungkan jaringan antar VLAN. Proses dan sistem tersebut adalah Inter-VLAN.  
+
+Pada intinya, Inter-VLAN adalah suatu teknik yang memperbolehkan adanya *traffic* atau jaringan antara suatu VLAN dengan VLAN yang lain. Misalkan kita memiliki beberapa VLAN, paket yang berasal dari VLAN satu tidak akan dialirkan ke VLAN yang lain. Namun dengan menggunakan Inter-VLAN, kita dapat membuat *switch* mengalirkan *traffic* yang berasal dan bertujuan dari dua VLAN yang berbeda.  
+
+## Jenis Inter-VLAN
+
+Terdapat 3 teknik atau metode yang bisa kita gunakan untuk mengimplementasikan Inter-VLAN pada jaringan:
+
+### Legacy Inter-VLAN Routing
+
+Pada metode ini, kita akan menggunakan satu perangkat *router* untuk membantu kita mengatur *traffic* antar VLAN. Setiap VLAN yang ada akan dipasangkan dengan satu *interface* pada *router*, sehingga kita dapat melakukan pengaturan *traffic* pada *router* tersebut.
+
+ <img src={legacy} />
+
+### Router-on-a-Stick
+
+Metode ini mirip seperti metode Legacy, kita akan menggunakan perangkat bantuan *router* dalam pengaturan *traffic* antar VLAN. Akan tetapi, kita hanya menggunakan satu *interface router* saja untuk memenuhi semua kebutuhan VLAN yaitu dengan menggunakan *sub-interface*. Pada *router*, kita membuat *sub-interface* yang sesuai dengan jumlah VLAN dan melakukan konfigurasi agar *router* dapat menandakan setiap paket yang mengalir pada jaringan.
+
+ <img src={routeronstick} />
+
+### Switch Virtual Interface (SVI)
+
+Berbeda dengan dua metode sebelumnya, pada metode SVI kita akan menggunakan *switch* lapisan 3 yaitu Multilayer Switch. Pada metode ini, kita melakukan pengaturan *traffic* dengan membuat *interface* bayangan (virtual) untuk setiap VLAN. Sehingga hal tersebut membuat seakan-akan setiap VLAN memiliki *gateway* mereka masing-masing.
+
+ <img src={svi} />
+
+# **Referensi**
+
+- Jenis Inter-VLAN. [Inter-VLAN Routing Operation (4.1)](https://www.ciscopress.com/articles/article.asp?p=3089357&seqNum=4)
+- Sejarah VLAN. [VLAN \- Wikipedia](https://en.wikipedia.org/wiki/VLAN)
+- Mode VTP. [Understand VLAN Trunk Protocol (VTP) \- Cisco](https://www.cisco.com/c/en/us/support/docs/lan-switching/vtp/10558-21.html)
+- Mode Interface. [Configuring Access and Trunk Interfaces](https://www.cisco.com/en/US/docs/switches/datacenter/nexus5000/sw/configuration/nxos/Cisco_Nexus_5000_Series_NX-OS_Software_Configuration_Guide_chapter9.pdf)
+- Mode VTP. [Configuring VTP \- Cisco](https://www.cisco.com/c/en/us/td/docs/switches/datacenter/sw/5_x/nx-os/layer2/configuration/guide/Cisco_Nexus_7000_Series_NX-OS_Layer_2_Switching_Configuration_Guide_Release_5-x_chapter5.html#concept_13398A3BC3AB419C93E0E0CCD67886D8)

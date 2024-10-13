@@ -1,0 +1,119 @@
+---
+sidebar_position: 6
+---
+
+import AuthorList from "../../src/components/Author";
+
+# MODUL 6: Higher Level Abstraction
+
+<AuthorList authorsName={["den"]} />
+
+## Higher Level Abstraction
+
+Pada modul sebelum-sebelumnya, kalian sudah mempelajari empat pilar dalam konsep Pemrograman Berorientasi Objek (OOP). Jika kalian sudah lupa, berikut adalah penjelasan singkat mengenai empat pilar OOP:
+
+### Inheritance
+
+Inheritance adalah konsep OOP yang mirip seperti *family tree*, Class-Class pada OOP dapat memiliki atribut dan *method* yang ada pada Class lain dengan menggunakan kata kunci **extends**.
+
+### Encapsulation
+
+Encapsulation pada intinya adalah konsep untuk melindungi dan mengisolasi data-data atau variabel-variabel penting yang ada dalam Class agar Class lain tidak dapat mengetahui data tersebut.
+
+### Polymorphism
+
+Polymorphism adalah konsep OOP yang dapat membuat Class OOP memiliki beberapa method yang sama sesuai dengan parameter yang dibutuhkan. Sehingga hal tersebut membuat Class OOP memiliki sifat yang fleksibel dan dinamis karena dapat memiliki beberapa bentuk.
+
+### Abstraction
+
+Abstraction adalah konsep OOP yang mensimplifikasi/menyembunyikan suatu fungsi yang kompleks agar Class lain dapat menggunakan fungsi tersebut tanpa perlu mengetahui alur dari fungsi.
+
+**Higher Level Abstraction** merupakan konsep yang sangat penting dalam OOP yang menggabungkan keempat pilar OOP tersebut. Dengan menggunakan Higher Level Abstraction, kita dapat membuat kode OOP kita menjadi lebih efisien dan *scalable*. Implementasi dari Higher Level Abstraction biasanya berupa suatu gaya pemrograman yang disebut sebagai **Design Pattern**.
+
+## Design Pattern
+
+Design Pattern adalah suatu gaya pemrograman yang mencotohkan kasus dunia asli sehingga gaya pemrograman ini sangat spesifik tergantung kasus yang dihadapi ketika membuat suatu program. Design Pattern ini sejalan dengan tujuan Higher Level Abstraction yaitu membuat kode program kita lebih efisien dan mudah untuk ditingkatkan dalam skala besar. Berikut adalah 3 tipe Design Pattern secara umum:
+
+### Creational Pattern
+
+Pattern ini berhubungan dengan bagaimana cara kita bisa membuat suatu objek secara efisien dan fleksibel. Umumnya, dalam suatu program terdapat banyak sekali tipe-tipe objek baik yang berhubungan maupun yang tidak berhubungan. Jika kita menggunakan metode tradisional untuk membuat objek-objek tersebut, maka program kita tidak akan efisien dan perlu banyak perubahan karena tidak ada fleksibilitas yang mendukung untuk pembuatan objek.
+
+Salah satu contoh yang mungkin adalah misalkan kalian membuat suatu aplikasi yang memiliki objek pengaturan (settings) dan memiliki 3 halaman. Kalian ingin pada setiap halaman, user dapat men-klik pengaturan tersebut sehingga kalian harus membuat data yang ada di pengaturan tersebut sinkron antara satu halaman dengan yang lain. Bayangkan jika kalian membuat objek pengaturan tersebut untuk setiap halaman, maka akan sulit sekali untuk melakukan sinkronisasi dan bisa saja terjadi timpa-timpaan data antar objek pengaturan yang satu dengan yang lain. Sehingga, kasus seperti ini harus melibatkan Creational Design Pattern yang membuat objek pengaturan tersebut hanya ada satu di seluruh aplikasi.
+
+Contoh dari Creational Design Pattern adalah Singleton Pattern, Factory Method Pattern, Builder Pattern, dll.
+
+### Structural Pattern
+
+Konsep paling dasar OOP adalah penggabungan objek-objek sehingga membentuk struktur satu-kesatuan. Structural Design Pattern membuat penggabungan objek dalam program menjadi lebih mudah untuk ditingkatkan dan mudah untuk ditambahkan. Bayangkan seperti ini:
+
+Kalian ingin membuat suatu gim tentang tembak-tembakkan, gim tersebut tentu saja akan memiliki objek pemain/player dan musuh. Kalian ingin musuh tersebut memiliki beberapa tipe, selain itu terdapat juga objek-objek yang ada di dalam gim yang mendukung keseruan dari gim. Misalkan NPC yang berkeliaran, pohon-pohon, batu, dll.
+
+Tahap pertama adalah kita ingin mengimplementasi objek Player:
+- Player memiliki darah
+- Player memiliki kontrol jalan
+- Player bisa menyerang
+- Player bisa berbicara
+
+Kemudian kita ingin mengimplementasi objek musuh pertama:
+- Musuh memiliki darah
+- Musuh memiliki kontrol jalan
+- Musuh bisa menyerang
+
+Jika kita lihat dari kedua objek tersebut, mereka memiliki kesamaan pada 3 komponen pertama. Oleh karena itu agar kode kita lebih efisien maka kita dapat mengimplementasikan konsep Inheritance. Sehingga kode sekarang adalah:
+
+Objek Entity:
+- Entity memiliki darah
+- Entity memiliki kontrol jalan
+- Entity bisa menyerang
+
+Objek Player:
+- Extends dari Entity
+- Menambahkan method untuk berbicara
+
+Objek Musuh:
+- Extends dari Entity
+
+Setelah itu, kita ingin mengimplementasi NPC yang dapat diserang oleh musuh:
+- NPC memiliki darah
+- NPC memiliki kontrol jalan
+- NPC bisa berbicara
+
+Kita tidak bisa mewariskan objek NPC dari Entity karena Entity bisa menyerang sedangkan NPC tidak. Mau tidak mau kita harus membuat Class Parent baru atau mengubah objek Entity. Akan tetapi kalian bisa lihat, hanya dengan mengimplementasi 3 objek sudah terlihat bahwa semakin kita menambahkan objek, semakin banyak perubahan dan kompleksitas yang ada pada kode kita. Sehingga kita bisa menggunakan Structural Design Pattern untuk mengatasi masalah ini.
+
+Daripada kita mendefinisikan suatu Parent Class untuk setiap kombinasi objek, bagaimana jika kita membuat objek untuk setiap komponen yang ada untuk entitas:
+- Objek untuk darah
+- Objek untuk kontrol jalan
+- Objek untuk menyerang
+- Objek untuk berbicara
+
+Dengan begitu, kita dapat dengan fleksibel menambahkan komponen-komponen tersebut untuk membangun objek yang diinginkan. Misalkan:
+Objek Player:
+- Objek untuk darah
+- Objek untuk kontrol jalan
+- Objek untuk menyerang
+- Objek untuk berbicara
+
+Objek Musuh:
+- Objek untuk darah
+- Objek untuk kontrol jalan
+- Objek untuk menyerang
+
+Objek NPC:
+- Objek untuk darah
+- Objek untuk kontrol jalan
+- Objek untuk berbicara
+
+Lalu jika kita ingin menambahkan objek baru seperti Pohon Berduri, kita dapat dengan mudah memasukkan komponen yang sudah dibuat:
+Objek Pohon Berduri:
+- Objek untuk darah
+- Objek untuk menyerang
+
+Dengan cara seperti ini, kita dapat dengan mudah dan efisien untuk membuat banyak variasi-variasi objek tanpa perlu memikirkan Inherintance dan konsep yang lain.
+
+## Behavioral Pattern
+
+Behavioral Design Pattern pada intinya adalah bagaimana cara kita bisa mendefinisikan hubungan-hubungan algoritma antara satu objek dengan yang lain. Ketika melakukan implementasi untuk Behavioral Design Pattern, biasanya kita melihat bagaimana perilaku yang diinginkan dari suatu objek. Contoh dari Behavioral Design Pattern adalah Command Pattern, Observer Pattern, State Pattern, dll.
+
+## Referensi
+
+- https://refactoring.guru/design-patterns/catalog
