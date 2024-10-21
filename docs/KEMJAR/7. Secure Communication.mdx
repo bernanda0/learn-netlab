@@ -1,0 +1,162 @@
+---
+sidebar_position: 7
+---
+
+import AuthorList from "../../src/components/Author"
+import Cryptography from "./assets/Modul7/cryptography.webp"
+import Hashing from "./assets/Modul7/hashing.png"
+import Symmetric from "./assets/Modul7/symmetric.webp"
+import Asymmetric from "./assets/Modul7/asymmetric.webp"
+
+# MODUL 7: Cryptography and Secure Communication
+
+<AuthorList authorsName={["bernanda"]} />
+
+## Objectives
+- Define cryptography and cryptographic algorithms, and explore the various uses of cryptography.
+- Gain an understanding of secure communication principles.
+- Grasp the concepts of symmetric and asymmetric cryptography in securing emails.
+- Learn how to implement encryption and decryption in emails using PGP.
+- Understand the OpenPGP method for authentication.
+- Learn how to apply digital signatures in email security.
+
+---
+
+### Cryptography
+
+**What is Cryptography?**
+
+Cryptography involves "scrambling" data to prevent unauthorized access. Derived from the Greek words for "hidden writing," cryptography transforms information into a secure format, making it unreadable by unauthorized individuals. While cryptography encrypts a message to make it unintelligible, **steganography** hides the presence of the data itself, often embedding messages within harmless-looking files such as images, audio, or video. Steganography conceals data by dividing it into smaller pieces and embedding it in unused portions of a file, such as the header or metadata.
+
+<img src={Cryptography}/>
+
+**Cleartext** refers to data in an unencrypted form, which can be easily displayed without decryption. **Plaintext** is the data that will be encrypted or has been decrypted, and it is a specific type of cleartext. Plaintext is processed by a cryptographic algorithm, which uses a mathematical procedure to encrypt or decrypt the data. A **key**, which is a mathematical value, is applied to the algorithm to produce **ciphertext** (the encrypted data). Similar to a key in a lock, a cryptographic key "locks" the data by encrypting it. When needed, the reverse process (decryption) occurs using the appropriate key.
+
+### Cryptographic Algorithms
+
+Cryptographic algorithms vary in how much data they process at a time. Some use a **stream cipher**, which encrypts data one character at a time. The simplest stream cipher is a **substitution cipher**, where each letter is replaced by another, as shown in the monoalphabetic substitution cipher. A more advanced version, the **homoalphabetic substitution cipher**, maps one plaintext character to multiple ciphertext characters, making it more secure.
+
+Other algorithms use **block ciphers**, which process blocks of data (typically 8 to 16 bytes) at once. Each block is encrypted separately, and for added security, the blocks can be randomized. Stream ciphers are faster for short plaintext, but require more processing power for longer texts, and are more vulnerable to attacks. Block ciphers, on the other hand, are more secure because they randomize the output by resetting the cipher after each block.
+
+Cryptographic algorithms fall into three main categories: **hash algorithms**, **symmetric algorithms**, and **asymmetric algorithms**.
+
+---
+
+## Hash Algorithms
+
+A **hash algorithm** generates a unique "digital fingerprint" for a set of data, commonly called a digest. Hashing is one-way, meaning that once a digest is created, it cannot be used to retrieve the original data. Hashing is primarily used for data comparison rather than encryption, ensuring the integrity of the data. 
+
+<img src={Hashing} width="60%" />
+
+Characteristics of secure hash algorithms include:
+- **Fixed size**: A digest of any data length should produce a consistent-sized output.
+- **Unique**: Different data sets should not produce the same digest.
+- **Original**: It should be impossible to create data with a predefined hash.
+- **Secure**: The hash should not be reversible to reveal the original data.
+
+Hash algorithms are commonly used to verify file integrity, where the digest of a downloaded file is compared with a posted digest value to ensure no alterations.
+
+Common hash algorithms include **Message Digest (MD)**, **Secure Hash Algorithm (SHA)**, **Whirlpool**, and **RIPEMD**.
+
+### Message Digest (MD)
+
+The **Message Digest (MD)** algorithm family includes three versions:
+- **MD2** (1989): Creates a 128-bit digest, optimized for 8-bit processing. It is no longer secure.
+- **MD4** (1990): Designed for 32-bit processing, also producing a 128-bit digest. It is considered insecure due to flaws.
+- **MD5**: A revision of MD4, MD5 produces a 128-bit digest and uses four 32-bit variables in a round-robin manner. However, weaknesses in the algorithm have led to recommendations for more secure alternatives.
+
+### Secure Hash Algorithm (SHA)
+
+SHA is a family of secure hash algorithms developed by the **U.S. National Security Agency (NSA)** and **National Institute of Standards and Technology (NIST)**. SHA-1, introduced in 1993, generates a 160-bit digest and has since been replaced by more secure algorithms in the **SHA-2** family, which includes SHA-224, SHA-256, SHA-384, and SHA-512.
+
+SHA-3, finalized in 2012, is designed to be distinct from earlier algorithms and utilizes a sponge function. **Keccak** is the winning algorithm for SHA-3.
+
+### Whirlpool
+
+**Whirlpool** is a modern cryptographic hash function recognized by international standards. It generates a 512-bit digest and is widely used in commercial applications.
+
+---
+
+## Symmetric Cryptographic Algorithms
+
+**Symmetric algorithms** are known for using a single key to both encrypt and decrypt data, emphasizing the importance of maintaining key secrecy. This approach, also referred to as **private key cryptography**, provides efficient encryption but places heavy reliance on secure key management practices.
+
+<img src={Symmetric} width="60%" />
+
+Some of the most common symmetric cryptographic algorithms include:
+
+- **Data Encryption Standard (DES)**: A block cipher that works with 64-bit blocks of plaintext. Despite being widely adopted in the past, DES has become obsolete due to its 56-bit key size, which is vulnerable to brute-force attacks and has been broken several times.
+  
+- **Triple Data Encryption Standard (3DES)**: Developed as an improvement to DES, 3DES applies the DES algorithm three times with either two or three unique keys, providing a more robust encryption method. Though more secure than DES, 3DES has been largely replaced by newer algorithms like AES due to performance considerations.
+
+- **Advanced Encryption Standard (AES)**: AES, a modern and highly secure block cipher, operates on blocks of 128 bits, supporting key sizes of 128, 192, and 256 bits. It involves multiple rounds of encryption (9, 11, or 13, depending on the key size), and remains the encryption standard of choice for most applications due to its strength and speed.
+
+---
+
+## Asymmetric Cryptographic Algorithms
+
+In contrast to symmetric algorithms, **asymmetric encryption** involves a pair of keys: a **public key** and a **private key**. The public key is shared openly and can be used by anyone to encrypt a message, while the private key is kept secret by the recipient and is used to decrypt messages.
+
+<img src={Asymmetric} width="60%" />
+
+A practical example of asymmetric encryption would be if Kiel wanted to send a secure message to Nindya. Kiel would encrypt the message using Nindya's public key. Once Nindya receives the encrypted message, she would use her private key to decrypt it, ensuring the confidentiality of their communication without ever having to exchange secret keys. 
+
+The core principles of asymmetric cryptography include:
+
+- **Key Pairs**: Asymmetric cryptography relies on the use of two mathematically related keys. One key is used for encryption (public key), and the other for decryption (private key).
+- **Public Key**: Since the public key is designed to be distributed widely, it can be freely shared or published.
+- **Private Key**: The private key, on the other hand, must remain confidential and should not be disclosed.
+
+---
+
+## Secure Communication
+
+Securing communication is crucial for protecting the integrity and confidentiality of data transmitted across networks. Key techniques to ensure secure communication include the use of device hardening, firewalls, access control lists (ACLs), monitoring systems such as IDS/IPS, and security appliances like email or web security tools.
+
+The four main pillars of secure communication are:
+
+- **Confidentiality**: Ensuring that data can only be accessed by authorized parties.
+- **Integrity**: Protecting data from unauthorized alteration.
+- **Authentication**: Verifying the identity of the data source.
+- **Non-repudiation**: Ensuring that the sender cannot deny sending the message.
+
+---
+
+## Pretty Good Privacy (PGP)
+
+**Pretty Good Privacy (PGP)** is a popular encryption method used to secure email communication, credit card numbers, and other sensitive information transmitted over the internet. PGP relies on asymmetric cryptography, using a public and private key pair to encrypt and decrypt messages.
+
+With PGP, the public key is shared freely so that others can use it to encrypt messages intended for the key owner. The key owner then uses their private key to decrypt the message. Unlike symmetric encryption, which requires the sharing of a single key, PGP mitigates the risk of key interception during transmission.
+
+---
+
+## Gpg4win
+
+**Gpg4win** is a software package for Windows that provides encryption tools for files and emails. It is based on the **GnuPG** standard, which supports the OpenPGP protocol (compatible with PGP) and other cryptographic standards like S/MIME. Gpg4win includes several programs for encryption, decryption, and key management:
+
+- **GnuPG**: The core encryption tool based on OpenPGP.
+- **Kleopatra**: A certificate management tool for key generation and cryptography operations.
+- **GNU Privacy Assistant (GPA)**: An alternative program for certificate management.
+- **GpgOL**: An extension for Microsoft Outlook to enable email encryption.
+- **GpgEX**: An extension for Windows Explorer for file encryption.
+- **Claws Mail**: An email client that integrates GnuPG for secure email.
+- **Instant Crypt**: An open-source tool for performing encryption and decryption based on OpenPGP.
+
+---
+
+## Authentication in Public Key Systems
+
+Although public key cryptography offers high reliability, there remains the challenge of ensuring that the public key being used truly belongs to the intended recipient. For instance, when Andi wants to send an encrypted email to Budi, how can Andi be certain that the public key obtained from a website or certificate server actually belongs to Budi and not an imposter? This issue is solved through authentication mechanisms:
+
+### S/MIME
+**S/MIME** (Secure/Multipurpose Internet Mail Extensions) uses a hierarchical trust model, in which public keys are authenticated by accredited organizations, typically through a certificate authority (CA). This ensures the legitimacy of the key being used.
+
+### OpenPGP
+**OpenPGP**, in contrast, uses a "web of trust" model. Instead of a central authority, users can sign each other’s keys, creating a decentralized trust system. For example, if user B trusts user A, they can also trust user C’s public key if it has been verified by user A.
+
+---
+
+## Digital Signatures
+
+Both **PGP** and **GnuPG** support digital signatures, which provide a way to verify the authenticity of a message. When a sender creates a message, they generate a digital signature using algorithms such as RSA or DSA. The process involves creating a hash (message digest) from the plaintext message and then encrypting that hash using the sender’s private key. The recipient can verify the digital signature by decrypting the hash with the sender’s public key. If the decrypted hash matches the original message hash, it confirms the authenticity of the message.
+
