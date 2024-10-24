@@ -1,0 +1,266 @@
+---
+sidebar_position: 7
+---
+
+# MODUL 7: Unity Introduction
+
+import AuthorList from "./../../src/components/Author";
+import GameObjectCreate from "./assets/modul7/gameobject_create.gif";
+import ComponentAdd from "./assets/modul7/component_add.gif";
+import TranformImage from "./assets/modul7/transform.png";
+import SpriteRendererImage from "./assets/modul7/spriterenderer.png";
+import SpriteRendererCreate1 from "./assets/modul7/spriterenderer_create_1.gif";
+import SpriteRendererCreate2 from "./assets/modul7/spriterenderer_create_2.gif";
+import RigidBody2DImage from "./assets/modul7/rigidbody2d.png";
+import AnimatorImage from "./assets/modul7/animator.png";
+import AnimatorControllerCreate from "./assets/modul7/animatorcontroller_create.gif";
+import AnimationStateCreate1 from "./assets/modul7/animationstate_create_1.gif";
+import AnimationStateCreate2 from "./assets/modul7/animationstate_create_2.gif";
+import TransitionMake from "./assets/modul7/transition_make.gif";
+import ParameterAdd from "./assets/modul7/parameter_add.gif";
+import SceneCreate from "./assets/modul7/scene_create.gif";
+import SpriteCreate from "./assets/modul7/sprite_create.gif";
+import ScriptCreate from "./assets/modul7/script_create.gif";
+import PrefabCreate from "./assets/modul7/prefab_create.gif";
+import AnimationCreate from "./assets/modul7/animation_create.gif";
+import SerializeFieldImage from "./assets/modul7/serializefield.png";
+
+export const loadImage = (imageId, imageButtonId) => {
+  const img = document.getElementById(imageId);
+  const btn = document.getElementById(imageButtonId);
+  if (btn.innerHTML == "Show Image") {
+    img.style.display = 'block';
+    btn.innerHTML = "Hide Image";
+  } else if (btn.innerHTML == "Hide Image") {
+    img.style.display = 'none';
+    btn.innerHTML = "Show Image";
+  }
+}
+
+<AuthorList authorsName={["george"]} />
+
+## Unity Introduction
+
+**Unity** adalah sebuah game engine yang digunakan untuk membuat game 2D, 3D, ataupun VR.
+Unity menyediakan banyak sekali fitur yang diperlukan untuk mengembangkan sebuah game, seperti *physics engine*, *sprite renderer* dan *animation*, *tilemap system*, *cinemachine*, *lighting system*, dan masih banyak lagi.
+Unity menggunakan **C#** sebagai **bahasa pemrogramannya** dan juga mendukung pengembangan game untuk semua platform utama, sehingga memudahkan pengembangan game untuk berbagai perangkat dan sistem operasi yang berbeda.
+Unity juga dapat dan telah banyak digunakan untuk mengembangkan aplikasi-aplikasi yang bukan game.
+
+Note: Hampir semua object dapat diatur parameternya pada window Inspector dengan cara left click pada object tersebut.
+
+## GameObject
+
+**GameObject** adalah Base Class untuk semua entity yang dibuat di dalam sebuah Scene pada Unity.  
+Cara membuat sebuah empty GameObject adalah pada window Hierarchy dengan  
+**right click > GameObject > Create Empty**:  
+<button id="game-object-create-button" style={{ borderRadius: '5px', padding: '10px 19px'}} onClick={() => loadImage("game-object-create", "game-object-create-button")}>Show Image</button>
+<img id="game-object-create" src={GameObjectCreate} alt="Create Game Object" width="500" style={{ display: 'none'}} /><br/>
+
+Setiap GameObject dapat dilengkapi dengan komponen-komponen yang dapat ditambahkan sesuai kebutuhan, seperti *Sprite Renderer*, *RigidBody2D*, *Animator*, dan masih banyak lagi.  
+Cara menambahkan komponen pada GameObject adalah pada window Inspector dengan  
+**Add Component > search Component > click Component**:  
+<button id="component-add-button" style={{ borderRadius: '5px', padding: '10px 19px'}} onClick={() => loadImage("component-add", "component-add-button")}>Show Image</button>
+<img id="component-add" src={ComponentAdd} alt="Add Component" width="500" style={{ display: 'none'}} /><br/>
+
+Untuk penjelasan lebih detail tentang GameObject, dapat dilihat pada [**GameObject Manual**](https://docs.unity3d.com/2022.3/Documentation/Manual/class-GameObject.html).
+
+Berikut adalah beberapa komponen GameObject yang paling sering digunakan:
+
+### Transform
+
+<img width="500" src={TranformImage} />
+**Transform** adalah komponen utama yang dimiliki semua GameObject yang berfungsi untuk menentukan:
+- position : koordinat dari GameObject
+- rotation : derajat perputaran GameObject secara counter clockwise terhadap setiap sumbu
+- scale : skala perkalian dari ukuran GameObject
+
+Untuk penjelasan lebih detail tentang Transform, dapat dilihat pada [**Transform Manual**](https://docs.unity3d.com/2022.3/Documentation/Manual/class-Transform.html).
+
+### SpriteRenderer
+
+<img width="500" src={SpriteRendererImage} /><br/>
+**SpriteRenderer** adalah komponen GameObject yang berfungsi untuk menghandle dan menampilkan sprite atau gambar pada suatu GameObject.
+
+Terdapat 2 cara untuk memasukkan gambar ke dalam SpriteRenderer, antara lain:
+- dengan drag and drop<br/>
+  <button id="sprite-renderer-create-1-button" style={{ borderRadius: '5px', padding: '10px 19px'}} onClick={() => loadImage("sprite-renderer-create-1", "sprite-renderer-create-1-button")}>Show Image</button>
+  <img id="sprite-renderer-create-1" src={SpriteRendererCreate1} alt="Create Sprite Renderer 1" width="500" style={{ display: 'none'}} /><br/>
+- melalui sprite selector<br/>
+  <button id="sprite-renderer-create-2-button" style={{ borderRadius: '5px', padding: '10px 19px'}} onClick={() => loadImage("sprite-renderer-create-2", "sprite-renderer-create-2-button")}>Show Image</button>
+  <img id="sprite-renderer-create-2" src={SpriteRendererCreate2} alt="Create Sprite Renderer 2" width="500" style={{ display: 'none'}} /><br/>
+
+Untuk penjelasan lebih detail tentang SpriteRenderer, dapat dilihat pada [**SpriteRenderer Manual**](https://docs.unity3d.com/2022.3/Documentation/Manual/class-SpriteRenderer.html).
+
+### RigidBody2D
+
+<img width="500" src={RigidBody2DImage} /><br/>
+**RigidBody2D** adalah komponen GameObject yang menambahkan sistem physics sehingga GameObject tersebut dapat dipengaruhi oleh sistem physics seperti gravitasi, gaya gesek, dan gaya-gaya lainnya.
+Untuk GameObject yang bergerak atau dinamis, komponen RigidBody2D seringkali digunakan berdampingan dengan sebuah collider sehingga GameObject tersebut dapat berinteraksi dengan GameObject lain yang mempunyai collider.
+
+Untuk penjelasan lebih detail tentang RigidBody2D, dapat dilihat pada [**RigidBody2D Manual**](https://docs.unity3d.com/2022.3/Documentation/Manual/class-Rigidbody2D.html).
+
+### Animator
+
+<img width="500" src={AnimatorImage} /><br/>
+**Animator** adalah komponen GameObject yang berfungsi untuk menghandle dan menampilkan animasi pada suatu GameObject.
+Mirip seperti Sprite Renderer, animasi dapat dimasukkan ke Animator melalui *Animator Controller*.
+Seperti memasukkan Sprite ke Sprite Renderer, Animator Controller harus dimasukkan ke dalam Animator agar animasi dapat ditampilkan.
+
+**Animator Controller** adalah sebuah controller yang mengatur alur dari satu animasi ke animasi lainnya.
+Cara membuat sebuah animator controller adalah pada window Project dengan  
+**right click > Create > Animator Controller**:  
+<button id="animator-controller-create-button" style={{ borderRadius: '5px', padding: '10px 19px'}} onClick={() => loadImage("animator-controller-create", "animator-controller-create-button")}>Show Image</button>
+<img id="animator-controller-create" src={AnimatorControllerCreate} alt="Create Animator Controller" width="700" style={{ display: 'none'}} /><br/>
+
+Animator Controller ditampilkan pada sebuah window yang berbeda, yaitu window Animator yang dapat dibuka dengan melakukan **double-click pada sebuah animator controller pada window Project**.
+Di dalam window Animator, untuk mengatur alur dari animasi diperlukan state-state yang berbeda untuk setiap kondisi.
+
+Berikut adalah beberapa cara untuk memasukkan animasi ke dalam animator controller:
+- membuat empty state pada window Animator dengan **right click > Create State > Empty** kemudian memasukkan animasi ke dalam state tersebut<br/>
+  <button id="animator-state-create-1-button" style={{ borderRadius: '5px', padding: '10px 19px'}} onClick={() => loadImage("animator-state-create-1", "animator-state-create-1-button")}>Show Image</button>
+  <img id="animator-state-create-1" src={AnimationStateCreate1} alt="Create Animator State 1" width="500" style={{ display: 'none'}} /><br/>
+- drag and drop animasi ke dalam window Animator<br/>
+  <button id="animator-state-create-2-button" style={{ borderRadius: '5px', padding: '10px 19px'}} onClick={() => loadImage("animator-state-create-2", "animator-state-create-2-button")}>Show Image</button>
+  <img id="animator-state-create-2" src={AnimationStateCreate2} alt="Create Animator State 2" width="500" style={{ display: 'none'}} /><br/>
+
+**Transition** adalah tools yang mengatur kondisi dan proses berubahnya animasi dari satu animasi ke animasi yang lain.  
+Cara membuat Transition antar animasi pada window Animator adalah dengan  
+**right click pada animasi asal > Make Transition > left click pada animasi tujuan**:  
+<button id="transition-make-button" style={{ borderRadius: '5px', padding: '10px 19px'}} onClick={() => loadImage("transition-make", "transition-make-button")}>Show Image</button>
+<img id="transition-make" src={TransitionMake} alt="Make Transition" width="500" style={{ display: 'none'}} /><br/>
+
+**Parameter** pada window Animator adalah variabel yang digunakan untuk menentukan kapan Transition dari satu animasi ke animasi yang lain akan dijalankan.  
+Cara menambahkan Parameter pada window Animator adalah dengan  
+**left click tombol + pada tab parameter > pilih tipe parameter yang diinginkan > berikan nama parameter**:  
+<button id="parameter-add-button" style={{ borderRadius: '5px', padding: '10px 19px'}} onClick={() => loadImage("parameter-add", "parameter-add-button")}>Show Image</button>
+<img id="parameter-add" src={ParameterAdd} alt="Add Parameter" width="500" style={{ display: 'none'}} /><br/>
+
+Untuk penjelasan lebih detail tentang Animator, dapat dilihat pada [**Animator Manual**](https://docs.unity3d.com/2022.3/Documentation/Manual/class-Animator.html).  
+Untuk penjelasan lebih detail tentang Animator Controller, dapat dilihat pada [**Animator Controller Manual**](https://docs.unity3d.com/2022.3/Documentation/Manual/class-AnimatorController.html).
+
+## Assets
+
+Assets adalah resources yang digunakan dalam pengembangan suatu game untuk membuat konten yang akan dimainkan pada game tersebut.
+Assets biasanya dikelompokkan sesuai dengan jenis dan kegunaannya dan dipisah dalam folder yang berbeda agar project lebih terstruktur.
+
+Berikut adalah beberapa jenis Assets yang sering digunakan dalam Unity:
+
+### Scenes
+
+**Scenes** adalah container pada Unity yang menyimpan semua konten dari sebuah game.
+Salah satu implementasi scene yang paling umum adalah penggunaan dua scene yang berbeda untuk dua area yang berbeda, dipisah dengan sebuah loading screen untuk mengurangi penggunaan memori.
+
+Pembuatan Scene dilakukan pada window Project dengan  
+**right click > Create > Scene**:  
+<button id="scene-create-button" style={{ borderRadius: '5px', padding: '10px 19px'}} onClick={() => loadImage("scene-create", "scene-create-button")}>Show Image</button>
+<img id="scene-create" src={SceneCreate} alt="Create Scene" width="500" style={{ display: 'none'}} /><br/>
+
+Untuk penjelasan lebih detail tentang Scenes, dapat dilihat pada [**Scenes Manual**](https://docs.unity3d.com/2022.3/Documentation/Manual/CreatingScenes.html).
+
+### Sprites
+
+**Sprites** adalah gambar 2D yang digunakan untuk memvisualisasikan suatu GameObject.
+Sprite dapat diassign ke sebuah GameObject dengan menggunakan SpriteRenderer.
+
+Pembuatan Sprite template dilakukan pada window Project dengan  
+**right click > Create > 2D > Sprites > bentuk yang diinginkan**:  
+<button id="sprite-create-button" style={{ borderRadius: '5px', padding: '10px 19px'}} onClick={() => loadImage("sprite-create", "sprite-create-button")}>Show Image</button>
+<img id="sprite-create" src={SpriteCreate} alt="Create Sprite" width="800" style={{ display: 'none'}} /><br/>
+sedangkan sprite custom dibuat dengan menggunakan software seperti Aseprite, GIMP, atau menggunakan gambar apa pun.
+
+Untuk penjelasan lebih detail tentang Sprites, dapat dilihat pada [**Sprites Manual**](https://docs.unity3d.com/2022.3/Documentation/Manual/Sprites.html).
+
+### Scripts
+
+**Scripts** adalah kode yang digunakan untuk mengatur perilaku dari suatu GameObject.
+Pada Unity, Scripts yang digunakan umumnya ditulis dalam bahasa pemrograman **C#**.  
+
+Pembuatan Script dilakukan pada window Project dengan  
+**right click > Create > C# Script**:  
+<button id="script-create-button" style={{ borderRadius: '5px', padding: '10px 19px'}} onClick={() => loadImage("script-create", "script-create-button")}>Show Image</button>
+<img id="script-create" src={ScriptCreate} alt="Create Script" width="500" style={{ display: 'none'}} /><br/>
+
+Beberapa referensi atau dokumentasi script Unity yang paling sering digunakan, antara lain:
+- [**Unity Scripting API for GameObject**](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/GameObject.html)
+- [**Unity Scripting API for Transform**](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Transform.html)
+- [**Unity Scripting API for SpriteRenderer**](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/SpriteRenderer.html)
+- [**Unity Scripting API for RigidBody2D**](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Rigidbody2D.html)
+- [**Unity Scripting API for Animator**](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/Animator.html)
+
+Untuk penjelasan lebih detail tentang Scripts, dapat dilihat pada [**Scripts Manual**](https://docs.unity3d.com/2022.3/Documentation/Manual/CreatingAndUsingScripts.html) dan [**Unity Scripting API**](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/).
+
+### Prefabs
+
+**Prefabs** adalah Asset pada Unity yang menyimpan sebuah GameObject dengan semua komponen, nilai-nilai yang disimpan pada komponen tersebut, serta semua child GameObject yang ada di dalamnya.
+Prefabs bekerja seperti template dan memungkinkan sebuah template GameObject untuk digunakan berkali-kali.
+
+Pembuatan Prefab dilakukan dengan mendrag sebuah GameObject dari window Hierarchy ke window Project:  
+<button id="prefab-create-button" style={{ borderRadius: '5px', padding: '10px 19px'}} onClick={() => loadImage("prefab-create", "prefab-create-button")}>Show Image</button>
+<img id="prefab-create" src={PrefabCreate} alt="Create Prefab" width="500" style={{ display: 'none'}} /><br/>
+
+Untuk penjelasan lebih detail tentang Prefabs, dapat dilihat pada [**Prefabs Manual**](https://docs.unity3d.com/2022.3/Documentation/Manual/Prefabs.html).
+
+### Animations
+
+**Animations** adalah animasi yang digunakan untuk memberi pergerakan pada sebuah GameObject.
+Dengan bantuan Animator dan Animator Controller, beberapa animasi yang berbeda dapat digabung untuk menghidupkan sebuah GameObject.
+
+Pembuatan Animation Clip pada Unity dilakukan pada window Project dengan  
+**memilih lebih dari satu sprite secara berurutan > right click > Create > Animation**:  
+<button id="animation-create-button" style={{ borderRadius: '5px', padding: '10px 19px'}} onClick={() => loadImage("animation-create", "animation-create-button")}>Show Image</button>
+<img id="animation-create" src={AnimationCreate} alt="Create Animation" width="700" style={{ display: 'none'}} /><br/>
+
+Untuk penjelasan lebih detail tentang Animations, dapat dilihat pada [**Animations Manual**](https://docs.unity3d.com/2022.3/Documentation/Manual/AnimationSection.html).
+
+## Unity C# Basics
+
+### MonoBehaviour
+
+MonoBehaviour adalah base class dari semua GameObject dan digunakan dalam semua script.  
+Di dalam MonoBehaviour, terdapat beberapa event function yang akan dijalankan secara berurutan mengikuti alur berikut:
+- **Awake** : dijalankan saat GameObject pertama kali diinstansiasi
+- **Start** : dijalankan saat Script pertama kali diaktifkan
+- **FixedUpdate** : dijalankan 50 kali setiap detik secara default dan dapat diubah melalui **Edit > Project Settings > Time > Fixed Timestep**
+- **Update** : dijalankan setiap frame tergantung pada fps dari setiap mesin
+- **LateUpdate** : dijalankan setiap frame seperti Update, namun dijalankan setelah FixedUpdate (jika ada) dan Update dijalankan
+
+Untuk penjelasan lebih detail tentang MonoBehaviour, dapat dilihat pada [**Unity Scripting API for Monobehaviour**](https://docs.unity3d.com/2022.3/Documentation/ScriptReference/MonoBehaviour.html)
+dan untuk urutan jalannya event function dapat dilihat pada [**Order of Execution for Event Functions**](https://docs.unity3d.com/Manual/execution-order.html).
+
+### Basic Informations
+
+Berikut adalah beberapa informasi tambahan untuk pemrograman pada Unity:
+- tipe data dalam Unity bersifat **private** jika tidak dispesifikasikan
+- SerializeField digunakan untuk menampilkan variabel private pada window Inspector
+  ```
+  [SerializeField] int secretCode = 123;
+  ```
+  <img width="500" src={SerializeFieldImage} />
+- HideInInspector digunakan untuk menyembunyikan variabel public pada window Inspector
+  ```
+  [HideInInspector] public string myName = "Jeff";
+  ```
+- informasi component dan script lain sebaiknya diambil sebelum melakukan update
+  ```
+  RigidBody2D rb;
+  SomeRandomScript someRandomScript;
+
+  void Start() {
+    rb = GetComponent<RigidBody2D>();                    // mengambil informasi component
+    someRandomScript = GetComponent<SomeRandomScript>(); // mengambil informasi script lain
+  }
+  ```
+- FixedUpdate digunakan untuk melakukan hal yang berhubungan dengan physics engine
+  ```
+  void FixedUpdate() {
+    someRandomScript.handleMovement(); // mengatur pergerakan object menggunakan physics engine seperti RigidBody2D
+  }
+  ```
+- LateUpdate digunakan untuk mengatur animasi atau kamera
+  ```
+  void LateUpdate() {
+    someRandomScript.handleFollowCamera();       // mengatur pergerakan kamera agar mengikuti suatu object
+    animator.SetInteger("Level", handleLevel()); // mengatur parameter Level pada animator untuk melakukan Transition ke animasi lain
+  }
+  ```
+- Update digunakan untuk melakukan hal-hal lainnya yang tidak dilakukan pada FixedUpdate dan LateUpdate

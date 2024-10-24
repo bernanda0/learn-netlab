@@ -60,7 +60,7 @@ const authorsData = {
     image_url: "https://github.com/patuyyy.png",
   },
   den: {
-    name: "Dermawan [DN]",
+    name: "Dermawan [DM]",
     title: "Netlab Assistant 2024/2025",
     url: "https://github.com/den-dimas",
     image_url: "https://github.com/den-dimas.png",
