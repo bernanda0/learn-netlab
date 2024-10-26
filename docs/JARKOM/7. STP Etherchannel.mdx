@@ -1,0 +1,140 @@
+---
+sidebar_position: 7
+---
+
+import AuthorList from "../../src/components/Author";
+import EtherChannel from "./assets/Modul7/Etherchannel.png";
+import PAGP from "./assets/Modul7/PAGP.png";
+import LACP from "./assets/Modul7/LACP.png";
+
+# MODUL 7: STP and Etherchannel
+
+<AuthorList authorsName={["emiw"]} />
+
+## TUJUAN:
+1. Mengetahui dan memahami konsep Link Aggregation
+2. Mengetahui dan memahami teknologi EtherChannel 
+3. Mengkonfigurasi Link Aggregation dengan menggunakan EtherChannel 
+4. Memahami konsep Redundancy dan Spanning-Tree Protocol 
+5. Mempelajari konsep PVST+ dan Rapid PVST+ 
+6. Mengkonfigurasi PVST+ dalam jaringan 
+
+## Spanning Tree Protocol
+
+### Pengertian Spanning Tree Protocol
+
+Spanning-Tree Protocol (STP) adalah sebuah protokol jaringan yang digunakan untuk mencegah terjadinya loop dalam topologi jaringan akibat adanya redundancy. STP bekerja dengan memastikan bahwa hanya boleh ada 1 logical path antar koneksi dan memblokir redundant path yang menyebabkan loop. Secara fisik, redundant path masih ada namun akan di block untuk menghindari adanya looping dan akan diaktifkan kembali apabila logical path gagal berfungsi. STP sangat penting dalam jaringan yang kompleks untuk memastikan bahwa tidak ada loop yang dapat menyebabkan broadcast storm atau kegagalan jaringan. 
+
+### Redundancy
+
+Sebelumnya sudah dibahas kata “Redundancy” pada bagian Pengertian Spanning Tree Protocol. Redundancy diperlukan untuk mengatasi masalah single point of failure. Implementasi redundancy bisa dilakukan dengan membuat redundant paths. Sehingga apabila jalur pengiriman paket utama mengalami kerusakan, maka bisa memakai jalur alternatif. Tetapi, bisa mengakibatkan looping sehingga paket tidak bisa diterima. Untuk mengatasi masalah looping ini maka diperlukan konfigurasi Spanning-Tree Protocol yang dipasangkan pada switch untuk mencegah terjadinya looping.
+
+### Jenis Port dalam STP
+
+Dalam algoritma STP terdapat 4 jenis port yakni,
+
+- Root Port
+- Designated Port
+- Alternate Port
+- Disabled Port
+
+### Port State
+
+| Port State | BPDU | Detail |
+| ----- | :---: | ----- |
+| Blocking | Receive Only| Ketika perangkat terhubung, port pertama-tama akan memasuki status pemblokiran |
+| Listening | Receive and Send | Switch akan mendengarkan dan mengirim BPDU |
+| Learning | Receive and Send | Switch  akan menerima BPDU superior, akan berhenti mengirim BPDU sendiri, dan akan menyampaikan BPDU superior |
+| Forwarding | Receive and Send | Port meneruskan lalu lintas |
+| Disabled | Receive and Send | Hasil dari perintah administratif yang akan menonaktifkan port |
+
+### Konfigurasi STP
+
+Terdapat beberapa jenis STP, namun yang akan dibahas pada modul ini adalah PVST+ dan Rapid PVST+. Perbedaannya adalah Rapid PVST+ lebih cepat melakukan konvergensi daripada PVST+. 
+
+- Mengaktifkan mode PVST+ 
+    ```text
+    Switch(config)#spanning-tree mode pvst
+    ```
+
+- Mengaktifkan mode Rapid PVST+ 
+    ```text
+    Switch(config)#spanning-tree mode pvst
+    ```
+
+- Mengaktifkan spanning-tree pada VLAN (banyaknya vlan_id disesuaikan dengan jumlah vlan yang ada)
+    ```text
+    Switch(config)#spanning-tree vlan vlan_id, vlan_id
+    ```
+
+- Mengkonfigurasi Spanning-Tree Load Balancing Sebagai Primary 
+    ```text
+    Switch(config)#spanning-tree vlan vlan_id, vlan_id root primary
+    ```
+
+- Mengkonfigurasi Spanning-Tree Load Balancing Sebagai Secondary Root
+    ```text
+    Switch2(config)#spanning-tree vlan vlan_id, vlan_id root secondary
+    ```
+
+- Mengkonfigurasi PVST+ dan Rapid PVST+ PortFast dan BPDUGuard pada interface switch
+    ```text
+    Switch(config)#interface [switch interface]
+    Switch(config-if)#spanning-tree portfast
+    Switch(config-if)#spanning-tree bpduguard enable
+    ```
+- Melihat konfigurasi PVST+ dan Rapid PVST+:
+    ```text
+    Switch#show spanning-tree
+    ```
+
+### Router Redundancy
+Masalah lain yang muncul adalah apabila ada router atau router interface yang bertindak
+sebagai default gateway gagal beroperasi, maka paket tidak bisa dikirim. Sehingga diperlukan
+mekanisme router redundancy dimana terdapat banyak router yang dikonfigurasi bersama
+sehingga bisa membuat satu virtual router.
+
+## EtherChannel
+
+Link Aggregation merupakan suatu metode untuk menggabungkan beberapa port fisik menjadi satu sehingga akan menambah bandwidth dan tentunya redundant. EtherChannel merupakan bentuk dari Link Aggregation yang akan menggabungkan beberapa port fisik ke dalam satu atau lebih logical etherchannel link. Namun, tipe interface-nya harus sama. Contohnya Fast Ethernet hanya bisa di gabungkan dengan port Fast Ethernet yang lain. 
+
+<img src={EtherChannel} />
+
+EtherChannel dapat dibentuk melalui negosiasi menggunakan salah satu dari dua protokol, yaitu Port Aggregation Protocol (PAgP) atau Link Aggregation Control Protocol (LACP). 
+
+### Port Aggregation Protocol (PAgP)
+
+PAgP merupakan protokol Cisco yang membantu dalam pembuatan etherchannel. Cara kerja dari PAgP adalah ketika link EtherChannel dikonfigurasi menggunakan PAgP, paket PAgP dikirimkan antara port yang mendukung EtherChannel untuk menegosiasikan pembentukan channel. PAgP akan menggabungkan port-port tersebut menjadi EtherChannel. EtherChannel kemudian ditambahkan ke spanning tree sebagai satu port tunggal.
+
+<img src={PAGP} />
+
+### Link Aggregation Control Protocol (LACP)
+
+LACP merupakan bagian dari spesifikasi IEEE 802.3ad yang fungsinya sama dengan PAgP. Cara kerja LACP sama seperti PAgP, namun perbedaannya terdapat pada mode yang dipakai. 
+
+<img src={LACP} />
+
+### Konfigurasi EtherChannel
+
+Berikut merupakan cara untuk konfigurasi etherchannel
+
+1. Memilih mode yang diinginkan
+    ```text
+    Switch(config)#interface [interface]
+    Switch(config)#channel-group [channel-group-number] mode [mode]
+    ```
+
+2. Memanggil channel group number harus sama dengan interface lainnya
+    ```text
+    Switch(config)#interface port-channel [channel-group-number]
+    ```
+
+3. Konfigurasi port channel menjadi mode trunk
+    ```text
+    Switch(config-if)# switchport mode trunk 
+    ```
+
+4. Verifikasi hasil etherchannel dan trunk
+    ```text
+    Switch# show interface
+    ```
