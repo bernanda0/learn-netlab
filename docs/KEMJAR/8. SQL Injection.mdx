@@ -1,0 +1,97 @@
+---
+sidebar_position: 8
+---
+
+# MODUL 8: SQL Injection
+
+<AuthorList authorsName={["eriqo"]} />
+
+## Tujuan Praktikum:
+1. Memahami konsep dasar SQL Injection .
+2. Memahami jenis-jenis SQL Injection .
+3. Memahami teknik dalam melakukan SQL Injection .
+4. Memahami tindakan pencegahan yang dapat dilakukan untuk mecegah SQL Injection.
+
+## SQL Injection
+SQL Injection merupakan salah satu teknik penyerangan keamanan yang melibatkan perubahan SQL Statement dalam aplikasi web melalui penggunaan data yang disediakan penyerang. Sistem Validation Input yang tidak memadai dan konstruksi SQL Statement yang tidak tepat dalam aplikasi web dapat menimbulkan potensi dilakukannya serangan ini. SQL Injection adalah serangan yang lazim dan berpotensi merusak sehingga Open Web Application Security Project (OWASP) mencantumkannya sebagai ancaman nomor satu untuk aplikasi web.
+
+Adapun konsep dasar dari SQL Injection adalah penyisipan kode atau skrip berbahayadengan memanfaatkan kerentanan untuk meluncurkan serangan yang didukung oleh komponen back-end. Penyisipan kode atau skrip tersebut dapat berbentuk SQL Statements, skrip dalam Javascript, dsb. sehingga sistem secara tidak sengaja akan mendeteksi bahwa skrip atau kode sisipan tersebut merupakan bagian dari sistem tersebut. Berikut merupakan
+
+Contoh injection yang dapat dilakukan dengan menggunakan SQL Statement:
+
+**SQL Statement :**
+```
+“SELECT * FROM accounts WHERE custID = ‘’ ” + request.getParameter(“id”) + “ ‘’ ”;
+```
+Secara umum Queries tersebut merupakan sintaks yang biasa digunakan untuk mendapatkan data dari tabel accounts dengan parameter ‘id’. Namun, dengan sedikit modifikasi dan memasukkannya kedalam url dari Web misalnya :
+
+
+```
+http://example.com/app/accountView?id=’ or ‘1’=’1
+```
+
+
+Maka, jika web tersebut tidak dilindungi dan disusun dengan pengaturan kode atau skrip yang benar akan mengakibatkan diberikannya nilai dari seluruh baris dalam tabel tersebut.
+
+## Efek dari Serangan SQL Injection
+
+Meskipun efek dari serangan SQL Injection yang berhasil bervariasi berdasarkan aplikasi yang ditargetkan dan bagaimana aplikasi tersebut memproses data yang disediakan pengguna, serangan ini umumnya dapat menimbulkan efek samping untuk serangan – serangan seperti:
+
+- **Authentication Bypass :** Serangan ini memungkinkan penyerang untuk masuk ke aplikasi, berpotensi dengan hak administratif, tanpa memberikan nama pengguna dan kata sandi yang valid.
+- **Information Disclosure:** Serangan ini memungkinkan penyerang untuk mendapatkan, baik secara langsung maupun tidak langsung, informasi sensitif dalam database.
+- **Compromised Data Integrity :** Serangan ini melibatkan perubahan konten database. Penyerang dapat menggunakan serangan ini untuk merusak halaman web atau lebih cenderung memasukkan konten berbahaya ke dalam halaman web yang tidak berbahaya. Teknik ini telah dibuktikan melalui serangan yang dijelaskan dalam eksploitasi massal dengan SQL Injection di SANS Internet Storm Center.
+- **Compromised Availability of Data :** Serangan ini memungkinkan penyerang untuk menghapus informasi dengan maksud menyebabkan kerusakan atau menghapus log atau informasi audit dalam database.
+- **Remote Command Execution:** Melakukan eksekusi perintah melalui database dapat memungkinkan penyerang menyusupi sistem operasi host. Serangan ini sering kali memanfaatkan prosedur tersimpan yang telah ditetapkan sebelumnya untuk eksekusi perintah sistem operasi host. Variasi yang paling dikenal dari serangan ini menggunakan prosedur tersimpan xp_cmdshell yang umum untuk penginstalan Microsoft SQL Server atau memanfaatkan kemampuan untuk membuat panggilan prosedur eksternal pada database Oracle.
+
+## Jenis-jenis Serangan SQL Injection
+Beberapa metode umum untuk injeksi SQL termasuk menjalankan perintah di server database, mengambil data berdasarkan kesalahan, atau mengganggu logical query adalah sebagai berikut:
+
+- **Union – Based SQL Injection:** Jenis injeksi SQL ini adalah metode paling populer yang dilakukan oleh penyerang. Teknik injeksi ini memungkinkan penyerang mengekstrak data dari database dengan memperluas hasil dari kueri asli. Dengan menggunakan operator UNION SQL untuk mengintegrasikan dua pernyataan SELECT menjadi satu hasil, lalu mengembalikannya sebagai bagian dari respons.
+- **Blind SQL Injection:** Merupakan teknik injeksi SQL yang lebih canggih dan sulit untuk dilakukan daripada jenis injeksi lainnya, penyerang melakukan injeksi Blind SQL ketika pesan kesalahan umum diterima dari target. Blind SQL Injection membedakan dirinya dari injeksi SQL biasa dalam metode mengambil informasi dari database. Dalam teknik ini, penyerang meminta database untuk pertanyaan benar atau salah, kemudian menentukan jawaban berdasarkan respons, serta waktu yang dibutuhkan untuk mengambil respons server saat menggunakannya dengan time based attack.
+- **Boolean – based SQL Injection:** Jenis serangan ini menimpa logika dan kondisi kueri menjadi miliknya sendiri. Ini biasanya digunakan dalam permintaan izin atau otentikasi, di mana mereka mengelabui database dengan berpikir mereka memiliki izin yang ditinggikan atau kredensial yang benar. Boolean-based SQL Injection juga digunakan dalam Blind SQL Injection, yang dilanjutkan dengan eliminasi untuk mengekstrak data dari database. Dengan mengirimkan berton-ton permintaan, masing-masing dengan kondisi yang sedikit berbeda dari sebelumnya, penyerang dapat mengetahui data apa yang disimpan berdasarkan hasil operasi.
+- **Error – Based SQL Injection:** Dalam teknik ini, penyerang mengeksploitasi kesalahan database dari halaman web atau aplikasi yang telah dipicu oleh input yang tidak dibersihkan. Selama serangan, teknik ini menggunakan error messages / responses untuk mengembalikan hasil kueri lengkap dan mengungkapkan informasi rahasia dari database. Metode ini juga dapat digunakan untuk mengidentifikasi apakah situs web atau aplikasi web rentan dan memperoleh informasi tambahan untuk menyusun ulang kueri berbahaya.
+- **Time – Based SQL Injection:** Dengan normal SQL Injection, penyerang dapat dengan mudah membaca teks saat dikembalikan. Namun, ketika penyerang tidak dapat mengambil informasi dari server database, mereka akan sering menggunakan Time-Based SQL Injection untuk mencapai hasil mereka. Ini bekerja dengan menggunakan operasi yang membutuhkan waktu lama untuk diselesaikan seringkali beberapa detik. Teknik ini biasanya digunakan saat menentukan apakah terdapat kerentanan pada aplikasi web atau situs web, serta dalam hubungannya dengan teknik Boolean-based selama Blind SQL Injection.
+
+## Tindakan Pencegahan SQL Injection
+
+Penyerang sering kali menargetkan situs web yang menggunakan kerentanan yang diketahui. Kerentanan yang dirahasiakan, tidak ditambal, atau zero-day juga menyebabkan persentase besar SQL Injection selama serangan yang ditargetkan. Cara termudah untuk melindungi situs Anda dari SQL Injection adalah dengan selalu memperbarui semua perangkat lunak dan komponen pihak ketiga Anda. Namun, ada sejumlah teknik yang dapat Anda gunakan untuk membantu mencegah kerentanan SQL Injection:
+
+- **Use Prepared Statements with Parameterized Queries:**
+Prepared Statement disiapkan digunakan untuk memastikan tidak ada variabel dinamis yang Anda perlukan dalam kueri yang dapat keluar dari posisinya. Kueri inti ditentukan sebelumnya, dengan argumen dan jenisnya sesudahnya. Karena kueri mengetahui tipe data yang diharapkan, seperti string atau angka, mereka tahu persis cara mengintegrasikannya ke kueri tanpa menimbulkan masalah. 
+&nbsp;
+    Contoh penerapan dalam Node.js:
+
+```javascript
+const query = `SELECT * FROM users WHERE username = $1 AND password = $2;`;
+const values = [username, password];
+const result = await db.query(query, values);
+```
+- **Use Stored Procedures:**
+Stored Procedures adalah operasi SQL yang sering disimpan di database itu sendiri, hanya bervariasi dengan argumennya. Prosedur yang disimpan mempersulit penyerang untuk mengeksekusi SQL berbahaya mereka, karena tidak dapat disisipkan secara dinamis dalam kueri.
+- **Allow – list Input Validation:**
+Prinsipnya, jangan percaya pada data yang dikirimkan pengguna. Anda dapat melakukan validasi allowlist untuk menguji input pengguna terhadap kumpulan input yang sudah diketahui, disetujui, dan ditentukan. Setiap kali data yang diterima tidak memenuhi nilai yang ditetapkan, data tersebut akan ditolak — melindungi aplikasi atau situs web dari SQL Injection yang berbahaya dalam prosesnya.
+- **Enforce the Principle of Least Privilege:**
+The Principle of Least Privilege adalah prinsip ilmu komputer yang memperkuat kontrol akses ke situs Anda untuk mengurangi ancaman keamanan. 
+&nbsp;
+Adapun prinsip-prinsip yang dimaksud adalah sebagai berikut:
+    - Gunakan kumpulan hak istimewa minimum di sistem Anda untuk melakukan tindakan.
+    - Berikan hak istimewa hanya selama tindakan tersebut diperlukan.
+    - Jangan tetapkan hak akses jenis admin ke akun aplikasi.
+    - Minimalkan hak istimewa untuk setiap akun database di lingkungan Anda.
+- **Escape User Supplied Input:**
+Selama normal SQL Injection, penyerang dapat dengan mudah membaca teks saat dikembalikan. Namun, ketika penyerang tidak dapat mengambil informasi dari server database, mereka akan sering menggunakan SQL Injection berbasis waktu untuk mencapai hasil mereka. Ini bekerja dengan menggunakan operasi yang membutuhkan waktu lama untuk diselesaikan — seringkali beberapa detik.
+&nbsp;
+SQL Injection berbasis waktu biasanya digunakan saat menentukan apakah terdapat kerentanan pada aplikasi web atau situs web, serta dalam hubungannya dengan teknik berbasis Boolean selama Blind SQL Injection.
+&nbsp;
+- **Use a Web Application Firewall:**
+Anda dapat melindungi dari SQL Injection umum dengan firewall aplikasi web. Dengan memfilter permintaan web yang berpotensi berbahaya, firewall aplikasi web dapat menangkap dan mencegah SQL Injection.
+
+## Cara Mengatasi SQL Injection
+Adapun beberapa petunjuk langkah singkat yang anda dapat lakukan, jika Web yang telah anda buat telah terserang dengan SQL Injection yaitu:
+
+1.	Melokasikan source code yang tereksploitasi.
+2.	Menghapus konten dan backdoors yang terinjeksi.
+3.	Melakukan Patching terhadap Vurnerability tersebut.
+4.	Melakukan Update terhadap data.
+5.	Melakukan pemantauan terhadap SQL Statements yang digunakan pada web.
+6.	Memasangkan Web Application Firewall ( WAF ) pada web.
