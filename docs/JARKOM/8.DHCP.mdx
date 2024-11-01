@@ -1,0 +1,124 @@
+---
+sidebar_position: 8
+---
+
+# MODUL 8: DHCP
+
+import AuthorList from "./../../src/components/Author";
+import DHCPDiscover from "./assets/Modul8/dhcp-discover.png";
+import DHCPOffer from "./assets/Modul8/dhcp-offer.png";
+import DHCPRequest from "./assets/Modul8/dhcp-request.png";
+import DHCPAck from "./assets/Modul8/dhcp-ack.png";
+import DHCPv6 from "./assets/Modul8/dhcpv6.png"
+import DHCPRelay from "./assets/Modul8/dhcp-relay.png";
+
+<AuthorList authorsName={["george"]} />
+
+Dynamic Host Configuration Protocol
+
+## TUJUAN PRAKTIKUM
+
+- Memahami konsep dasar DHCP (Dynamic Host Configuration Protocol)
+- Mempelajari konfigurasi dan implementasi DHCP pada suatu jaringan komputer
+
+## DHCP
+
+### Pengertian DHCP
+
+**DHCP** atau **Dynamic Host Configuration Protocol** adalah protokol pada Application Layer yang berfungsi untuk memberikan alamat IP dan parameter-parameter lainnya secara otomatis, seperti subnet mask, default gateway, dan alamat DNS.
+Pengalokasian alamat IP oleh DHCP dilakukan secara otomatis sesuai dengan alamat IP yang tersedia di dalam *address pool* yang telah ditentukan.
+Pengaturan alamat IP yang dinamis memudahkan proses administrasi jaringan, terutama pada jaringan yang besar, karena tidak perlu memasukkan alamat IP satu per satu ke semua perangkat.
+
+Penggunaan DHCP biasanya digunakan secara berdampingan dengan static addressing. DHCP biasanya digunakan untuk user end device, seperti pc dan laptop, sedangkan static addressing digunakan untuk network device, seperti router, switch, dan server.
+
+### Cara Kerja DHCP
+
+DHCP adalah protokol yang menggunakan **client-server architecture**, artinya terdapat perangkat yang bertindak sebagai DHCP Server dan DHCP Client.
+DHCP Server dapat berupa router atau server, sedangkan DHCP Client adalah perangkat-perangkat lain yang meminta konfigurasi IP ke DHCP Server.
+
+DHCP Server menyimpan suatu pool alamat IP dan parameter-parameter yang bersangkutan, kemudian membagikan alamat IP beserta parameter-parameter tersebut kepada DHCP Client.
+DHCP Client mengirimkan request kepada DHCP Server setiap kali DHCP Client terhubung ke jaringan.
+Hal ini menyebabkan alamat IP sebuah perangkat tidak sama setiap kali dihubungkan ke jaringan.
+
+### DHCPv4
+
+**DHCPv4** seperti namanya adalah versi DHCP yang dikembangkan untuk IPv4.  
+Proses pembagian alamat IP antara sebuah DHCPv4 Client dengan DHCPv4 Server terdiri dari 4 langkah sebagai berikut:
+
+<img src={DHCPDiscover} /><br/>
+Ketika client dihubungkan ke suatu jaringan dan dikonfigurasikan dengan DHCP, Client akan mengirimkan pesan **DHCP Discover** untuk **mencari tahu apakah terdapat DHCP Server di dalam jaringan**.
+
+<img src={DHCPOffer} /><br/>
+Apabila DHCP Server menerima pesan DHCP Discover, maka DHCP Server selanjutnya akan mengirimkan pesan **DHCP Offer** kepada Client yang akan mengandung **alamat IP yang telah ditentukan oleh DHCP Server** beserta parameter-parameter tambahan jika ada.
+
+<img src={DHCPRequest} /><br/>
+Setelah menerima DHCP Offer, Client akan mengirimkan **DHCP Request** kembali ke DHCP Server sebagai tanda bahwa **Client setuju untuk menerima alamat IP tersebut**.
+
+<img src={DHCPAck} /><br/>
+Akhirnya, DHCP Server akan mengirimkan **DHCP Acknowledgement (DHCPACK)** ke Client untuk **mengkonfirmasi persetujuan alamat IP dari Client** dan Client terkoneksi ke jaringan dengan alamat IP tersebut.
+Sebaliknya, DHCP Server akan mengirimkan **DHCP Negative Acknowledgement (DHCPNACK)** apabila **alamat IP yang ditawarkan sudah tidak tersedia** dan proses DHCP akan diulang kembali.
+
+### DHCPv6
+
+<img src={DHCPv6} /><br/>
+Pengalamatan IPv6 secara dinamis terdiri dari dua protokol, yaitu **SLAAC** dan **DHCPv6**.  
+**DHCPv6** adalah versi DHCP yang dikembangkan untuk IPv6 dan terdiri dari dua jenis, yaitu:
+- **Stateless DHCPv6** : tidak menyediakan informasi alamat IPv6, melainkan hanya menyediakan informasi-informasi pendukung seperti dns server.
+- **Stateful DHCPv6** : menyediakan informasi alamat IPv6 dan informasi-informasi lainnya.
+
+### DHCP Relay
+
+<img src={DHCPRelay} /><br/>
+
+**DHCP Relay** adalah teknik yang digunakan untuk melanjutkan pengiriman pesan DHCP dari Client ke DHCP Server apabila DHCP Server dan Client berada pada **jaringan yang berbeda**.
+Perangkat yang melakukan DHCP Relay disebut dengan **DHCP Relay Agent**.
+
+## Konfigurasi DHCP
+
+Router dan Server dapat dikonfigurasikan menjadi DHCP Server.  
+Berikut adalah beberapa konfigurasi DHCP pada Router:
+
+### Konfigurasi Dasar DHCPv4
+
+```
+Router(config)#ip dhcp excluded-address <single ip address>
+Router(config)#ip dhcp excluded-address <low ip address> <high ip address>
+Router(config)#ip dhcp pool <pool name>
+Router(dhcp-config)#default-router <default gateway>
+Router(dhcp-config)#dns-server <dns server ip address>
+Router(dhcp-config)#domain-name <domain name>
+Router(dhcp-config)#network <network address> <subnet mask>
+```
+
+### Konfigurasi Dasar DHCPv6 Stateful
+
+```
+Router(config)#ipv6 dhcp pool <pool name>
+Router(config-dhcpv6)#address prefix <ipv6 address prefix>
+Router(config-dhcpv6)#dns-server <dns server ip address>
+Router(config-dhcpv6)#domain-name <domain name>
+Router(config)#interface <interface connected to network>
+Router(config-if)#ipv6 nd managed-config-flag
+Router(config-if)#ipv6 dhcp server <dhcp pool name>
+Router(config-if)#ipv6 nd ra suppress
+```
+
+### Konfigurasi Dasar DHCPv6 Stateless
+
+```
+Router(config)#ipv6 dhcp pool <pool name>
+Router(config-dhcpv6)#address prefix <ipv6 address prefix>
+Router(config-dhcpv6)#dns-server <dns server ip address>
+Router(config-dhcpv6)#domain-name <domain name>
+Router(config)#interface <interface connected to network>
+Router(config-if)#ipv6 nd other-config-flag
+Router(config-if)#ipv6 dhcp server <dhcp pool name>
+Router(config-if)#ipv6 nd ra suppress
+```
+
+### Konfigurasi Dasar DHCP Relay
+
+```
+Router(config)#interface <receiving interface>
+Router(config-if)#ip helper-address <dhcp server address>
+```
