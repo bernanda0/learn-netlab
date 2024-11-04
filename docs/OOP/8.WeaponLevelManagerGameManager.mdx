@@ -1,0 +1,130 @@
+---
+sidebar_position: 8
+---
+
+# Modul 8: Collider Trigger, Game Manager, and Level Manager
+
+import AuthorList from "./../../src/components/Author";
+
+<AuthorList authorsName={["ryan"]} />
+
+## Collider Trigger
+
+### "Is Trigger" dalam Collider2D
+Salah satu fitur yang ada pada Collider2D ialah "Is Trigger", fitur ini akan membuat suatu collider menjadi sebuah trigger yang dapat dilalui oleh objek lain.
+
+Cara mengaktifkan "Is Trigger":
+![image](https://hackmd.io/_uploads/Bkc3bn7-yl.png)
+Pada contoh Collider2D diatas terlihat pada bagian bawah Material terdapat "Is Trigger" ketika checkbox di check maka collider akan menjadi trigger.
+
+---
+### OnTriggerEnter2D(Collider2d other)
+Method ini merupakan method bawaan/dasar dari suatu collider. Method ini akan aktif jika suatu Collider2D dibuat menjadi trigger.
+
+Contoh Implementasi Kode:
+```csharp=
+ void OnTriggerEnter2D(Collider2D other)
+    {
+        Debug.Log("Memasuki Objek Trigger");
+    }
+```
+Pada potongan kode diatas objek apapun yang melewati objek yang diimplementasikan collider trigger dan script tersebut, maka akan ter-display pada console "Memasuki Objek Trigger".
+
+#### Object Tag
+Method OnTriggerEnter2D(Collider2D other) juga dapat diimplementasikan kepada objek yang memiliki Tag, hal tersebut akan membuat Method OnTriggerEnter2D(Collider2D other) dapat secara presisi menentukan objek yang melewati trigger.
+
+Cara Implementasi:
+
+- Pastikan Objek yang ingin melewati trigger memiliki Tag seperti contoh dibawah ini
+![image](https://hackmd.io/_uploads/HkwcV37Zkl.png)
+
+- Implementasikan kedalam Script
+```csharp=
+void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Objek Player Memasuki trigger");
+        }
+        else{
+            Debug.Log("Bukan Objek Player yang memasuki Trigger");
+        }
+    }
+```
+Dengan begitu objek yang masuk ke dalam trigger akan bergantung pada tag yang dimiliki suatu objek.
+
+Dokumentasi Unity : https://docs.unity3d.com/ScriptReference/MonoBehaviour.OnTriggerEnter2D.html
+
+## Game Manager
+Game Manager adalah suatu objek yang akan mengatur bagaimana suatu game berjalan.
+
+Perhatikan pada potongan kode Game Manager di bawah ini:
+```csharp=
+public class GameManager : MonoBehaviour
+{
+    public static GameManager Instance { get; private set; }
+
+    public LevelManager LevelManager { get; private set; }
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+            return;
+        }
+
+        Instance = this;
+
+        LevelManager = GetComponentInChildren<LevelManager>();
+
+        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(GameObject.Find("Camera"));
+    }
+}
+```
+
+Pada potongan kode di atas Game manager tersebut akan mengatur bagaimana suatu Scene akan dihapus semua objeknya, kecuali kedua object yang berada pada method DontDestroyOnLoad(), kedua objek tersebut ialah gameObject yang menjadi inti permainan dan Objek Camera.
+
+
+## Level Manager
+Level Manager adalah objek yang akan mengatur bagaimana suatu scene akan berpindah scene lainnya, bisa kita sebut juga seperti mengganti suatu level pada permainan.
+
+Lihat Potongan kode berikut
+```csharp=
+public class LevelManager : MonoBehaviour
+{
+
+    void Awake()
+    {
+        //do Something on Awake E.g. make an object appearence false
+    }
+
+    IEnumerator LoadSceneAsync(string sceneName)
+    {
+        yield return new WaitForSeconds(1);
+
+        SceneManager.LoadSceneAsync(sceneName);
+
+        Player.Instance.transform.position = new(0, -4.5f);
+    }
+
+    public void LoadScene(string sceneName)
+    {
+        StartCoroutine(LoadSceneAsync(sceneName));
+    }
+}
+```
+Potongan kode tersebut akan mengubah suatu Scene dengan scene lain ada method LoadScene menggunakan SceneManager(), dan menaruh posisi Player pada bagian bawah kamera agar seperti start dari suatu level.
+
+### Scene Manager
+SceneManager adalah suatu Objek bawaan dari unity yang dapat mengubah scene pada suatu permainan. Untuk dokumentasi yang lebih jelas dapat dibaca dokumentasi dibawah ini
+https://docs.unity3d.com/ScriptReference/SceneManagement.SceneManager.html
+
+### Making and Building a New Scene
+1. Klik kanan pada folder Scene
+![image](https://hackmd.io/_uploads/B1JhT27bkx.png)
+2. Rename Scene
+3. Drag and Drop Scene ke Builder Settings (Pada kiri atas File -> Builder Settings)
+4. Pastikan seperti ini
+![image](https://hackmd.io/_uploads/B1-b03mZkg.png)
