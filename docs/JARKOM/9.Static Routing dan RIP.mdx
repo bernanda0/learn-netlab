@@ -1,0 +1,161 @@
+---
+sidebar_position: 9
+---
+
+# MODUL 9: Static Routing & RIP
+
+import AuthorList from "./../../src/components/Author";
+
+<AuthorList authorsName={["fairuz"]} />
+
+## Tujuan
+
+- Memahami konsep routing.
+- Memahami konsep static routing.
+- Dapat mengkonfigurasi static routing IPv4 dan IPv6.
+- Mengenal dynamic routing.
+- Mempelajari dynamic routing dengan RIPv1, RIPv2, dan RIPng.
+
+## Routing
+
+Supaya jaringan yang tidak saling terhubung dapat berkomunikasi satu sama lain, dibutuhkan suatu jalur yang menghubungkan jaringan-jaringan tersebut, namun antara satu jaringan dengan jaringan lainnya mungkin saja memiliki banyak jalur yang dapat dipilih untuk menghubungkannya. Disinilah peran router berada, yaitu untuk melakukan routing dengan menentukan jalur terbaik yang digunakan untuk mengirimkan paket dari satu jaringan ke jaringan lainnya. Routing diperlukan ketika, sebuah paket memiliki alamat tujuan (destination address) yang berada diluar jaringan lokal (LAN) atau dengan kata lain menuju ke jaringan yang berbeda, maupun ketika sebuah paket yang berasal dari jaringan yang berbeda
+
+Dalam penentuan jalur yang terbaik, sebuah router akan menggunakan algoritma routing tertentu sesuai dengan protokol routing yang digunakan. Algoritma-algoritma yang digunakan adalah:
+- Distance vector algorithm (Bellman-Ford algorithm) digunakan oleh protokol RIP.
+- Link-state algorithm (Djikstra algorithm) digunakan oleh protokol OSPF.
+- Path-vector algorithm digunakan oleh protokol BGP.
+- Diffusing update algorithm (DUAL) digunakan oleh protokol EIGRP.
+
+Metode transmisi dalam routing:
+| **Metode Transmisi** | **Deskripsi** |
+|----------------------|---------------|
+| Unicast              | Pengiriman paket dari satu sumber ke satu tujuan. |
+| Multicast            | Pengiriman paket dari satu sumber ke beberapa tujuan. |
+| Broadcast            | Pengiriman paket dari satu sumber ke semua tujuan. |
+| Anycast              | Pengiriman paket dari satu tujuan ke beberapa tujuan, biasanya dipilih yang terdekat dengan si pengirim. |
+| Geocast              | Pengiriman paket dari satu sumber ke beberapa tujuan yang berada pada daerah geografis tertentu. |
+
+Terdapat dua jenis routing yang berbeda berdasarkan cara router membuat tabel informasi routing, yaitu:
+
+## Static Routing
+Static routing merupakan jenis routing dimana penentuan jalur yang digunakan, dikonfigurasi secara manual oleh *network administrator* dan tidak akan berubah secara otomatis jika terjadi perubahan topologi jaringan kecuali diubah secara manual. Tabel routing pada router diisi secara manual oleh *network administrator*. Sebelum memasukkan static routing, setiap interface yang terhubung ke router sebaiknya sudah diberikan alamat IP karena alamat tersebut akan digunakan untuk static routing. Static routing digunakan pada jaringan yang relatif kecil atau jaringan yang jarang mengalami perubahan.
+
+Terdapat dua metode konfigurasi static routing, yaitu:
+- **Next Hop Address:**
+  
+  Next-hop merupakan jenis static routing yang menggunakan IP address dari router yang terhubung selanjutnya. Misalkan terdapat dua buah router yang saling terhubung sebagai berikut:
+  ![Next Hop Address](https://imgur.com/HpuU7LX.jpg)
+  - Router R1 memiliki ip 10.0.0.1 pada interface Se0/1/0 dan alamat ip 192.168.1.1 pada interface g0/0. 
+  - Router R2 memiliki ip 10.0.0.2 pada interface Se0/1/1 dan alamat ip 192.168.2.1 pada interface g0/0.
+
+  Maka next-hop address dari router R1 ke jaringan yang melewati router R2 adalah 10.0.0.2, yang merupakan IP address dari interface router R2 yang terhubung langsung dengan router R1, begitu pula sebaliknya. Sehingga contoh konfigurasinya adalah:
+  ![Next Hop Address Configuration](https://imgur.com/k1cJkq5.jpg)
+
+- **Forwarding/Exit Interface:**
+  
+  Forwarding/exit interface merupakan jenis static routing yang menggunakan nama interface router yang mengarah pada jaringan luar. Misalkan terdapat dua buah router yang saling terhubung sebagai berikut:
+  ![Forwarding/Exit Interface](https://imgur.com/QiM8QjD.jpg)
+  - Router R1 terhubung dengan R2 melalui interface Se0/1/0.
+  - Router R2 terhubung dengan R1 melalui interface Se0/1/1.
+
+  Maka forwarding/exit interface dari router R1 ke jaringan yang melewati router R2 adalah Se0/1/0, yang merupakan interface yang mengarah ke router R2, begitu pula sebaliknya. Sehingga contoh konfigurasinya adalah:
+  ![Forwarding/Exit Interface Configuration](https://imgur.com/yEDL7Pp.jpg)
+
+## Dynamic Routing
+Dynamic routing adalah suatu mekanisme routing, dimana pemilihan jalur dilakukan dengan adanya protokol yang digunakan router untuk mencari jaringan dan meng-update routing table secara otomatis. Keuntungan utama dari dynamic routing adalah router-router akan menukar informasi routing setiap kali terjadi perubahan pada topologi. Pertukaran ini membuat router-router untuk secara otomatis belajar akan kondisi jaringan yang baru dan juga menentukan jalur alternatif ketika terjadi kegagalan hubungan (link failure) di jaringan tersebut. Dynamic routing lebih mudah digunakan ketimbang static routing maupun default routing dalam jaringan dengan skala besar, akan tetapi dynamic routing akan membutuhkan proses yang lebih banyak pada CPU router dan memakan lebih banyak bandwidth dibanding dengan static routing dan default routing.
+
+Tujuan dari dynamic routing adalah:
+1. Menemukan remote networks.
+2. Menjaga informasi routing agar tetap up-to-date.
+3. Memilih jalur terbaik (best path) ke network tujuan.
+4. Kemampuan untuk menentukan jalur baru dan terbaik, jika jalur yang biasa digunakan tidak tersedia lagi di jaringan.
+
+Komponen utama dari protokol dynamic routing adalah:
+1. **Data Structures (Struktur Data)**: tipikal protokol routing menggunakan tabel atau database untuk operasi mereka. Informasi routing ini disimpan di dalam RAM.
+2. **Routing protocol messages (Pesan-pesan protokol routing)**: protokol routing menggunakan beberapa tipe pesan untuk mencari dan mengeksplorasi router tetangga (neighbour routers), menukar informasi routing, dan tugas-tugas lain untuk belajar dan mempertahankan informasi tentang network seakurat mungkin.
+3. **Algorithm (Algoritma)**: suatu algoritma adalah sejumlah langkah-langkah terbatas yang digunakan untuk menyelesaikan suatu masalah. Protokol routing menggunakan algoritma-algoritma tertentu untuk memfasilitasi informasi routing dan menentukan jalur terbaik.
+
+Perbandingan static routing dengan dynamic routing:
+| **Metode** | **Keuntungan** | **Kekurangan** |
+|:----------:|:--------------|:--------------|
+| **Static** |<p> - Mudah diimplementasikan pada jaringan skala kecil.</p><p> - Lebih aman. </p><p> - Rute ke tujuan selalu sama.</p><p> - Tidak memerlukan algoritma.</p>|<p> - Sulit diterapkan pada jaringan yang lebih kompleks.</p><p> - Kompleksitas meningkat jauh seiring dengan perkembangan skala jaringan.</p><p> - Diperlukan routing manual untuk rerouting trafik jaringan.</p>|
+| **Dynamic** |<p> - Cocok diterapkan di semua topologi dimana diperlukan banyak router.</p><p> - Independen terhadap ukuran jaringan.</p><p> - Secara otomatis beradaptasi terhadap topologi untuk reroute trafik (jika dimungkinkan).</p> |<p> - Lebih kompleks untuk diimplementasikan. </p><p> - Kurang aman, memerlukan konfigurasi tambahan untuk membuat jaringan lebih aman.</p><p> - Route tergantung kondisi topologi saat itu. </p><p> - Memerlukan tambahan proses CPU, RAM, dan bandwidth.</p>|
+
+Protokol routing digunakan untuk memfasilitasi terjadinya pertukaran informasi routing antara router dengan router lainnya dengan algoritma tertentu. Protokol routing itu sendiri adalah gabungan dari proses, algoritma, dan pesan yang digunakan untuk menukar informasi routing dan mendapatkan routing table yang berisi jalur terbaik pilihan berdasar routing protocol bersangkutan.
+
+## Routing Information Protocol (RIP)
+RIP (Routing Information Protocol) merupakan salah satu jenis dari dynamic routing pertama yang ditemukan pada tahun 1988 dengan nama RIP versi 1 (RIP v1). RIP menggunakan algoritma distance vector dalam membuat routing table-nya. Salah satu ciri dari distance vector protokol adalah protokol ini menggunakan hop count untuk menentukan jalur terbaik menuju network tujuan.
+
+Router dengan protokol RIP akan memberikan routing table-nya secara lengkap
+kepada router tetangganya, yang kemudian router ini akan membandingkan setiap routing table yang dia terima dengan routing table yang dia miliki. routing by rumour menerima update routing table dari router tetangganya dan percaya bahwa jalur routing tersebut benar tanpa mencarinya sendiri.
+
+Protokol RIP menggunakan 4 jenis timer, antara lain :
+1. Route update timer
+2. Route invalid timer
+3. Hold down timer
+4. Route flush timer
+
+Pada RIP, hop count sebagai metrik mempunyai nilai maksimal 15 hop. Sehingga hop count mulai dari 16 akan di hitung oleh RIP sebagai unreachable network atau down. Pengembangan lebih lanjut dari protokol RIP adalah:
+
+1. **RIPv2**
+   
+   RIPv2, ditemukan pada tahun 1993, adalah protokol routing yang bersifat classless. Berbeda dengan RIP versi 1 yang masih bersifat classful, pada RIPv2 dapat digunakan metode VLSM pada perhitungan network dan IP address-nya.
+
+2. **RIPng**
+   
+   RIPng merupakan protokol dynamic routing RIP untuk pengalamatan jaringan dengan sistem IPv6.
+
+## Command Set Utama
+Berikut adalah perintah utama untuk konfigurasi static routing hingga RIP, beserta tujuan dari setiap perintah tersebut:
+
+1. **Static Routing IPv4:**
+
+| **Command** | **Contoh** | **Fungsi** |
+|-------------|-------------|------------|
+| ip route ***"destination_address"*** ***"destination_mask"*** ***"next_hop_address"*** | ip route **192.168.2.0** **255.255.255.0** **10.0.0.2** | Konfigurasi static route dengan metode next-hop |
+| ip route ***"destination_address"*** ***"destination_mask"*** ***"forwarding_interface"*** | ip route **192.168.2.0** **255.255.255.0** **Se0/1/0** | Konfigurasi static route dengan metode forwarding interface |
+| ip route 0.0.0.0 0.0.0.0 ***"next_hop_address/forwarding_interface"*** |<p> ip route **0.0.0.0 0.0.0.0 10.0.0.2** </p><p>ip route **0.0.0.0 0.0.0.0 Se0/1/0**</p> | Konfigurasi default route. Metode dipilih salah satu saja |
+
+2. **Static Routing IPv6:**
+
+| **Command** | **Contoh** | **Fungsi** |
+|-------------|-------------|------------|
+| ipv6 route ***"ipv6_prefix/prefix_length"*** ***"forwarding_interface"*** | ipv6 route **2001:db8::/32** **Se0/1/0** | Konfigurasi IPv6 static route dengan metode forwarding interface |
+| ipv6 route ***"ipv6_prefix/prefix_length"*** ***"next_hop_address"*** | ipv6 route **2001:db8::/32** **2001:db8::1** | Konfigurasi IPv6 static route dengan metode next-hop address |
+| ipv6 route ::/0 ***"forwarding_interface/next_hop_address"*** | <p>ipv6 route **::/0 Se0/1/0** </p><p>ipv6 route **::/0 2001:db8::1**</p>| Konfigurasi IPv6 default route. Metode dipilih salah satu saja |
+
+3. **RIP:**
+
+| **Command** | **Contoh** | **Fungsi** |
+|-------------|-------------|------------|
+| enable | enable | Masuk ke mode privileged EXEC |
+| configure terminal | configure terminal | Masuk ke mode global configuration |
+| router rip | router rip | Menspesifikasikan routing protokol yang digunakan yaitu RIP |
+| network ***"local_network_address"*** | network **192.168.1.0** | Menambahkan network address pada RIP |
+
+4. **RIPv2:**
+
+| **Command** | **Contoh** | **Fungsi** |
+|-------------|-------------|------------|
+| enable | enable | Masuk ke mode privileged EXEC |
+| configure terminal | configure terminal | Masuk ke mode global configuration |
+| router rip | router rip | Menspesifikasikan routing protokol yang digunakan yaitu RIP |
+| version 2 | version 2 | Menggunakan RIP versi 2 |
+| network ***"local_network_address"*** | network **192.168.1.0** | Menambahkan network address pada RIP |
+
+5. **RIPng:**
+
+| **Command** | **Contoh** | **Fungsi** |
+|-------------|-------------|------------|
+| enable | enable | Masuk ke mode privileged EXEC |
+| configure terminal | configure terminal | Masuk ke mode global configuration |
+| ipv6 unicast-routing | ipv6 unicast-routing | Membuat router dapat memforward paket IPv6 |
+| interface ***"interface_id"*** | interface **g0/0** | Masuk ke interface yang ingin dikonfigurasi |
+| ipv6 rip ***"RIP-AS"*** enable | ipv6 rip **RIP-AS** enable | Mengaktifkan RIPng pada interface |
+
+6. **Tambahan:**
+
+| **Command** | **Contoh** | **Fungsi** |
+|-------------|-------------|------------|
+| no router rip | no router rip | Menonaktifkan protokol RIP pada router |
+| show ip protocols | show ip protocols | Menampilkan protokol routing yang sudah dikonfigurasi pada router |
