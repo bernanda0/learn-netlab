@@ -1,0 +1,106 @@
+---
+sidebar_position: 9
+---
+
+import AuthorList from "../../src/components/Author"
+
+# MODUL 9: Intrusion Detection Systems
+
+<AuthorList authorsName={["bernanda"]} />
+
+# PRACTICAL OBJECTIVES
+- Understand Intrusion Detection System
+- Understand the difference between Intrusion Detection System and Intrusion Prevention
+- Be able to use basic features of the Snort application such as sniffer, logger, and Intrusion Detection System
+
+### INTRUSION DETECTION SYSTEM
+An intrusion detection system (IDS) is a system that monitors network traffic for suspicious activity and alerts when such activity is discovered. Intrusion detection systems are used to detect anomalies to catch hackers before they damage a network. When an IDS analyzes traffic for something strange, it uses multiple techniques based on the rule defined in the IDS sensor. The following tools and techniques can be used in this regard:
+
+- **Signature-based IDS**: A signature looks for some specific string or behavior in a single packet or stream of packets to detect the anomaly.
+- **Policy-based IDS**: Works based on the policy or SOP of an organization.
+- **Anomaly-based IDS**: A baseline is created for a specific kind of traffic. IDS will depend on the decided baseline to analyze traffic.
+- **Reputation-based IDS**: Collects information from systems participating in global correlation. It would be great to filter out the known traffic, which results in attack propagation before it hits critical infrastructure.
+
+Depending on the network scenario, IDS modules are deployed in one of the following configurations:
+- **Host-based Intrusion Detection**: Normally deployed to protect a specific host machine, it works closely with the Operating System Kernel of the host machine. It creates a filtering layer and filters out any malicious application call to the OS.
+- **Network-based Intrusion Detection**: Works with the perimeter edge device or some specific segment of the overall network. As a network-based solution works by monitoring overall network traffic (or data packets in particular), it should work as fast as possible regarding the processing power so that the overall latency may not be introduced in the network system.
+
+### INTRUSION PREVENTION SYSTEM
+An Intrusion Prevention System (IPS) is a network security/threat prevention technology that examines network traffic flows to detect and prevent vulnerability exploits. Vulnerability exploits usually come from malicious inputs to a target application or service that attackers use to interrupt and gain control of an application or machine. Following a successful exploit, the attacker can disable the target application (resulting in a denial-of-service state) or can potentially access all the rights and permissions available to the compromised application.
+
+#### Prevention
+The IPS often sits directly behind the firewall and provides a complementary layer of analysis that negatively selects for dangerous content. Unlike its predecessor, the Intrusion Detection System (IDS)—which is a passive system that scans traffic and reports back on threats—the IPS is placed inline (in the direct communication path between source and destination), actively analyzing and taking automated actions on all traffic flows that enter the network. Specifically, these actions include:
+- Sending an alarm to the administrator (as would be seen in an IDS)
+- Dropping the malicious packets
+- Blocking traffic from the source address
+- Resetting the connection
+
+As an inline security component, the IPS must work efficiently to avoid degrading network performance. It must also work fast because exploits can happen in near real-time. The IPS must also detect and respond accurately so as to eliminate threats and false positives (legitimate packets misread as threats).
+
+#### Detection
+The IPS has a number of detection methods for finding exploits, but signature-based detection and statistical anomaly-based detection are the two dominant mechanisms. Signature-based detection is based on a dictionary of uniquely identifiable patterns (or signatures) in the code of each exploit. As an exploit is discovered, its signature is recorded and stored in a continuously growing dictionary of signatures. Signature detection of IPS is split into two types:
+- **Exploit-facing signatures**: Identify individual exploits by triggering on the unique patterns of a particular exploit attempt. The IPS can identify specific exploits by finding a match with an exploit-facing signature in the traffic stream.
+- **Vulnerability-facing signatures**: Broader signatures that target the underlying vulnerability in the system being targeted. These signatures protect networks from variants of an exploit that may not have been directly observed in the wild but also raise the risk of false positives.
+
+Statistical anomaly detection takes samples of network traffic at random and compares them to a pre-calculated baseline performance level. When the sample of network traffic activity is outside the parameters of baseline performance, the IPS takes action to handle the situation.
+
+IPS was originally built and released as a standalone device in the mid-2000s. This, however, was in the advent of today’s implementations, which are now commonly integrated into Unified Threat Management (UTM) solutions (for small and medium-sized companies) and next-generation firewalls (at the enterprise level).
+
+Quoted from: Accessed 6 September 2023, What is an Intrusion Prevention System? - Palo Alto Networks 
+
+### INTRUSION DETECTION AND INTRUSION PREVENTION
+Intrusion Detection System (IDS) and Intrusion Prevention System (IPS) often create confusion as both modules are created by multiple vendors, and different terminologies used to define the technical concepts are also the same. Sometimes, the same technology may be used to detect and prevent some threats.
+
+The placement of a sensor within a network differentiates the functionality of IPS over IDS. When a sensor is placed in line with the network, every packet will be analyzed and passed through the sensor only if it contains nothing malicious. By dropping the malicious traffic, the trusted network or a segment of it can be protected from known threats and attacks. This is the basic working of IPS. If a sensor is installed in the position to get a copy of every packet to analyze any malicious activity, then it becomes an IDS. In other means, the sensor, running in promiscuous mode, will detect and generate an alert if required.
+
+### SNORT
+In this module, we will use to snort IDS. Snort is an open-source IDS and IPS that delivers the most effective and comprehensive real-time network defense solutions. Snort is capable of protocol analysis, real-time packet analysis, and logging. It can also search and filter content and detect various attacks and probes, including buffer overflows, port scans, SMB probes, etc. Snort has three modes:
+- **Sniffer mode**: To see packets passing on a network.
+- **Packet logger mode**: To record all packets on the network for later analysis.
+- **Intrusion Detection mode**: Snort will detect attacks made over a computer network in this mode. IDS mode setup needs various rules/rules that will differentiate a normal packet from a packet carrying the attack.
+
+### SNORT RULE
+Rules are a different methodology for performing detection, which brings the advantage of 0-day detection to the table. Developing a rule requires an acute understanding of how the vulnerability actually works. Snort rules are comprised of 2 logical sections:
+1. **The rule header**: Contains the rule’s action, protocol, source and destination IP addresses, netmasks, direction, and source and destination port information.
+2. **The rule options**: Contain alert messages and information on which parts of the packet should be inspected to determine if the rule action should be taken.
+
+### SNORT DOWNLOAD
+```bash
+sudo apt-get install snort
+```
+Access [http://www.snort.org](http://www.snort.org), follow the instruction on the website
+
+### SNIFFER MODE
+Sniffer mode functions are the same as Wireshark. In this mode, snort captures packets passing through an interface, e.g., the eth0 interface. To run Snort in sniffer mode is not difficult. Some examples of the command are listed below:
+
+By adding several switches, `-v`, `-d`, `-e` will generate several different outputs, e.g.:
+- `-v`: To see the header of TCP / IP packets that pass.
+- `-d`: To see the contents of the package.
+- `-e`: To look at the link layer header, such as the ethernet packet header.
+
+### PACKET LOGGER MODE
+To continue logging the traffic captured by snort, some commands that may be used are:
+```bash
+snort -l [log file location]
+```
+This determines that the package will pass in the log or log in with a snort folder path `/var/log/snort`. Some additional commands can be used, such as `-h 152.118.101.0/24`, which indicates that only packets from any host will be recorded, and `-b` to store logs in binary format.
+
+Read the log file by moving to the directory where the log is saved (`/var/log/snort`) and run snort with the added `-r` command:
+```bash
+snort -dv -r [log file name]
+```
+Example: `-dvr packet.log icmp` for Snort intrusion detection using ICMP in the log file.
+
+### INTRUSION DETECTION MODE
+Characteristics of operating modes for detecting intruders can be set by adding commands to snort. Use `-c` to read configuration files:
+```bash
+snort -c [file-name konfigurasi.conf]
+```
+
+Snort uses logging packages with the `-l` command to specify the logging file name or use the default logging file in `/var/log/snort`. Several additional commands help improve the detection alert notification mechanism in Linux:
+- `-A fast`: Rapid alert mode that contains the time, news, IP, and destination port.
+- `-A full`: Full alert mode with full information.
+- `-A unsock`: Alert mode to the Unix socket.
+- `-A none`: Turn off the alert mode.
+
+To send alerts to a UNIX syslog, use the `-s`
