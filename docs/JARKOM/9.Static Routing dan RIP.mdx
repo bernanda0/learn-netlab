@@ -143,6 +143,7 @@ Berikut adalah perintah utama untuk konfigurasi static routing hingga RIP, beser
 | router rip | router rip | Menspesifikasikan routing protokol yang digunakan yaitu RIP |
 | version 2 | version 2 | Menggunakan RIP versi 2 |
 | network ***"local_network_address"*** | network **192.168.1.0** | Menambahkan network address pada RIP |
+| passive-interface ***"interface_id"*** | passive-interface **g0/0** | Menonaktifkan Pembaruan pada interface tertentu |
 
 5. **RIPng:**
 
@@ -153,6 +154,7 @@ Berikut adalah perintah utama untuk konfigurasi static routing hingga RIP, beser
 | ipv6 unicast-routing | ipv6 unicast-routing | Membuat router dapat memforward paket IPv6 |
 | interface ***"interface_id"*** | interface **g0/0** | Masuk ke interface yang ingin dikonfigurasi |
 | ipv6 rip ***"RIP-AS"*** enable | ipv6 rip **RIP-AS** enable | Mengaktifkan RIPng pada interface |
+| passive-interface ***"interface_id"*** | passive-interface **g0/0** | Menonaktifkan Pembaruan pada interface tertentu |
 
 6. **Tambahan:**
 
