@@ -116,6 +116,10 @@ const config = {
               {
                 label: "JARKOM",
                 to: "/docs/category/JARKOM",
+              },
+              {
+                label: "OS",
+                to: "/docs/category/OS",
               }
             ],
           },
