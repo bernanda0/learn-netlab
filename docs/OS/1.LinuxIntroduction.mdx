@@ -1,0 +1,176 @@
+---
+sidebar_position: 1
+---
+
+import AuthorList from "../../src/components/Author";
+import dockervsvm from './assets/Modul1/dockervsvm.png'
+
+# Linux Introduction
+
+<AuthorList authorsName={["kamal"]} />
+
+## TUJUAN PRAKTIKUM
+
+- Memahami konsep dasar sistem operasi dan peranannya dalam komputasi.
+- Menggunakan mesin virtual untuk menjalankan sistem operasi Linux.
+- Memahami konsep dasar Docker dan penggunaannya dalam lingkungan virtualisasi.
+- Mengenal berbagai distribusi Linux dan perbedaan utama di antara mereka.
+- Mempelajari perintah dasar Linux untuk navigasi, pengelolaan file, dan administrasi sistem.
+
+---
+
+### Operating System
+
+Sistem operasi (Operating System/OS) adalah perangkat lunak yang mengelola perangkat keras komputer dan menyediakan layanan untuk program komputer. OS bertindak sebagai perantara antara pengguna dan perangkat keras.
+
+Fungsi utama sistem operasi:
+
+- Manajemen sumber daya (CPU, memori, penyimpanan, dan perangkat I/O).
+- Manajemen proses dan multitasking.
+- Manajemen file dan sistem penyimpanan.
+- Keamanan dan kontrol akses.
+- Antarmuka pengguna (CLI atau GUI).
+
+Beberapa contoh sistem operasi umum meliputi Windows, macOS, dan Linux.
+
+### Virtual Machine
+
+Mesin virtual (Virtual Machine/VM) adalah perangkat lunak yang meniru lingkungan komputer fisik. Dengan VM, pengguna dapat menjalankan berbagai sistem operasi dalam satu perangkat keras fisik tanpa mengganggu OS utama.
+
+Keuntungan menggunakan VM:
+
+- Isolasi antara sistem operasi utama dan tamu.
+- Mudah untuk menguji berbagai sistem operasi.
+- Meningkatkan efisiensi sumber daya.
+- Mendukung pengembangan dan pengujian perangkat lunak.
+
+Beberapa perangkat lunak VM populer meliputi:
+
+- VirtualBox
+- VMware
+- Hyper-V
+
+### Docker
+
+Docker adalah platform containerization yang memungkinkan pengembang untuk mengemas aplikasi beserta dependensinya ke dalam kontainer. Kontainer ini dapat dijalankan secara konsisten di berbagai lingkungan.
+
+Keuntungan menggunakan Docker:
+
+- Portabilitas tinggi.
+- Isolasi yang lebih ringan dibandingkan dengan VM.
+- Efisiensi dalam penggunaan sumber daya.
+- Mempermudah deployment dan manajemen aplikasi.
+
+Komponen utama Docker:
+
+- **Docker Engine**: Mesin yang menjalankan kontainer Docker.
+- **Docker Image**: Blueprint untuk membuat kontainer.
+- **Docker Container**: Unit aplikasi yang berjalan berdasarkan image.
+- **Docker Hub**: Repositori untuk menyimpan dan membagikan image Docker.
+
+### Perbedaan untuk menjalankan aplikasi
+
+Untuk menjalankan aplikasi, terdapat beberapa perbedaan antara menggunakan sistem operasi langsung, mesin virtual, dan Docker.
+
+1. **Sistem Operasi Langsung**: Aplikasi dijalankan langsung pada sistem operasi utama tanpa lapisan tambahan. Ini memberikan kinerja terbaik tetapi kurang isolasi dan portabilitas.
+
+2. **Virtual Machine (VM)**: Aplikasi dijalankan dalam lingkungan terisolasi yang meniru perangkat keras fisik. VM memberikan isolasi yang baik dan memungkinkan menjalankan berbagai sistem operasi, tetapi memerlukan lebih banyak sumber daya dibandingkan Docker.
+
+3. **Docker**: Aplikasi dijalankan dalam kontainer yang lebih ringan dibandingkan VM. Docker memberikan isolasi yang baik dan portabilitas tinggi dengan penggunaan sumber daya yang lebih efisien. Kontainer Docker dapat dijalankan konsisten di berbagai lingkungan, membuatnya ideal untuk pengembangan dan deployment aplikasi.
+
+<img src={dockervsvm} />
+
+---
+
+### Linux
+
+Linux adalah sistem operasi berbasis Unix yang bersifat open-source dan banyak digunakan dalam server, sistem embedded, serta perangkat IoT. Linux dikenal dengan fleksibilitas, keamanan, dan stabilitasnya.
+
+#### Linux Distributions
+
+Distribusi Linux (Linux Distro) adalah variasi dari sistem operasi Linux yang dikembangkan oleh berbagai komunitas atau perusahaan dengan tambahan paket perangkat lunak tertentu.
+
+Beberapa distribusi Linux populer:
+
+- **Ubuntu**: Cocok untuk pemula dengan dukungan komunitas yang luas.
+- **Debian**: Stabil dan sering digunakan di server.
+- **Fedora**: Inovatif dan selalu diperbarui dengan teknologi terbaru.
+- **Arch Linux**: Fleksibel dan memungkinkan pengguna untuk mengatur sistemnya dari awal.
+- **CentOS**: Digunakan di lingkungan server karena stabilitasnya.
+
+#### Common Commands In Linux
+
+Beberapa perintah dasar yang sering digunakan dalam Linux:
+
+1. **Navigasi dan Pengelolaan File**
+
+   - `ls` : Menampilkan daftar file dan direktori.
+   - `cd <direktori>` : Berpindah ke direktori tertentu.
+   - `pwd` : Menampilkan direktori saat ini.
+   - `cp <sumber> <tujuan>` : Menyalin file atau direktori.
+   - `mv <sumber> <tujuan>` : Memindahkan atau mengganti nama file/direktori.
+   - `rm <file/direktori>` : Menghapus file atau direktori.
+
+2. **Manajemen Pengguna dan Hak Akses**
+
+   - `whoami` : Menampilkan pengguna yang sedang login.
+   - `sudo <perintah>` : Menjalankan perintah sebagai administrator.
+   - `chmod <mode> <file>` : Mengubah izin akses file/direktori.
+   - `chown <user>:<group> <file>` : Mengubah kepemilikan file/direktori.
+
+3. **Manajemen Proses**
+
+   - `ps` : Menampilkan daftar proses yang sedang berjalan.
+   - `top` : Menampilkan proses yang sedang berjalan secara real-time.
+   - `kill <PID>` : Menghentikan proses berdasarkan ID.
+   - `htop` : Alternatif `top` dengan tampilan yang lebih interaktif.
+
+4. **Jaringan**
+
+   - `ping <alamat>` : Menguji konektivitas ke alamat tertentu.
+   - `ifconfig` atau `ip addr` : Menampilkan konfigurasi jaringan.
+   - `netstat -tulnp` : Menampilkan daftar koneksi jaringan yang aktif.
+
+5. **Manajemen Paket**
+   - `apt-get install <paket>` (Debian/Ubuntu) : Menginstal paket baru.
+   - `yum install <paket>` (RHEL/CentOS) : Menginstal paket baru.
+   - `dnf install <paket>` (Fedora) : Menginstal paket baru.
+   - `pacman -S <paket>` (Arch Linux) : Menginstal paket baru.
+
+#### Cara Menjalankan file .c dalam Linux
+
+1. Update library apt
+
+```
+sudo apt update
+```
+
+2. Download library yang penting agar dapat mengcompile
+
+```
+sudo apt install build-essential
+```
+
+3. Buatlah file .c dengan
+
+```
+touch <nama file>.c
+```
+
+4. Ubahlah isi file dengan
+
+```
+sudo nano <nama file>.c
+```
+
+5. compile .c menjadi .exe dengan
+
+```
+gcc <nama file>.c -o <nama output file>
+```
+
+6. Jalankan file .exe
+
+```
+./<nama file .exe>
+```
